@@ -107,6 +107,42 @@
                         </li>
                     @endhasanyrole
 
+                    @hasanyrole('Developer|Owner|Admin|Hadith admin|Hadith staff')
+                        <li
+                            class="pc-item pc-hasmenu {{ Str::is('admin.hadith-books.*', $route) ||
+                            Str::is('admin.hadith-book-translations.*', $route) ||
+                            Str::is('admin.quran-chapters.*', $route) ||
+                            Str::is('admin.quran-chapter-translations.*', $route) ||
+                            Str::is('admin.quran-verses.*', $route)
+                                ? 'active pc-trigger'
+                                : '' }}">
+                            <a href="javascript:void(0)" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-notes"></i></span>
+                                <span class="pc-mtext">Hadith</span>
+                                <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                            </a>
+                            <ul class="pc-submenu">
+                                <li
+                                    class="pc-item {{ Str::is('admin.hadith-books.*', $route) || Str::is('admin.hadith-book-translations.*', $route)
+                                        ? 'active'
+                                        : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.hadith-books.index') }}">Books</a>
+                                </li>
+
+                                <li
+                                    class="pc-item {{ Str::is('admin.quran-chapters.*', $route) || Str::is('admin.quran-chapter-translations.*', $route)
+                                        ? 'active'
+                                        : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.quran-chapters.index') }}">Chapters</a>
+                                </li>
+
+                                <li class="pc-item {{ Str::is('admin.quran-verses.*', $route) ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.quran-verses.index') }}">Verses</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endhasanyrole
+
                     @can('view users')
                         <li class="pc-item {{ Route::currentRouteName() == 'admin.users.index' ? 'active' : '' }}"
                             class="pc-link">

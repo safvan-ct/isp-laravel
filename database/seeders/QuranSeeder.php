@@ -11,9 +11,7 @@ use Illuminate\Support\Facades\DB;
 class QuranSeeder extends Seeder
 {
     public function __construct(protected ApiService $apiService)
-    {
-        $this->apiService = $apiService;
-    }
+    {}
 
     /**
      * Run the database seeds.

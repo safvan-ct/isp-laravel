@@ -43,7 +43,8 @@ class QuranChapterTranslationController extends Controller
     {
         try {
             $this->persist($request);
-            return redirect()->route('admin.quran-chapter-translations.index', [$request->quran_chapter_id])->with('success', 'Chapter translation created successfully');
+            return redirect()->route('admin.quran-chapter-translations.index', [$request->quran_chapter_id])
+                ->with('success', 'Chapter translation created successfully');
         } catch (\Exception $e) {
             return redirect()->route('admin.quran-chapter-translations.index', [$request->quran_chapter_id])
                 ->withInput($request->all())
@@ -55,9 +56,10 @@ class QuranChapterTranslationController extends Controller
     {
         try {
             $this->persist($request, $quranChapterTranslation);
-            return to_route('admin.quran-chapter-translations.index', [$request->quran_chapter_id])->with('success', 'Chapter translation updated successfully');
+            return to_route('admin.quran-chapter-translations.index', [$request->quran_chapter_id])
+                ->with('success', 'Chapter translation updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('admin.quran-chapter-translations.index', [$request->quran_chapter_id, $request->id])
+            return redirect()->route('admin.quran-chapter-translations.index', [$request->quran_chapter_id, $quranChapterTranslation->id])
                 ->withInput($request->all())
                 ->with('error', $e->getMessage());
         }

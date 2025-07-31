@@ -35,8 +35,10 @@ return [
         ],
     ],
 
-    'razorpay' => [
-        'key'    => env('RAZORPAY_KEY'),
-        'secret' => env('RAZORPAY_SECRET'),
+    'hadith'   => [
+        'books'   => "https://www.hadithapi.com/api/books?apiKey={api_key}",
+        'chapter' => "https://www.hadithapi.com/api/{book_slug}/chapters?apiKey={api_key}",
+        'hadith'  => "https://www.hadithapi.com/api/hadiths/?apiKey={api_key}",
+        'api_key' => env('HADITH_API_KEY'),
     ],
 ];

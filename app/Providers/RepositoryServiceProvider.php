@@ -1,6 +1,18 @@
 <?php
 namespace App\Providers;
 
+use App\Repository\Hadith\HadithBookInterface;
+use App\Repository\Hadith\HadithBookRepository;
+use App\Repository\Hadith\HadithBookTranslationInterface;
+use App\Repository\Hadith\HadithBookTranslationRepository;
+use App\Repository\Hadith\HadithChapterInterface;
+use App\Repository\Hadith\HadithChapterRepository;
+use App\Repository\Hadith\HadithChapterTranslationInterface;
+use App\Repository\Hadith\HadithChapterTranslationRepository;
+use App\Repository\Hadith\HadithVerseInterface;
+use App\Repository\Hadith\HadithVerseRepository;
+use App\Repository\Hadith\HadithVerseTranslationInterface;
+use App\Repository\Hadith\HadithVerseTranslationRepository;
 use App\Repository\Quran\QuranChapterInterface;
 use App\Repository\Quran\QuranChapterRepository;
 use App\Repository\Quran\QuranChapterTranslationInterface;
@@ -32,6 +44,13 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(QuranChapterTranslationInterface::class, QuranChapterTranslationRepository::class);
         $this->app->bind(QuranVerseInterface::class, QuranVerseRepository::class);
         $this->app->bind(QuranVerseTranslationInterface::class, QuranVerseTranslationRepository::class);
+
+        $this->app->bind(HadithBookInterface::class, HadithBookRepository::class);
+        $this->app->bind(HadithBookTranslationInterface::class, HadithBookTranslationRepository::class);
+        $this->app->bind(HadithChapterInterface::class, HadithChapterRepository::class);
+        $this->app->bind(HadithChapterTranslationInterface::class, HadithChapterTranslationRepository::class);
+        $this->app->bind(HadithVerseInterface::class, HadithVerseRepository::class);
+        $this->app->bind(HadithVerseTranslationInterface::class, HadithVerseTranslationRepository::class);
     }
 
     /**

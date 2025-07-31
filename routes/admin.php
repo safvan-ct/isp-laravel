@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HadithBookController;
+use App\Http\Controllers\Admin\HadithBookTranslationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\QuranChapterController;
 use App\Http\Controllers\Admin\QuranChapterTranslationController;
@@ -39,6 +41,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::patch('quran-verse-translations/{id}/status', [QuranVerseTranslationController::class, 'status'])->name('quran-verse-translations.status');
     Route::put('quran-verse-translations/update/{quran_verse_translation}', [QuranVerseTranslationController::class, 'update'])->name('quran-verse-translations.update');
     // End Quran
+
+    // Hadith
+    Route::get('hadith-books/dataTable', [HadithBookController::class, 'dataTable'])->name('hadith-books.dataTable');
+    Route::patch('hadith-books/status/{id}', [HadithBookController::class, 'status'])->name('hadith-books.status');
+    Route::resource('hadith-books', HadithBookController::class)->only('index', 'update');
+
+    Route::get('hadith-book-translations/dataTable', [HadithBookTranslationController::class, 'dataTable'])->name('hadith-book-translations.dataTable');
+    Route::get('hadith-book-translations/{chapter}/{translation?}', [HadithBookTranslationController::class, 'index'])->name('hadith-book-translations.index');
+    Route::patch('hadith-book-translations/status/{id}', [HadithBookTranslationController::class, 'status'])->name('hadith-book-translations.status');
+    Route::resource('hadith-book-translations', HadithBookTranslationController::class)->only('store', 'update');
+    // End Hadith
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');
     Route::patch('users/{user}/active', [UserController::class, 'active'])->name('users.active');

@@ -1,9 +1,9 @@
 <?php
-namespace App\Http\Requests\Quran;
+namespace App\Http\Requests\Hadith;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ChapterTranslationStoreRequest extends FormRequest
+class HadithBookTranslationStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,10 +21,10 @@ class ChapterTranslationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'             => 'required',
-            'lang'             => 'required|in:' . implode(',', array_diff(array_keys(config('app.languages')), ['ar'])),
-            'translation'      => 'required',
-            'quran_chapter_id' => 'required|exists:quran_chapters,id',
+            'lang'           => 'required|in:' . implode(',', array_keys(config('app.languages'))),
+            'name'           => 'required',
+            'writer'         => 'required',
+            'hadith_book_id' => 'required|exists:hadith_books,id',
         ];
     }
 }

@@ -26,12 +26,6 @@ class RolePermissionSeeder extends Seeder
         $roles = ['Developer', 'Owner', 'Admin', 'Customer'];
         foreach ($roles as $role) {
             $role = Role::create(['name' => $role]);
-
-            if ($role->name == 'Admin') {
-                $remove      = ['delete role', 'delete permission', 'delete settings'];
-                $permissions = array_values(array_diff($permissions, $remove));
-                $role->givePermissionTo($permissions);
-            }
         }
     }
 }
