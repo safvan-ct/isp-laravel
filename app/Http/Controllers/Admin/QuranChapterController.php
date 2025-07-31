@@ -18,11 +18,8 @@ class QuranChapterController extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware(PermissionMiddleware::using('view quran-chapter'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('store product'), only: ['store', 'create']),
-            new Middleware(PermissionMiddleware::using('update product'), only: ['edit', 'update', 'active']),
-            new Middleware(PermissionMiddleware::using('approve product'), only: ['approve']),
-            new Middleware(PermissionMiddleware::using('delete product'), only: ['destroy']),
+            new Middleware(PermissionMiddleware::using('view quran-chapters'), only: ['index', 'dataTable']),
+            new Middleware(PermissionMiddleware::using('update quran-chapters'), only: ['update', 'status']),
         ];
     }
 

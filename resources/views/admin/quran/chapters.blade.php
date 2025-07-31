@@ -72,7 +72,7 @@
                         searchable: false,
                         render: function(data, type, row, meta) {
                             const url =
-                                "{{ route('admin.quran-chapter-translation.index', [':id']) }}"
+                                "{{ route('admin.quran-chapter-translations.index', [':id']) }}"
                                 .replace(':id', row.id);
                             return `<a href="${url}" class="btn btn-link">Translations</a>|
                                 <button onclick="createUpdate(${row.id})" class="btn btn-link" id="editBtn${row.id}" data-name="${row.name}">Edit</button>`;

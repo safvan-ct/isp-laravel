@@ -31,12 +31,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::patch('quran-chapters/status/{id}', [QuranChapterController::class, 'status'])->name('quran-chapters.status');
     Route::resource('quran-chapters', QuranChapterController::class)->only('index', 'update');
 
-    Route::prefix('quran-chapter-translation')->name('quran-chapter-translation.')->group(function () {
-        Route::get('result', [QuranChapterTranslationController::class, 'result'])->name('result');
-        Route::get('{chapter}/{translation?}', [QuranChapterTranslationController::class, 'index'])->name('index');
-        Route::post('store', [QuranChapterTranslationController::class, 'store'])->name('store');
-        Route::post('status/{id}', [QuranChapterTranslationController::class, 'status'])->name('status');
-    });
+    Route::get('quran-chapter-translations/dataTable', [QuranChapterTranslationController::class, 'dataTable'])->name('quran-chapter-translations.dataTable');
+    Route::get('quran-chapter-translations/{chapter}/{translation?}', [QuranChapterTranslationController::class, 'index'])->name('quran-chapter-translations.index');
+    Route::patch('quran-chapter-translations/status/{id}', [QuranChapterTranslationController::class, 'status'])->name('quran-chapter-translations.status');
+    Route::resource('quran-chapter-translations', QuranChapterTranslationController::class)->only('store', 'update');
 
     Route::prefix('quran-verse')->name('quran-verse.')->group(function () {
         Route::get('result', [QuranVerseController::class, 'result'])->name('result');
