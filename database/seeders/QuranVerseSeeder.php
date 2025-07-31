@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Normalizer;
 
 class QuranVerseSeeder extends Seeder
 {
@@ -35,11 +36,22 @@ class QuranVerseSeeder extends Seeder
                 foreach ($ayahs as $i => $ayah) {
                     $verseId = $ayah['number'];
 
+                    $cleanedText = $ayah['text'];
+                    if ($surah['number'] > 1 && $ayah['numberInSurah'] == 1) {
+                        $bismillahOriginal   = 'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ';
+                        $normalizedAyah      = preg_replace('/[\p{Mn}]/u', '', Normalizer::normalize($ayah['text'], Normalizer::FORM_D));
+                        $normalizedBismillah = preg_replace('/[\p{Mn}]/u', '', Normalizer::normalize($bismillahOriginal, Normalizer::FORM_D));
+
+                        if (mb_substr($normalizedAyah, 0, mb_strlen($normalizedBismillah)) === $normalizedBismillah) {
+                            $cleanedText = trim(mb_substr($ayah['text'], mb_strlen($bismillahOriginal)));
+                        }
+                    }
+
                     $verses[] = [
                         'id'                => $verseId,
                         'quran_chapter_id'  => $surah['number'],
                         'number_in_chapter' => $ayah['numberInSurah'],
-                        'text'              => $ayah['text'],
+                        'text'              => $cleanedText,
                         'juz'               => $ayah['juz'],
                         'manzil'            => $ayah['manzil'],
                         'ruku'              => $ayah['ruku'],
@@ -92,32 +104,29 @@ class QuranVerseSeeder extends Seeder
                         'updated_at'        => $now,
                     ];
 
-                    if (count($verses) === 500) {
+                    if (count($verses) === 200) {
                         DB::transaction(function () use ($verses, $translations) {
-                            collect($verses)->chunk(500)->each(function ($chunk) {
-                                QuranVerse::insert($chunk->toArray());
-                            });
+                            QuranVerse::insert($verses);
 
-                            collect($translations)->chunk(500)->each(function ($chunk) {
+                            collect($translations)->chunk(200)->each(function ($chunk) {
                                 QuranVerseTranslation::insert($chunk->toArray());
                             });
                         });
 
                         $verses       = [];
                         $translations = [];
+                        gc_collect_cycles();
                     }
                 }
             }
 
-            DB::transaction(function () use ($verses, $translations) {
-                collect($verses)->chunk(500)->each(function ($chunk) {
-                    QuranVerse::insert($chunk->toArray());
+            if (! empty($verses)) {
+                DB::transaction(function () use ($verses, $translations) {
+                    QuranVerse::insert($verses);
+                    QuranVerseTranslation::insert($translations);
+                    gc_collect_cycles();
                 });
-
-                collect($translations)->chunk(500)->each(function ($chunk) {
-                    QuranVerseTranslation::insert($chunk->toArray());
-                });
-            });
+            }
         } catch (\Exception $e) {
             $this->command->error('Failed to fetch Quran verses: ' . $e->getMessage());
             return;
