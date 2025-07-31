@@ -1,6 +1,6 @@
 <div class="modal fade createUpdate" id="{{ $id }}" tabindex="-1" aria-labelledby="{{ $id }}Label"
     aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog {{ $size }}">
         <div class="modal-content">
             @if (!empty($title))
                 <div class="modal-header">

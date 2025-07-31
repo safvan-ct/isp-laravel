@@ -83,8 +83,8 @@
                     @hasanyrole('Developer|Owner|Admin|Quran admin|Quran staff')
                         <li
                             class="pc-item pc-hasmenu {{ Str::is('admin.quran-chapters.*', $route) ||
-                            Str::is('admin.quran-chapter-translation.*', $route) ||
-                            Str::is('admin.quran-verse.*', $route)
+                            Str::is('admin.quran-chapter-translations.*', $route) ||
+                            Str::is('admin.quran-verses.*', $route)
                                 ? 'active pc-trigger'
                                 : '' }}">
                             <a href="javascript:void(0)" class="pc-link">
@@ -94,14 +94,14 @@
                             </a>
                             <ul class="pc-submenu">
                                 <li
-                                    class="pc-item {{ Str::is('admin.quran-chapter.*', $route) || Str::is('admin.quran-chapter-translation.*', $route)
+                                    class="pc-item {{ Str::is('admin.quran-chapters.*', $route) || Str::is('admin.quran-chapter-translations.*', $route)
                                         ? 'active'
                                         : '' }}">
                                     <a class="pc-link" href="{{ route('admin.quran-chapters.index') }}">Chapters</a>
                                 </li>
 
-                                <li class="pc-item {{ Str::is('admin.quran-verse.*', $route) ? 'active' : '' }}">
-                                    <a class="pc-link" href="{{ route('admin.quran-verse.index', 0) }}">Verses</a>
+                                <li class="pc-item {{ Str::is('admin.quran-verses.*', $route) ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.quran-verses.index') }}">Verses</a>
                                 </li>
                             </ul>
                         </li>

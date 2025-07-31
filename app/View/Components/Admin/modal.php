@@ -9,11 +9,13 @@ class modal extends Component
 {
     public $id;
     public $title;
+    public $size;
 
-    public function __construct($id = 'modal', $title = 'Create')
+    public function __construct($id = 'modal', $title = 'Create', $size = '')
     {
         $this->id    = $id;
         $this->title = $title;
+        $this->size  = $size;
     }
 
     public function render(): View | Closure | string

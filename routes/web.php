@@ -36,17 +36,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::patch('quran-chapter-translations/status/{id}', [QuranChapterTranslationController::class, 'status'])->name('quran-chapter-translations.status');
     Route::resource('quran-chapter-translations', QuranChapterTranslationController::class)->only('store', 'update');
 
-    Route::prefix('quran-verse')->name('quran-verse.')->group(function () {
-        Route::get('result', [QuranVerseController::class, 'result'])->name('result');
-        Route::get('{chapter}', [QuranVerseController::class, 'index'])->name('index');
-        Route::get('fetch/{chapter}/{lang}', [QuranVerseController::class, 'fetch'])->name('fetch');
-        Route::post('store', [QuranVerseController::class, 'store'])->name('store');
-        Route::post('status/{id}', [QuranVerseController::class, 'status'])->name('status');
-    });
-    Route::prefix('quran-verse-translation')->name('quran-verse-translation.')->group(function () {
-        Route::post('store', [QuranVerseTranslationController::class, 'store'])->name('store');
-        Route::post('status/{id}', [QuranVerseTranslationController::class, 'status'])->name('status');
-    });
+    Route::get('quran-verses/dataTable', [QuranVerseController::class, 'dataTable'])->name('quran-verses.dataTable');
+    Route::patch('quran-verses/status/{id}', [QuranVerseController::class, 'status'])->name('quran-verses.status');
+    Route::resource('quran-verses', QuranVerseController::class)->only('index', 'update');
+
+    Route::patch('quran-verse-translations/{id}/status', [QuranVerseTranslationController::class, 'status'])->name('quran-verse-translations.status');
+    Route::put('quran-verse-translations/update/{quran_verse_translation}', [QuranVerseTranslationController::class, 'update'])->name('quran-verse-translations.update');
     // End Quran
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');
