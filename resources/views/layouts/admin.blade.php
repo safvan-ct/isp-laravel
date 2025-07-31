@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" href="{{ asset('img/logo.svg') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         id="main-font-link" />
     <link rel="stylesheet" href="{{ asset('admin/fonts/phosphor/duotone/style.css') }}" />
@@ -36,6 +36,26 @@
 </head>
 
 <body>
+    @php
+        $menu = isset($menu) ? $menu : null;
+        $route = Route::currentRouteName();
+
+        $ICTR = Str::startsWith($route, ['admin.category.', 'admin.category-translation.']) && $menu === 'islam';
+        $ITR = Str::startsWith($route, ['admin.topic.', 'admin.topic-translation.']) && $menu === 'islam';
+        $ICR = Str::startsWith($route, ['admin.content.', 'admin.content-translation.']) && $menu === 'islam';
+
+        $BCTR = Str::startsWith($route, ['admin.category.', 'admin.category-translation.']) && $menu === 'belief';
+        $BTR = Str::startsWith($route, ['admin.topic.', 'admin.topic-translation.']) && $menu === 'belief';
+        $BCR = Str::startsWith($route, ['admin.content.', 'admin.content-translation.']) && $menu === 'belief';
+
+        $HCTR = Str::startsWith($route, ['admin.category.', 'admin.category-translation.']) && $menu === 'history';
+        $HTR = Str::startsWith($route, ['admin.topic.', 'admin.topic-translation.']) && $menu === 'history';
+
+        $LCTR = Str::startsWith($route, ['admin.category.', 'admin.category-translation.']) && $menu === 'life';
+        $LTR = Str::startsWith($route, ['admin.topic.', 'admin.topic-translation.']) && $menu === 'life';
+        $LCR = Str::startsWith($route, ['admin.content.', 'admin.content-translation.']) && $menu === 'life';
+    @endphp
+
     <div class="loader-bg">
         <div class="loader-track">
             <div class="loader-fill"></div>
@@ -46,8 +66,8 @@
         <div class="navbar-wrapper">
             <div class="m-header d-flex justify-content-center">
                 <a href="{{ route('admin.dashboard') }}" class="b-brand text-primary">
-                    <img src="{{ asset('img/logo.svg') }}" alt="{{ config('app.name') }}" class="logo logo-lg"
-                        width="150" />
+                    <img src="{{ asset('img/logo.png') }}" alt="{{ config('app.name') }}" class="logo logo-lg w-100"
+                        style="height: 75px" />
                 </a>
             </div>
 
@@ -59,6 +79,33 @@
                             <span class="pc-mtext">Dashboard</span>
                         </a>
                     </li>
+
+                    @hasanyrole('Developer|Owner|Admin|Quran admin|Quran staff')
+                        <li
+                            class="pc-item pc-hasmenu {{ Str::is('admin.quran-chapters.*', $route) ||
+                            Str::is('admin.quran-chapter-translation.*', $route) ||
+                            Str::is('admin.quran-verse.*', $route)
+                                ? 'active pc-trigger'
+                                : '' }}">
+                            <a href="javascript:void(0)" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-book"></i></span>
+                                <span class="pc-mtext">Quran</span>
+                                <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                            </a>
+                            <ul class="pc-submenu">
+                                <li
+                                    class="pc-item {{ Str::is('admin.quran-chapter.*', $route) || Str::is('admin.quran-chapter-translation.*', $route)
+                                        ? 'active'
+                                        : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.quran-chapters.index') }}">Chapters</a>
+                                </li>
+
+                                <li class="pc-item {{ Str::is('admin.quran-verse.*', $route) ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.quran-verse.index', 0) }}">Verses</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endhasanyrole
 
                     @can('view users')
                         <li class="pc-item {{ Route::currentRouteName() == 'admin.users.index' ? 'active' : '' }}"
@@ -237,8 +284,8 @@
 
     <script>
         window.logoPaths = {
-            dark: "{{ asset('img/logo.svg') }}",
-            light: "{{ asset('img/logo.svg') }}"
+            dark: "{{ asset('img/logo.png') }}",
+            light: "{{ asset('img/logo.png') }}"
         };
 
         preset_change('preset-1');

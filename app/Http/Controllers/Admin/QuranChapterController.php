@@ -1,0 +1,61 @@
+<?php
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\QuranChapter;
+use App\Repository\Quran\QuranChapterInterface;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Yajra\DataTables\Facades\DataTables;
+
+class QuranChapterController extends Controller
+{
+    public function __construct(
+        protected QuranChapterInterface $QuranChapterRepository,
+    ) {}
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view quran-chapter'), only: ['index', 'dataTable']),
+            new Middleware(PermissionMiddleware::using('store product'), only: ['store', 'create']),
+            new Middleware(PermissionMiddleware::using('update product'), only: ['edit', 'update', 'active']),
+            new Middleware(PermissionMiddleware::using('approve product'), only: ['approve']),
+            new Middleware(PermissionMiddleware::using('delete product'), only: ['destroy']),
+        ];
+    }
+
+    public function index()
+    {
+        return view('admin.quran.chapters');
+    }
+
+    public function update(Request $request, QuranChapter $quranChapter)
+    {
+        $request->validate(['name' => 'required|string|max:255']);
+
+        try {
+            $this->QuranChapterRepository->update($request->only(['name']), $quranChapter);
+            return response()->json(['message' => 'Chpter updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function dataTable()
+    {
+        $results = $this->QuranChapterRepository->dataTable();
+        return DataTables::of($results)->make(true);
+    }
+
+    public function status(string $id)
+    {
+        try {
+            $this->QuranChapterRepository->status($id);
+            return response()->json(['message' => 'Chpter status updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+}

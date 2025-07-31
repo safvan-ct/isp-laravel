@@ -9,7 +9,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" href="{{ asset('img/logo.svg') }}" type="image/x-icon" />
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}" id="main-style-link" />
     <link rel="stylesheet" href="{{ asset('admin/css/style-preset.css') }}" />
 </head>
@@ -27,7 +27,7 @@
                 <div class="card mt-5">
                     <div class="card-body">
                         <a href="#" class="d-flex justify-content-center mt-3">
-                            <img src="{{ asset('img/logo.svg') }}" alt="image" class="img-fluid brand-logo" />
+                            <img src="{{ asset('img/logo.png') }}" alt="image" class="img-fluid brand-logo" />
                         </a>
 
                         @yield('content')

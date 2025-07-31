@@ -7,7 +7,7 @@ function uploadFile($file, $path)
     Storage::disk('public')->put($path, file_get_contents($file));
 }
 
-function getFile($path, $dummy = 'img/logo.svg')
+function getFile($path, $dummy = 'img/logo.png')
 {
     return Storage::disk('public')->exists($path) ? Storage::disk('public')->url($path) : asset($dummy);
 }
