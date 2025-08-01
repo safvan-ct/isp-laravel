@@ -21,9 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('web', SetLocale::class);
         $middleware->alias([
-            'role'               => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'permission'         => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'role'                   => \Spatie\Permission\Middleware\RoleMiddleware::class,
+            'permission'             => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+            'role_or_permission'     => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'redirect.authenticated' => \App\Http\Middleware\RedirectIfAuthenticatedToDashboard::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
