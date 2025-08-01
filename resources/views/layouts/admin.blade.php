@@ -113,7 +113,8 @@
                             Str::is('admin.hadith-book-translations.*', $route) ||
                             Str::is('admin.hadith-chapters.*', $route) ||
                             Str::is('admin.hadith-chapter-translations.*', $route) ||
-                            Str::is('admin.quran-verses.*', $route)
+                            Str::is('admin.hadith-verses.*', $route) ||
+                            Str::is('admin.hadith-verse-translations.*', $route)
                                 ? 'active pc-trigger'
                                 : '' }}">
                             <a href="javascript:void(0)" class="pc-link">
@@ -136,8 +137,11 @@
                                     <a class="pc-link" href="{{ route('admin.hadith-chapters.index') }}">Chapters</a>
                                 </li>
 
-                                <li class="pc-item {{ Str::is('admin.quran-verses.*', $route) ? 'active' : '' }}">
-                                    <a class="pc-link" href="{{ route('admin.quran-verses.index') }}">Verses</a>
+                                <li
+                                    class="pc-item {{ Str::is('admin.hadith-verses.*', $route) || Str::is('admin.hadith-verse-translations.*', $route)
+                                        ? 'active'
+                                        : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.hadith-verses.index') }}">Verses</a>
                                 </li>
                             </ul>
                         </li>

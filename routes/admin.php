@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\HadithBookController;
 use App\Http\Controllers\Admin\HadithBookTranslationController;
 use App\Http\Controllers\Admin\HadithChapterController;
 use App\Http\Controllers\Admin\HadithChapterTranslationController;
+use App\Http\Controllers\Admin\HadithVerseController;
+use App\Http\Controllers\Admin\HadithVerseTranslationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\QuranChapterController;
 use App\Http\Controllers\Admin\QuranChapterTranslationController;
@@ -62,6 +64,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('hadith-chapter-translations/{chapter}/{translation?}', [HadithChapterTranslationController::class, 'index'])->name('hadith-chapter-translations.index');
     Route::patch('hadith-chapter-translations/status/{id}', [HadithChapterTranslationController::class, 'status'])->name('hadith-chapter-translations.status');
     Route::resource('hadith-chapter-translations', HadithChapterTranslationController::class)->only('store', 'update');
+
+    Route::get('hadith-verses/dataTable', [HadithVerseController::class, 'dataTable'])->name('hadith-verses.dataTable');
+    Route::get('hadith-verses/chapter/{book}', [HadithVerseController::class, 'chapter'])->name('hadith-verses.chapter');
+    Route::patch('hadith-verses/status/{id}', [HadithVerseController::class, 'status'])->name('hadith-verses.status');
+    Route::resource('hadith-verses', HadithVerseController::class)->only('index', 'update');
+
+    Route::get('hadith-verse-translations/dataTable', [HadithVerseTranslationController::class, 'dataTable'])->name('hadith-verse-translations.dataTable');
+    Route::get('hadith-verse-translations/{chapter}/{translation?}', [HadithVerseTranslationController::class, 'index'])->name('hadith-verse-translations.index');
+    Route::patch('hadith-verse-translations/status/{id}', [HadithVerseTranslationController::class, 'status'])->name('hadith-verse-translations.status');
+    Route::resource('hadith-verse-translations', HadithVerseTranslationController::class)->only('store', 'update');
     // End Hadith
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');
