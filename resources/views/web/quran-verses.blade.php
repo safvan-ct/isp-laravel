@@ -1,5 +1,7 @@
 @extends('layouts.web')
 
+@section('title', 'ഖുർആൻ പഠനം | ' . ($chapter->translation?->name ?: $chapter->name))
+
 @section('content')
     <main class="container my-3">
         <div class="index-card">
@@ -7,7 +9,6 @@
                 <div class="chapter-name">
                     {{ optional($chapter->translation)->name ? $chapter->translation->name . ' | ' : '' }}{{ $chapter->name }}
                 </div>
-
 
                 <div>
                     Chapter: <strong class="ar-number">{{ $chapter->id }}</strong> |

@@ -1,5 +1,7 @@
 @extends('layouts.web')
 
+@section('title', 'ഹദീസ് | ' . ($book->translation?->name ?: $book->name))
+
 @section('content')
     <main class="container my-3">
         <div class="index-card">

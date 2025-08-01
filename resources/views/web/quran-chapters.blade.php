@@ -1,5 +1,7 @@
 @extends('layouts.web')
 
+@section('title', 'ഖുർആൻ പഠനം')
+
 @section('content')
     <main class="container my-3">
         <div class="index-card">

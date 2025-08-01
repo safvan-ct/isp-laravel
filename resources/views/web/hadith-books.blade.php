@@ -1,5 +1,7 @@
 @extends('layouts.web')
 
+@section('title', 'ഹദീസ് ബുക്ക്സ്')
+
 @section('content')
     <main class="container my-3">
         <div class="row g-4">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ഇസ്ലാമിക് സ്റ്റഡി പോർട്ടൽ</title>
+    <title>@yield('title', 'ഇസ്ലാമിക് സ്റ്റഡി പോർട്ടൽ')</title>
 
     <!-- Favicon for most browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">

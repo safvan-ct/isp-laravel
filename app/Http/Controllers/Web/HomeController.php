@@ -65,7 +65,7 @@ class HomeController extends Controller
             abort(404);
         }
 
-        return view('web.quran-chapter', compact('chapter'));
+        return view('web.quran-verses', compact('chapter'));
     }
 
     public function hadith()
@@ -190,6 +190,5 @@ class HomeController extends Controller
         }
 
         return view('web.hadith-verses', compact('chapter', 'verseNumber'));
-        dd($hadithVerse, $bookId);
     }
 }

@@ -1,5 +1,8 @@
 @extends('layouts.web')
 
+@section('title', ($chapter->book->translation?->name ?: $chapter->book->name) . ' | ' . ($chapter->translation?->name
+    ?: $chapter->name))
+
 @section('content')
     <main class="container my-3">
         <div class="index-card">
