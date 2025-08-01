@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="hadith.html" class="btn btn-primary">കാണുക</a>
+                        <a href="{{ route('hadith.index') }}" class="btn btn-primary">കാണുക</a>
                     </div>
                 </div>
             </div>

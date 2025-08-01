@@ -7,16 +7,16 @@
     <title>ഇസ്ലാമിക് സ്റ്റഡി പോർട്ടൽ</title>
 
     <!-- Favicon for most browsers -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16x16.png">
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico" type="image/x-icon') }}">
 
     <!-- Android Chrome -->
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/android-chrome-512x512.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('img/android-chrome-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('img/android-chrome-512x512.png') }}">
 
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam&display=swap" rel="stylesheet">
@@ -59,8 +59,11 @@
                         <a class="nav-link {{ Str::is('quran.*', Route::currentRouteName()) ? 'active' : '' }}"
                             href="{{ route('quran.index') }}">QURAN</a>
                     </li>
-                    {{-- <li class="nav-item"><a class="nav-link" href="hadith.html">HADITH</a></li>
-                    <li class="nav-item"><a class="nav-link" href="life.html">LIFE OF MUSLIM</a></li> --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }}"
+                            href="{{ route('hadith.index') }}">HADITH</a>
+                    </li>
+                    {{-- <li class="nav-item"><a class="nav-link" href="life.html">LIFE OF MUSLIM</a></li> --}}
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase" href="#" id="languageDropdown"
@@ -89,9 +92,11 @@
 
     <footer class="notranslate">
         © {{ date('Y') }} Islamic Life | All Rights Reserved |
+
         <a href="https://www.instagram.com/islamicstudyportal/" target="_blank" class="text-white">
             <i class="bi bi-instagram"></i>
         </a> |
+
         <a href="https://www.youtube.com/@islamic_study_portal" target="_blank" class="text-white">
             <i class="bi bi-youtube"></i>
         </a>

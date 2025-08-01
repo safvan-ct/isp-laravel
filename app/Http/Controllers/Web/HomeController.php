@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\HadithBook;
+use App\Models\HadithChapter;
+use App\Models\HadithVerse;
 use App\Models\QuranChapter;
 
 class HomeController extends Controller
@@ -63,5 +66,130 @@ class HomeController extends Controller
         }
 
         return view('web.quran-chapter', compact('chapter'));
+    }
+
+    public function hadith()
+    {
+        $books = HadithBook::select(['id', 'name', 'slug', 'writer', 'writer_death_year', 'chapter_count', 'hadith_count'])
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select(['id', 'hadith_book_id', 'name', 'writer'])
+                    ->active()
+                    ->lang(),
+            ])
+            ->active()
+            ->get();
+
+        return view('web.hadith-books', compact('books'));
+    }
+
+    public function hadithChapters($bookId)
+    {
+        $book = HadithBook::select(['id', 'name', 'writer'])
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select(['id', 'hadith_book_id', 'name', 'writer'])
+                    ->active()
+                    ->lang(),
+
+                'chapters'     => fn($q)     => $q
+                    ->select(['id', 'hadith_book_id', 'chapter_number', 'name'])
+                    ->with(['translations' => fn($q) => $q
+                            ->select(['id', 'hadith_chapter_id', 'name'])
+                            ->active()
+                            ->lang(),
+                    ])
+                    ->active(),
+            ])
+            ->active()
+            ->find($bookId);
+
+        return view('web.hadith-chapters', compact('book'));
+    }
+
+    public function hadithChapterVerses($chapterId)
+    {
+        $chapter = HadithChapter::select(['id', 'hadith_book_id', 'name', 'chapter_number'])
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select(['id', 'hadith_chapter_id', 'name'])
+                    ->active()
+                    ->lang(),
+
+                'verses'       => fn($q)       => $q
+                    ->select(['id', 'hadith_chapter_id', 'heading', 'text', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status'])
+                    ->with(['translations' => fn($q) => $q
+                            ->select(['id', 'hadith_verse_id', 'heading', 'text'])
+                            ->active()
+                            ->lang(),
+                    ])
+                    ->active(),
+
+                'book'         => fn($q)         => $q
+                    ->select(['id', 'name', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count'])
+                    ->with(['translations' => fn($q) => $q
+                            ->select(['id', 'hadith_book_id', 'name', 'writer'])
+                            ->active()
+                            ->lang(),
+                    ])
+                    ->active(),
+            ])
+            ->whereHas('verses', fn($q) => $q->active())
+            ->active()
+            ->find($chapterId);
+
+        if (! $chapter) {
+            abort(404);
+        }
+
+        return view('web.hadith-verses', compact('chapter'));
+    }
+
+    public function hadithVerseByNumber($bookId, $verseNumber)
+    {
+        $hadithVerse = HadithVerse::where('hadith_number', $verseNumber)
+            ->where('hadith_book_id', $bookId)
+            ->first();
+
+        if (! $hadithVerse) {
+            abort(404);
+        }
+
+        $chapter = HadithChapter::select(['id', 'hadith_book_id', 'name', 'chapter_number'])
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select(['id', 'hadith_chapter_id', 'name'])
+                    ->active()
+                    ->lang(),
+
+                'verses'       => fn($q)       => $q
+                    ->select(['id', 'hadith_chapter_id', 'heading', 'text', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status'])
+                    ->with(['translations' => fn($q) => $q
+                            ->select(['id', 'hadith_verse_id', 'heading', 'text'])
+                            ->active()
+                            ->lang(),
+                    ])
+                    ->where('hadith_number', $hadithVerse->hadith_number)
+                    ->active(),
+
+                'book'         => fn($q)         => $q
+                    ->select(['id', 'name', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count'])
+                    ->with(['translations' => fn($q) => $q
+                            ->select(['id', 'hadith_book_id', 'name', 'writer'])
+                            ->active()
+                            ->lang(),
+                    ])
+                    ->active(),
+            ])
+            ->whereHas('verses', fn($q) => $q->active()->where('hadith_number', $hadithVerse->hadith_number))
+            ->active()
+            ->find($hadithVerse->hadith_chapter_id);
+
+        if (! $chapter) {
+            abort(404);
+        }
+
+        return view('web.hadith-verses', compact('chapter', 'verseNumber'));
+        dd($hadithVerse, $bookId);
     }
 }
