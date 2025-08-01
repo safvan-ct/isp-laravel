@@ -157,7 +157,7 @@
                         </li>
                     @endcan
 
-                    @if (auth()->user()->hasRole('Developer') || auth()->user()->hasAnyPermission('view staffs', 'view roles'))
+                    @if (auth()->user()->hasRole('Developer') || auth()->user()->hasAnyPermission('view staffs', 'view roles', 'view activity-logs'))
                         <li
                             class="pc-item pc-hasmenu
                         {{ Str::is('permissions.*', Route::currentRouteName()) ||
@@ -192,6 +192,13 @@
                                     </li>
                                 @endrole
                             </ul>
+                        </li>
+
+                        <li class="pc-item {{ Str::is('admin.activity-log', $route) ? 'active' : '' }}">
+                            <a href="{{ route('admin.activity-log') }}" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-activity"></i></span>
+                                <span class="pc-mtext">Activity Logs</span>
+                            </a>
                         </li>
                     @endif
 
