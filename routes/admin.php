@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HadithBookController;
 use App\Http\Controllers\Admin\HadithBookTranslationController;
+use App\Http\Controllers\Admin\HadithChapterController;
+use App\Http\Controllers\Admin\HadithChapterTranslationController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\QuranChapterController;
 use App\Http\Controllers\Admin\QuranChapterTranslationController;
@@ -51,6 +53,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('hadith-book-translations/{chapter}/{translation?}', [HadithBookTranslationController::class, 'index'])->name('hadith-book-translations.index');
     Route::patch('hadith-book-translations/status/{id}', [HadithBookTranslationController::class, 'status'])->name('hadith-book-translations.status');
     Route::resource('hadith-book-translations', HadithBookTranslationController::class)->only('store', 'update');
+
+    Route::get('hadith-chapters/dataTable', [HadithChapterController::class, 'dataTable'])->name('hadith-chapters.dataTable');
+    Route::patch('hadith-chapters/status/{id}', [HadithChapterController::class, 'status'])->name('hadith-chapters.status');
+    Route::resource('hadith-chapters', HadithChapterController::class)->only('index', 'update');
+
+    Route::get('hadith-chapter-translations/dataTable', [HadithChapterTranslationController::class, 'dataTable'])->name('hadith-chapter-translations.dataTable');
+    Route::get('hadith-chapter-translations/{chapter}/{translation?}', [HadithChapterTranslationController::class, 'index'])->name('hadith-chapter-translations.index');
+    Route::patch('hadith-chapter-translations/status/{id}', [HadithChapterTranslationController::class, 'status'])->name('hadith-chapter-translations.status');
+    Route::resource('hadith-chapter-translations', HadithChapterTranslationController::class)->only('store', 'update');
     // End Hadith
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');

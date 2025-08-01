@@ -111,8 +111,8 @@
                         <li
                             class="pc-item pc-hasmenu {{ Str::is('admin.hadith-books.*', $route) ||
                             Str::is('admin.hadith-book-translations.*', $route) ||
-                            Str::is('admin.quran-chapters.*', $route) ||
-                            Str::is('admin.quran-chapter-translations.*', $route) ||
+                            Str::is('admin.hadith-chapters.*', $route) ||
+                            Str::is('admin.hadith-chapter-translations.*', $route) ||
                             Str::is('admin.quran-verses.*', $route)
                                 ? 'active pc-trigger'
                                 : '' }}">
@@ -130,10 +130,10 @@
                                 </li>
 
                                 <li
-                                    class="pc-item {{ Str::is('admin.quran-chapters.*', $route) || Str::is('admin.quran-chapter-translations.*', $route)
+                                    class="pc-item {{ Str::is('admin.hadith-chapters.*', $route) || Str::is('admin.hadith-chapter-translations.*', $route)
                                         ? 'active'
                                         : '' }}">
-                                    <a class="pc-link" href="{{ route('admin.quran-chapters.index') }}">Chapters</a>
+                                    <a class="pc-link" href="{{ route('admin.hadith-chapters.index') }}">Chapters</a>
                                 </li>
 
                                 <li class="pc-item {{ Str::is('admin.quran-verses.*', $route) ? 'active' : '' }}">
