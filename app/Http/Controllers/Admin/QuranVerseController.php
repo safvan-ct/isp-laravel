@@ -23,7 +23,8 @@ class QuranVerseController extends Controller
     {
         return [
             new Middleware(PermissionMiddleware::using('view quran-verses'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('update quran-verses'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('update quran-verse'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active quran-verse'), only: ['status']),
         ];
     }
 

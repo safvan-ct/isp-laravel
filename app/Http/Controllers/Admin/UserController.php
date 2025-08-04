@@ -22,7 +22,8 @@ class UserController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('view users'), only: ['index', 'dataTable']),
             new Middleware(PermissionMiddleware::using('store user'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('update user'), only: ['update', 'active']),
+            new Middleware(PermissionMiddleware::using('update user'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active user'), only: ['status']),
             new Middleware(PermissionMiddleware::using('delete user'), only: ['destroy']),
         ];
     }
@@ -63,7 +64,7 @@ class UserController extends Controller implements HasMiddleware
         return response()->json(['message' => 'User deleted successfully']);
     }
 
-    public function active(User $user)
+    public function status(User $user)
     {
         try {
             $this->userRepository->toggleActive($user);

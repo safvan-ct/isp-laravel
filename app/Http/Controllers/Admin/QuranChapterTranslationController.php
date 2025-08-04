@@ -23,8 +23,9 @@ class QuranChapterTranslationController extends Controller
     {
         return [
             new Middleware(PermissionMiddleware::using('view quran-chapter-translations'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('store quran-chapter-translations'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('update quran-chapter-translations'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('store quran-chapter-translation'), only: ['store']),
+            new Middleware(PermissionMiddleware::using('update quran-chapter-translation'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active quran-chapter-translation'), only: ['status']),
         ];
     }
 

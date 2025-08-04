@@ -19,7 +19,8 @@ class QuranChapterController extends Controller
     {
         return [
             new Middleware(PermissionMiddleware::using('view quran-chapters'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('update quran-chapters'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('update quran-chapter'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active quran-chapter'), only: ['status']),
         ];
     }
 

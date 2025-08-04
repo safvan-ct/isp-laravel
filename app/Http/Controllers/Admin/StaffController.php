@@ -23,7 +23,8 @@ class StaffController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('view staffs'), only: ['index', 'dataTable']),
             new Middleware(PermissionMiddleware::using('store staff'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('update staff'), only: ['update', 'active']),
+            new Middleware(PermissionMiddleware::using('update staff'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active staff'), only: ['status']),
             new Middleware(PermissionMiddleware::using('delete staff'), only: ['destroy']),
         ];
     }
@@ -66,7 +67,7 @@ class StaffController extends Controller implements HasMiddleware
         return DataTables::of($this->userRepository->dataTable($roles, ['roles']))->make(true);
     }
 
-    public function active(User $staff)
+    public function status(User $staff)
     {
         try {
             $this->userRepository->toggleActive($staff);

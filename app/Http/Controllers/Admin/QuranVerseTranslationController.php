@@ -17,7 +17,8 @@ class QuranVerseTranslationController extends Controller
     public static function middleware(): array
     {
         return [
-            new Middleware(PermissionMiddleware::using('update quran-verse-translations'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('update quran-verse-translation'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active quran-verse-translation'), only: ['status']),
         ];
     }
 

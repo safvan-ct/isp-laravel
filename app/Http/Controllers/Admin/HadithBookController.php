@@ -18,7 +18,8 @@ class HadithBookController extends Controller
     {
         return [
             new Middleware(PermissionMiddleware::using('view hadith-books'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('update hadith-books'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('update hadith-book'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active hadith-book'), only: ['status']),
         ];
     }
 

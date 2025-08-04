@@ -22,7 +22,8 @@ class SettingsController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('view settings'), only: ['index', 'dataTable']),
             new Middleware(PermissionMiddleware::using('store settings'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('update settings'), only: ['update', 'active']),
+            new Middleware(PermissionMiddleware::using('update settings'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active settings'), only: ['status']),
             new Middleware(PermissionMiddleware::using('delete settings'), only: ['destroy']),
         ];
     }

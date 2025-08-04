@@ -23,8 +23,9 @@ class HadithChapterTranslationController extends Controller
     {
         return [
             new Middleware(PermissionMiddleware::using('view hadith-chapter-translations'), only: ['index', 'dataTable']),
-            new Middleware(PermissionMiddleware::using('store hadith-chapter-translations'), only: ['store']),
-            new Middleware(PermissionMiddleware::using('update hadith-chapter-translations'), only: ['update', 'status']),
+            new Middleware(PermissionMiddleware::using('store hadith-chapter-translation'), only: ['store']),
+            new Middleware(PermissionMiddleware::using('update hadith-chapter-translation'), only: ['update']),
+            new Middleware(PermissionMiddleware::using('active hadith-chapter-translation'), only: ['status']),
         ];
     }
 
