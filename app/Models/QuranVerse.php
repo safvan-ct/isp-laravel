@@ -41,4 +41,9 @@ class QuranVerse extends Model
     {
         return $this->belongsTo(QuranChapter::class, 'quran_chapter_id');
     }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class, 'topic_quran_verse');
+    }
 }

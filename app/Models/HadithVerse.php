@@ -46,4 +46,9 @@ class HadithVerse extends Model
     {
         return $this->belongsTo(HadithBook::class, 'hadith_book_id');
     }
+
+    public function topics()
+    {
+        return $this->belongsToMany(Topic::class, 'topic_hadith');
+    }
 }

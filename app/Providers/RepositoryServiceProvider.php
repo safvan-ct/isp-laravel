@@ -25,6 +25,8 @@ use App\Repository\Role\RoleInterface;
 use App\Repository\Role\RoleRepository;
 use App\Repository\Settings\SettingsInterface;
 use App\Repository\Settings\SettingsRepository;
+use App\Repository\Topic\TopicInterface;
+use App\Repository\Topic\TopicRepository;
 use App\Repository\User\UserInterface;
 use App\Repository\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -51,6 +53,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(HadithChapterTranslationInterface::class, HadithChapterTranslationRepository::class);
         $this->app->bind(HadithVerseInterface::class, HadithVerseRepository::class);
         $this->app->bind(HadithVerseTranslationInterface::class, HadithVerseTranslationRepository::class);
+
+        $this->app->bind(TopicInterface::class, TopicRepository::class);
     }
 
     /**

@@ -8,7 +8,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody id="sortableBody">
             {{ $slot }}
         </tbody>
     </table>

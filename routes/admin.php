@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\QuranVerseTranslationController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\TopicController;
+use App\Http\Controllers\Admin\TopicTranslationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +77,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::patch('hadith-verse-translations/status/{id}', [HadithVerseTranslationController::class, 'status'])->name('hadith-verse-translations.status');
     Route::resource('hadith-verse-translations', HadithVerseTranslationController::class)->only('store', 'update');
     // End Hadith
+
+    // Topic
+    Route::get('topics/dataTable', [TopicController::class, 'dataTable'])->name('topics.dataTable');
+    Route::get('topics/{type}', [TopicController::class, 'index'])->name('topics.index');
+    Route::patch('topics/status/{topic}', [TopicController::class, 'status'])->name('topics.status');
+    Route::post('topics/sort', [TopicController::class, 'sort'])->name('topics.sort');
+    Route::post('topics/{type}/store', [TopicController::class, 'store'])->name('topics.store');
+    Route::put('topics/{type}/update/{topic}', [TopicController::class, 'update'])->name('topics.update');
+
+    Route::get('topic-translations/dataTable', [TopicTranslationController::class, 'dataTable'])->name('topic-translations.dataTable');
+    Route::get('topic/{type}/translations/{id}/{translation?}', [TopicTranslationController::class, 'index'])->name('topic-translations.index');
+    Route::patch('topic-translations/status/{id}', [TopicTranslationController::class, 'status'])->name('topic-translations.status');
+    Route::resource('topic-translations', TopicTranslationController::class)->only('store', 'update');
+    // End Topic
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');
     Route::patch('users/{user}/active', [UserController::class, 'active'])->name('users.active');

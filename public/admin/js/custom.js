@@ -32,9 +32,18 @@ function storeData(data, url, method, table = "dataTable") {
             }
         },
         error: function (xhr, status, error) {
-            toastr.error(
-                xhr.responseJSON?.message || "Server error. Please try again."
-            );
+            let allMessages = [
+                xhr.responseJSON?.message || "Server error. Please try again.",
+            ];
+
+            if (xhr.responseJSON?.errors) {
+                Object.values(xhr.responseJSON.errors).forEach((messages) => {
+                    messages.forEach((msg) => allMessages.push(msg));
+                });
+            }
+            errorMessage = allMessages.join("<br>");
+
+            toastr.error(errorMessage);
         },
         complete: function () {
             hideLoader();
@@ -96,6 +105,58 @@ function updateStatus(url, token, table = "dataTable") {
             toastr.error(
                 xhr.responseJSON?.message || "Server error. Please try again."
             );
+        },
+        complete: function () {
+            hideLoader();
+        },
+    });
+}
+
+// Sort Data
+function makeSortable() {
+    $("#sortableBody")
+        .sortable({
+            helper: fixHelper,
+            cursor: "move",
+        })
+        .disableSelection();
+}
+
+const fixHelper = (e, ui) => {
+    ui.children().each(function () {
+        $(this).width($(this).width());
+    });
+    return ui;
+};
+
+function sortData(url, token) {
+    toastr.clear();
+    showLoader();
+
+    const order = [];
+    $("#sortableBody tr").each(function (index, element) {
+        const id = $(element).attr("id");
+        if (id) {
+            order.push({
+                id: id.replace("row_", ""),
+                position: index + 1,
+            });
+        }
+    });
+
+    $.ajax({
+        url: url,
+        method: "POST",
+        data: {
+            _token: token,
+            order: order,
+        },
+        success: function (res) {
+            toastr.success(res.message);
+            $("#dataTable").DataTable().ajax.reload(null, false);
+        },
+        error: function () {
+            toastr.error("Failed to update order.");
         },
         complete: function () {
             hideLoader();

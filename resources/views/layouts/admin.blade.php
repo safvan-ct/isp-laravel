@@ -54,6 +54,8 @@
         $LCTR = Str::startsWith($route, ['admin.category.', 'admin.category-translation.']) && $menu === 'life';
         $LTR = Str::startsWith($route, ['admin.topic.', 'admin.topic-translation.']) && $menu === 'life';
         $LCR = Str::startsWith($route, ['admin.content.', 'admin.content-translation.']) && $menu === 'life';
+
+        $topicType = isset($type) ? $type : null;
     @endphp
 
     <div class="loader-bg">
@@ -147,6 +149,37 @@
                         </li>
                     @endhasanyrole
 
+                    @hasanyrole('Developer|Owner|Admin|Hadith admin|Hadith staff')
+                        <li
+                            class="pc-item pc-hasmenu {{ Str::is('admin.topics.*', $route) || Str::is('admin.topic-translations.*', $route)
+                                ? 'active pc-trigger'
+                                : '' }}">
+                            <a href="javascript:void(0)" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-color-swatch"></i></span>
+                                <span class="pc-mtext">Islamic Knowledge</span>
+                                <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+                            </a>
+
+                            <ul class="pc-submenu">
+                                <li class="pc-item {{ $topicType == 'menu' ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.topics.index', 'menu') }}">Menus</a>
+                                </li>
+
+                                <li class="pc-item {{ $topicType == 'module' ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.topics.index', 'module') }}">Modules</a>
+                                </li>
+
+                                <li class="pc-item {{ $topicType == 'question' ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.topics.index', 'question') }}">Questions</a>
+                                </li>
+
+                                <li class="pc-item {{ $topicType == 'answer' ? 'active' : '' }}">
+                                    <a class="pc-link" href="{{ route('admin.topics.index', 'answer') }}">Answers</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endhasanyrole
+
                     @can('view users')
                         <li class="pc-item {{ Route::currentRouteName() == 'admin.users.index' ? 'active' : '' }}"
                             class="pc-link">
@@ -157,7 +190,8 @@
                         </li>
                     @endcan
 
-                    @if (auth()->user()->hasRole('Developer') || auth()->user()->hasAnyPermission('view staffs', 'view roles', 'view activity-logs'))
+                    @if (auth()->user()->hasRole('Developer') ||
+                            auth()->user()->hasAnyPermission('view staffs', 'view roles', 'view activity-logs'))
                         <li
                             class="pc-item pc-hasmenu
                         {{ Str::is('permissions.*', Route::currentRouteName()) ||
@@ -318,7 +352,6 @@
     <script src="{{ asset('admin/js/theme.js') }}"></script>
     <script src="{{ asset('admin/js/plugins/feather.min.js') }}"></script>
 
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -327,6 +360,7 @@
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <script src="{{ asset('admin/js/custom.js') }}"></script>
 
     <script>
@@ -344,14 +378,18 @@
         $(document).ready(function() {
             const dataTableWrapper = $('#dataTable_wrapper .dataTables_filter');
             $('.selectFilter').insertBefore(dataTableWrapper).css('display', 'inline-block');
+
             if ($('#createBtn').length) {
                 $('#createBtn').insertAfter(dataTableWrapper).css('display', 'inline-block');
+            }
+            if ($('#reorderBtn').length) {
+                $('#reorderBtn').insertAfter(dataTableWrapper).css('display', 'inline-block');
             }
 
             $('#dataTable_wrapper .dataTables_filter').parent().css({
                 display: 'flex',
                 justifyContent: 'flex-end',
-                gap: '10px',
+                gap: '5px',
                 alignItems: 'center'
             });
         });
