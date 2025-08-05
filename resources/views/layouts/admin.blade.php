@@ -151,7 +151,11 @@
 
                     @hasanyrole('Developer|Owner|Admin|Hadith admin|Hadith staff')
                         <li
-                            class="pc-item pc-hasmenu {{ Str::is('admin.topics.*', $route) || Str::is('admin.topic-translations.*', $route)
+                            class="pc-item pc-hasmenu {{ Str::is('admin.topics.*', $route) ||
+                            Str::is('admin.topic-translations.*', $route) ||
+                            Str::is('admin.topic-quran.*', $route) ||
+                            Str::is('admin.topic-hadith.*', $route) ||
+                            Str::is('admin.topic-video.*', $route)
                                 ? 'active pc-trigger'
                                 : '' }}">
                             <a href="javascript:void(0)" class="pc-link">

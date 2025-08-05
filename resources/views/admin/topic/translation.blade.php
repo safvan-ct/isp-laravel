@@ -1,13 +1,5 @@
 @extends('layouts.admin')
 
-@push('styles')
-    <!-- Trix CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.min.css">
-
-    <!-- Trix JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/2.0.0/trix.umd.min.js"></script>
-@endpush
-
 @section('content')
     <x-admin.page-header title="Translations" :breadcrumb="[
         ['label' => 'Dashboard', 'link' => route('admin.dashboard')],
@@ -81,6 +73,23 @@
 
                             <div class="invalid-feedback">
                                 @error('title')
+                                    {{ $message }}
+                                @else
+                                    {{ 'This field is required.' }}
+                                @enderror
+                            </div>
+
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="sub_title" class="form-label">Sub Title</label>
+                            <textarea id="sub_title" class="form-control  @error('title') is-invalid @enderror" name="sub_title">{{ old('sub_title', $translation?->sub_title) }}</textarea>
+
+                            <div class="invalid-feedback">
+                                @error('sub_title')
                                     {{ $message }}
                                 @else
                                     {{ 'This field is required.' }}

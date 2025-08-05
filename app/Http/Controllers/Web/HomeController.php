@@ -6,12 +6,26 @@ use App\Models\HadithBook;
 use App\Models\HadithChapter;
 use App\Models\HadithVerse;
 use App\Models\QuranChapter;
+use App\Models\Topic;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('web.index');
+        $modules = Topic::select('id', 'slug')
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select('id', 'topic_id', 'title', 'sub_title')
+                    ->active()
+                    ->lang(),
+            ])
+            ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->where('type', 'module')
+            ->where('is_primary', 1)
+            ->whereNotNull('parent_id')
+            ->get();
+
+        return view('web.index', compact('modules'));
     }
 
     public function changeLanguage($lang)
@@ -190,5 +204,98 @@ class HomeController extends Controller
         }
 
         return view('web.hadith-verses', compact('chapter', 'verseNumber'));
+    }
+
+    public function modules($slug)
+    {
+        $topic = Topic::select('id', 'slug')
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select('id', 'topic_id', 'title')
+                    ->active()
+                    ->lang(),
+
+                'children'     => fn($q)     => $q
+                    ->select('id', 'slug', 'parent_id')
+                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->active(),
+            ])
+            ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->where('type', 'menu')
+            ->whereNull('parent_id')
+            ->first();
+
+        if (! $topic) {
+            abort(404);
+        }
+
+        return view('web.modules', compact('topic'));
+    }
+
+    public function questions($module_id)
+    {
+        $module = Topic::select('id', 'slug', 'parent_id')
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select('id', 'topic_id', 'title', 'sub_title')
+                    ->active()
+                    ->lang(),
+
+                'parent'       => fn($q)       => $q
+                    ->select('id', 'slug', 'parent_id')
+                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->active(),
+
+                'children'     => fn($q)     => $q
+                    ->select('id', 'slug', 'parent_id')
+                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->active(),
+            ])
+            ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->where('type', 'module')
+            ->where('id', $module_id)
+            ->first();
+
+        if (! $module) {
+            abort(404);
+        }
+
+        return view('web.questions', compact('module'));
+    }
+
+    public function answers($question_id)
+    {
+        $question = Topic::select('id', 'slug', 'parent_id')
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select('id', 'topic_id', 'title', 'sub_title')
+                    ->active()
+                    ->lang(),
+
+                'parent'       => fn($q)       => $q
+                    ->select('id', 'slug', 'parent_id')
+                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->active(),
+
+                'children'     => fn($q)     => $q
+                    ->select('id', 'slug', 'parent_id')
+                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->active(),
+            ])
+            ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->where('type', 'question')
+            ->where('id', $question_id)
+            ->first();
+
+        if (! $question) {
+            abort(404);
+        }
+
+        return view('web.answers', compact('question'));
     }
 }

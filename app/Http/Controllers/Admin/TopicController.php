@@ -42,6 +42,8 @@ class TopicController extends Controller
     {
         $parentType = null;
         switch ($type) {
+            case 'menu':
+                $parentType = null;
             case 'module':
                 $parentType = 'menu';
                 break;
@@ -50,6 +52,9 @@ class TopicController extends Controller
                 break;
             case 'answer':
                 $parentType = 'question';
+                break;
+            default:
+                abort(404);
                 break;
         }
         $parents = Topic::where('type', $parentType)->get();

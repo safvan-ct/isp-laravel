@@ -96,13 +96,13 @@
     @yield('content')
 
     <footer class="notranslate">
-        © {{ date('Y') }} Islamic Life | All Rights Reserved |
+        © {{ date('Y') }} Islamic Life &nbsp;|&nbsp; All Rights Reserved &nbsp;|&nbsp;
 
-        <a href="https://www.instagram.com/islamicstudyportal/" target="_blank" class="text-white">
+        <a href="https://www.instagram.com/islamicstudyportal" target="_blank" class="text-white text-decoration-none">
             <i class="bi bi-instagram"></i>
-        </a> |
-
-        <a href="https://www.youtube.com/@islamic_study_portal" target="_blank" class="text-white">
+        </a>
+        &nbsp;|&nbsp;
+        <a href="https://www.youtube.com/@islamic_study_portal" target="_blank" class="text-white text-decoration-none">
             <i class="bi bi-youtube"></i>
         </a>
     </footer>

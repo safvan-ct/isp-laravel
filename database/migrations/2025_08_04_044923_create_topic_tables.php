@@ -51,6 +51,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('topic_id')->constrained()->onDelete('cascade');
             $table->foreignId('hadith_verse_id')->constrained('hadith_verses')->onDelete('cascade');
+            $table->text('simplified')->nullable();
+            $table->json('translation_json')->nullable();
             $table->timestamps();
 
             $table->unique(['topic_id', 'hadith_verse_id']);
@@ -60,6 +62,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('topic_id')->constrained()->onDelete('cascade');
             $table->foreignId('quran_verse_id')->constrained('quran_verses')->onDelete('cascade');
+            $table->text('simplified')->nullable();
+            $table->json('translation_json')->nullable();
             $table->timestamps();
 
             $table->unique(['topic_id', 'quran_verse_id']);

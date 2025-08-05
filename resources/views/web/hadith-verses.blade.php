@@ -62,14 +62,14 @@
                     <p class="text-muted small notranslate mt-1 fst-italic">
                         {{ $chapter->book->translation?->name ?: $chapter->book->name }},
 
-                        Volume: {{ $hadith->volume }},
+                        {{ __('Volume') }}: {{ $hadith->volume }},
 
                         {{ __('Chapter') }}: #{{ $hadith->chapter->chapter_number }} -
                         {{ $chapter->translation?->name ?: $chapter->name }},
 
                         {{ __('Hadith') }}: #{{ $hadith->hadith_number }},
 
-                        Status: {{ $hadith->status }}
+                        {{ __('Status') }}: {{ __($hadith->status) }}
                     </p>
                 </div>
             @endforeach
