@@ -28,7 +28,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div class="loader" id="pageLoader">
         <div class="spinner"></div>
     </div>

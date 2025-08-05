@@ -6,9 +6,8 @@
         <p>{{ __('You can study Islamic education in depth through this portal.') }}</p>
     </header>
 
-    <main class="container my-3">
+    <main class="container my-3 flex-grow-1">
         <div class="row g-4">
-
             <div class="col-md-4">
                 <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
                     <div class="card-body">
@@ -44,7 +43,7 @@
                         </div>
 
                         <div class="card-footer bg-transparent border-0 pb-3">
-                            <a href="life-list.html?id=6" class="btn btn-primary">{{ __('Know More') }}</a>
+                            <a href="{{ route('questions', $item->id) }}" class="btn btn-primary">{{ __('Know More') }}</a>
                         </div>
                     </div>
                 </div>

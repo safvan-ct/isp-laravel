@@ -4,7 +4,7 @@
     ?: $chapter->name))
 
 @section('content')
-    <main class="container my-3">
+    <main class="container my-3 flex-grow-1">
         <div class="index-card">
             <div class="chapter-header mb-3">
                 <div class="chapter-name">

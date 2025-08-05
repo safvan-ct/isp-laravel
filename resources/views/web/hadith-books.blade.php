@@ -3,7 +3,7 @@
 @section('title', __('Hadith Books'))
 
 @section('content')
-    <main class="container my-3">
+    <main class="container my-3 flex-grow-1">
         <div class="row g-4">
             @foreach ($books as $item)
                 <div class="col-lg-3 col-md-6 col-12">

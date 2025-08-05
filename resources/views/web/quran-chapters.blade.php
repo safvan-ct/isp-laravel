@@ -3,7 +3,7 @@
 @section('title', __('Quran'))
 
 @section('content')
-    <main class="container my-3">
+    <main class="container my-3 flex-grow-1">
         <div class="index-card">
             <h3 class="text-center quran-text">القرآن الكريم</h3>
             <p class="text-center">
