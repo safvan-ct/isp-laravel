@@ -17,14 +17,14 @@
 
                 @if (!isset($verseNumber))
                     <div class="notranslate">
-                        Chapter Number: <strong class="ar-number">{{ $chapter->chapter_number }}</strong> |
-                        Total Hadith: <strong class="ar-number">{{ $chapter->verses->count() }}</strong>
+                        {{ __('Chapter') }}: <strong class="ar-number">{{ $chapter->chapter_number }}</strong> |
+                        {{ __('Hadiths') }}: <strong class="ar-number">{{ $chapter->verses->count() }}</strong>
                     </div>
                 @endif
 
                 <div class="notranslate">
                     <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url"
-                        style="color: #4E2D45;">Chpters</a>
+                        style="color: #4E2D45;">{{ __('Chapters') }}</a>
 
                     @if (isset($verseNumber))
                         | <a href="{{ route('hadith.chapter.verses', [$chapter->id]) }}"
@@ -61,10 +61,14 @@
 
                     <p class="text-muted small notranslate mt-1 fst-italic">
                         {{ $chapter->book->translation?->name ?: $chapter->book->name }},
+
                         Volume: {{ $hadith->volume }},
-                        Chapter: #{{ $hadith->chapter->chapter_number }} -
-                        {{ $hadith->chapter->translation?->name ?: $hadith->chapter->name }},
-                        Hadith: #{{ $hadith->hadith_number }},
+
+                        {{ __('Chapter') }}: #{{ $hadith->chapter->chapter_number }} -
+                        {{ $chapter->translation?->name ?: $chapter->name }},
+
+                        {{ __('Hadith') }}: #{{ $hadith->hadith_number }},
+
                         Status: {{ $hadith->status }}
                     </p>
                 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', 'ഖുർആൻ പഠനം | ' . ($chapter->translation?->name ?: $chapter->name))
+@section('title', __('Quran') . ' | ' . ($chapter->translation?->name ?: $chapter->name))
 
 @section('content')
     <main class="container my-3">
@@ -11,8 +11,8 @@
                 </div>
 
                 <div>
-                    Chapter: <strong class="ar-number">{{ $chapter->id }}</strong> |
-                    Ayahs: <strong class="ar-number">{{ $chapter->no_of_verses }}</strong>
+                    {{ __('Chapter') }}: <strong class="ar-number">{{ $chapter->id }}</strong> |
+                    {{ __('Ayahs') }}: <strong class="ar-number">{{ $chapter->no_of_verses }}</strong>
                 </div>
             </div>
 

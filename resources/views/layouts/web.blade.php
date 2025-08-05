@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'ഇസ്ലാമിക് സ്റ്റഡി പോർട്ടൽ')</title>
+    <title>@yield('title', __('Islamic Study Portal'))</title>
 
     <!-- Favicon for most browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
@@ -50,20 +50,25 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"
-                            href="{{ route('home') }}">HOME</a>
-                    </li>
-                    {{-- <li class="nav-item"><a class="nav-link" href="islam.html">ISLAM</a></li>
-                    <li class="nav-item"><a class="nav-link" href="beliefs.html">BELIEF</a></li> --}}
-                    <li class="nav-item">
-                        <a class="nav-link {{ Str::is('quran.*', Route::currentRouteName()) ? 'active' : '' }}"
-                            href="{{ route('quran.index') }}">QURAN</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }} text-uppercase"
+                            href="{{ route('home') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }}"
-                            href="{{ route('hadith.index') }}">HADITH</a>
+                        <a class="nav-link {{ Str::is('quran.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                            href="{{ route('quran.index') }}">{{ __('Quran') }}</a>
                     </li>
-                    {{-- <li class="nav-item"><a class="nav-link" href="life.html">LIFE OF MUSLIM</a></li> --}}
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                            href="{{ route('hadith.index') }}">{{ __('Hadith') }}</a>
+                    </li>
+
+                    @foreach ($menus as $item)
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase" href="{{ route('modules.show', $item->slug) }}">
+                                {{ $item->translation?->title ?: $item->slug }}
+                            </a>
+                        </li>
+                    @endforeach
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase" href="#" id="languageDropdown"

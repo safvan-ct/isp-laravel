@@ -29,6 +29,7 @@ return new class extends Migration
             $table->foreignId('topic_id')->constrained('topics')->onDelete('cascade');
             $table->string('lang', 5)->index();
             $table->string('title');
+            $table->text('sub_title')->nullable()->fulltext();
             $table->text('content')->nullable()->fulltext(); // used only for topic/point
             $table->boolean('is_active')->default(true);
             $table->timestamps();
