@@ -22,6 +22,10 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
+            if (request()->routeIs('admin.*')) {
+                return;
+            }
+
             $menus = Cache::remember(app()->getLocale() . '_primary_menus', now()->addHours(6), function () {
                 return Topic::select('id', 'slug', 'position')
                     ->with(['translations' => fn($q) => $q
@@ -29,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
                             ->active()
                             ->lang(),
                     ])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                // ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->where('type', 'menu')
                     ->whereNull('parent_id')
                     ->where('is_primary', 1)

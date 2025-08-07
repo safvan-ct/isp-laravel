@@ -27,7 +27,7 @@ class RolePermissionSeeder extends Seeder
             'view hadith-verse-translations', 'store hadith-verse-translation', 'update hadith-verse-translation', 'active hadith-verse-translation',
 
             'view quran-chapters', 'update quran-chapters', 'active quran-chapters',
-            'view quran-verse-translations', 'store quran-verse-translation', 'update quran-verse-translation', 'active quran-verse-translation',
+            'view quran-chapter-translations', 'store quran-chapter-translation', 'update quran-chapter-translation', 'active quran-chapter-translation',
             'view quran-verses', 'update quran-verse', 'active quran-verse',
             'update quran-verse-translation', 'active quran-verse-translation',
         ];

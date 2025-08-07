@@ -221,7 +221,7 @@ class HomeController extends Controller
                     ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),
             ])
-            ->whereHas('translations', fn($q) => $q->lang()->active())
+        // ->whereHas('translations', fn($q) => $q->lang()->active())
             ->where('type', 'menu')
             ->whereNull('parent_id')
             ->first();
@@ -245,7 +245,6 @@ class HomeController extends Controller
                 'parent'       => fn($q)       => $q
                     ->select('id', 'slug', 'parent_id')
                     ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),
 
                 'children'     => fn($q)     => $q

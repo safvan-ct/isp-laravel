@@ -15,7 +15,7 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('modules.show', $module->parent->slug) }}" class="text-decoration-none">
-                            {{ $module->parent->translation?->title ?: $module->slug }}
+                            {{ $module->parent->translation?->title ?: $module->parent->slug }}
                         </a>
                     </li>
                     <li class="breadcrumb-item active text-muted" aria-current="page">

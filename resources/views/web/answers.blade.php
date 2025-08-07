@@ -15,7 +15,7 @@
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('questions', $question->parent->id) }}" class="text-decoration-none">
-                            {{ $question->parent->translation?->title ?: $question->slug }}
+                            {{ $question->parent->translation?->title ?: $question->parent->slug }}
                         </a>
                     </li>
                     <li class="breadcrumb-item active text-muted" aria-current="page">
