@@ -55,4 +55,9 @@ class Topic extends Model
     {
         return $this->hasMany(TopicQuranVerse::class);
     }
+
+    public function hadithVerses()
+    {
+        return $this->hasMany(TopicHadithVerse::class);
+    }
 }

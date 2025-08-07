@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HadithFetchController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,12 @@ Route::get('questions/{module_id}', [HomeController::class, 'questions'])->name(
 Route::get('answers/{question_id}', [HomeController::class, 'answers'])->name('answers');
 
 Route::get('fetch-quran-verse/{id}', [HomeController::class, 'fetchQuranVerse'])->name('fetch.quran.verse');
+
+// Fetch
+Route::get('fetch-hadith-books', [HadithFetchController::class, 'books'])->name('fetch.hadith.books');
+Route::get('fetch-hadith-chapters', [HadithFetchController::class, 'chapters'])->name('fetch.hadith.chapters');
+Route::get('fetch-hadith-verses', [HadithFetchController::class, 'verses'])->name('fetch.hadith.verses');
+Route::get('fetch-hadith-verse/{id}', [HadithFetchController::class, 'verse'])->name('fetch.hadith.verse');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

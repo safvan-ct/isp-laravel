@@ -3,7 +3,7 @@
 @section('title', $question->translation?->title ?: $question->slug)
 
 @section('content')
-    <header class="text-white text-center py-3">
+    <header class="text-white text-center py-3 notranslate">
         <div class="container">
             <h3>{{ $question->translation?->title ?: $question->slug }}</h3>
             <p>{!! $question->translation?->sub_title !!}</p>
@@ -26,7 +26,7 @@
         </div>
     </header>
 
-    <main class="container my-3 flex-grow-1">
+    <main class="container my-3 flex-grow-1 notranslate">
         @foreach ($question->children as $item)
             <div class="mb-2 section-card">
                 <h2>{{ $item->translation?->title ?: $item->slug }}</h2>
@@ -36,8 +36,8 @@
                 @endif
 
                 @foreach ($item->quranVerses as $quranVerse)
-                    <blockquote class="m-0 mt-1" onclick="viewQuran({{ $quranVerse->quran_verse_id }})"
-                        style="cursor: pointer;">
+                    <blockquote class="m-0 mt-1 notranslate"
+                        onclick="openAddOnModal('quran', {{ $quranVerse->quran_verse_id }})" style="cursor: pointer;">
                         <p dir="rtl" class="quran-text">{{ $quranVerse->simplified }}</p>
 
                         @php
@@ -46,25 +46,30 @@
                         {{ $json['ml'] }}
 
                         <br><span class="text-muted small fst-italic">
-                            🔖 {{ $quranVerse->quran->quran_chapter_id }}:{{ $quranVerse->quran->number_in_chapter }}
+                            🔖
+                            {{ $quranVerse->quran->quran_chapter_id }}.{{ $quranVerse->quran->chapter->translation->name }}:
+                            {{ $quranVerse->quran->number_in_chapter }}
+                        </span>
+                    </blockquote>
+                @endforeach
+
+                @foreach ($item->hadithVerses as $hadithVerse)
+                    <blockquote class="m-0 mt-1 notranslate"
+                        onclick="openAddOnModal('hadith', {{ $hadithVerse->hadith_verse_id }})" style="cursor: pointer;">
+                        <p dir="rtl" class="quran-text">{{ $hadithVerse->simplified }}</p>
+
+                        @php
+                            $json = json_decode($hadithVerse->translation_json, true);
+                        @endphp
+                        {{ $json['ml'] }}
+
+                        <br><span class="text-muted small fst-italic">
+                            🔖 {{ $hadithVerse->hadith->chapter->book->slug }}:{{ $hadithVerse->hadith->hadith_number }}
                         </span>
                     </blockquote>
                 @endforeach
 
                 {{--
-                if (hadiths.length) {
-                hadiths.forEach(({ ar = "", text = "", reference = "", book_slug = "", hadith_number = "" }) =>
-                {
-                html += `
-                <blockquote class="mb-0 mt-1" onclick="viewHadith('${book_slug}', ${hadith_number})"
-                    style="cursor: pointer;">
-                    ${ar ? `<p dir="rtl" class="quran-text">${ar}</p>` : ""}
-                    ${text}
-                    ${reference ? `<br><span class="text-muted small fst-italic">🔖 ${reference}</span>` : ""}
-                </blockquote>`;
-                });
-                }
-
                 if (video) {
                 html += `<div class="mt-3 text-center">
                     <button class="btn btn-outline-primary" onclick="openVideo('${video}', '${title}')">
@@ -88,44 +93,26 @@
         </div>
     </main>
 
-    <!-- Quran Modal -->
-    <div class="modal fade notranslate" id="quranModal" tabindex="-1" aria-labelledby="quranModalLabel" aria-hidden="true">
+    <!-- Add-on Modal -->
+    <div class="modal fade" id="addOnModal" tabindex="-1" aria-labelledby="addOnModalLabel">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title notranslate" id="quranModalLabel">📖 {{ __('Quran Revelation') }}</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
+                    <h5 class="modal-title notranslate" id="addOnModalLabel"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
-                <div class="modal-body" id="quranModalBody">
-                    <div class="text-center text-muted notranslate">{{ __('Loading Data') }}...</div>
-                </div>
-            </div>
-        </div>
-    </div>
+                <div id="google_translate_element" class="mt-2 text-center d-none"></div>
 
-    <!-- Hadith Modal -->
-    <div class="modal fade" id="hadithModal" tabindex="-1" aria-labelledby="hadithModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title notranslate" id="hadithModalLabel">📜 {{ __('Hadith Details') }}</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-
-                <div id="google_translate_element" class="mt-2 text-center mb-2"></div>
-
-                <div class="modal-body pt-0" id="hadithModalBody">
-                    <div class="text-center text-muted notranslate">{{ __('Loading Data') }}...</div>
+                <div class="modal-body p-2" id="addOnModalBody">
+                    <div class="text-center text-muted">{{ __('Loading Data') }}...</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Video Modal -->
-    <div class="modal fade notranslate" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal fade notranslate" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content bg-black">
                 <div class="modal-header border-0">
@@ -145,49 +132,102 @@
 @endsection
 
 @push('scripts')
-    <script>
-        function viewQuran(quranVerseId) {
-            const modalElement = document.getElementById("quranModal");
-            const modalBody = document.getElementById("quranModalBody");
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                    pageLanguage: 'en',
+                    includedLanguages: 'ml,hi',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                    autoDisplay: false
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
 
+    <script>
+        function openAddOnModal(type, id) {
+            const modalElement = document.getElementById("addOnModal");
+            const modalLabel = document.getElementById("addOnModalLabel");
+            const modalBody = document.getElementById("addOnModalBody");
+
+            let addOnModalLabel = '';
+            let url = '';
+            document.getElementById("google_translate_element").classList.add("d-none");
+
+            if (type === 'quran') {
+                addOnModalLabel = "📖 {{ __('Quran Revelation') }}";
+                url = "{{ route('fetch.quran.verse', ':id') }}".replace(':id', id);
+            } else if (type === 'hadith') {
+                addOnModalLabel = "📜 {{ __('Hadith Details') }}";
+                url = "{{ route('fetch.hadith.verse', ':id') }}".replace(':id', id);
+                document.getElementById("google_translate_element").classList.remove("d-none");
+            } else if (type === 'video') {
+                addOnModalLabel = "🎥 {{ __('Video Information') }}";
+            } else {
+                return;
+            }
+
+            modalLabel.innerHTML = addOnModalLabel;
             modalBody.innerHTML = `<div class="text-center text-muted py-3">{{ __('Loading Data') }}...</div>`;
 
             const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
             modal.show();
 
-            const url = "{{ route('fetch.quran.verse', ':id') }}".replace(':id', quranVerseId);
+            if (type === 'quran' || type === 'hadith') {
+                fetch(url)
+                    .then(res => res.json())
+                    .then(result => {
+                        if (!result) {
+                            modalBody.innerHTML =
+                                `<div class="text-danger text-center py-3">{{ __('No data found. Please try another.') }}</div>`;
+                            return;
+                        }
 
-            fetch(url)
-                .then(res => res.json())
-                .then(quran => {
-                    if (!quran) {
+                        let arHeading = type === 'hadith' ? result.heading : '';
+                        let trHeading = type === 'hadith' ? result.translation?.[0]?.heading || "" : '';
+                        let arVerse = result.text;
+                        let trVerse = result.translations?.[0]?.text || '<em>No translation available</em>';
+                        let verseNumber = type === 'quran' ? result.number_in_chapter : result.hadith_number;
+
+                        let reference = type === 'hadith' ? `${result.book.translations?.[0]?.name || result.book.name},
+                                Volume: ${result.volume},
+                                Chapter: #${result.chapter.chapter_number} - ${result.chapter.translations?.[0]?.name || result.chapter.name},
+                                Hadith: #${result.hadith_number},
+                                Status: ${result.status || 'Unknown'}` :
+                            `${result.quran_chapter_id}. ${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
+
+
+                        modalBody.innerHTML = `
+                            <blockquote class="border-start mb-3 ${type === 'quran' ? 'notranslate' : ''}">
+                                ${arHeading ? `<p class="notranslate fw-bold m-0 fs-5" dir="rtl">${arHeading}</p> <p class="fw-bold">${trHeading}</p>` : ""}
+
+                                <p dir="rtl" class="notranslate">
+                                    <span class="fs-5 ${type === 'hadith' ? 'mt-1' : 'mt-3 quran-text'}" ${type === 'quran' ? 'style="line-height: 2.2;"' : ''}>
+                                        ${arVerse}
+                                    </span>
+                                    <span class="ayah-number" ${type === 'hadith' ? 'style="font-size: 12px;"' : ''}>
+                                        ${toArabicNumber(verseNumber)}
+                                    </span>
+                                </p>
+
+                                <p class="mt-2">${trVerse}</p>
+
+                                <p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>
+                            </blockquote>
+                        `;
+                    })
+                    .catch(err => {
+                        console.log(err);
+
                         modalBody.innerHTML =
-                            `<div class="text-danger text-center py-3">ഖുർആൻ ലഭിച്ചില്ല. ദയവായി മറ്റൊന്ന് ശ്രമിക്കുക.</div>`;
-                        return;
-                    }
+                            `<div class="text-danger text-center py-3">{{ __('Informations not found') }}</div>`;
+                    });
 
-                    const translation = quran.translations[0];
-                    const chapter = quran.chapter.translations[0];
-
-                    modalBody.innerHTML = `
-                        <blockquote class="border-start ps-3 mb-3 notranslate">
-                            <p dir="rtl">
-                                <span class="fs-5 mt-3 quran-text" style="line-height: 2.2;">${quran.text}</span>
-                                <span class="ayah-number ar-number">${toArabicNumber(quran.number_in_chapter)}</span>
-                            </p>
-
-                            <p class="mt-2">${translation.text || "<em>No translation available</em>"}</p>
-
-                            <p class="text-muted small fst-italic mt-2">
-                                🔖 ${chapter.quran_chapter_id}. ${chapter.name}: ${quran.number_in_chapter}
-                            </p>
-                        </blockquote>
-                    `;
-                })
-                .catch(err => {
-                    modalBody.innerHTML =
-                        `<div class="text-danger text-center py-3">ഖുർആൻ ലോഡ് ചെയ്യാനാകുന്നില്ല.</div>`;
-                });
-        };
+                return;
+            }
+        }
     </script>
 @endpush

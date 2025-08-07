@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', __('Islamic Study Portal'))</title>
+    <title class="notranslate">@yield('title', __('Islamic Study Portal'))</title>
 
     <!-- Favicon for most browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
-    <link rel="shortcut icon" href="{{ asset('img/favicon.ico" type="image/x-icon') }}">
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
 
     <!-- Android Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('img/android-chrome-192x192.png') }}">

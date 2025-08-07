@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-    <x-admin.page-header :title="'Add-On Quran Verse : ' . $topic->slug" :breadcrumb="[
+    <x-admin.page-header :title="'Add-On Hadiths : ' . $topic->slug" :breadcrumb="[
         ['label' => 'Dashboard', 'link' => route('admin.dashboard')],
         ['label' => convertAsTitle($type), 'link' => route('admin.topics.index', $type)],
         ['label' => $topic->slug],
@@ -14,7 +14,7 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="card {{ $quran ? '' : 'd-none' }}">
+            <div class="card {{ $hadith ? '' : 'd-none' }}">
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -27,11 +27,11 @@
                     @endif
 
                     @php
-                        $url = $quran?->id
-                            ? route('admin.topic-quran.update', $quran->id)
-                            : route('admin.topic-quran.store');
+                        $url = $hadith?->id
+                            ? route('admin.topic-hadith.update', $hadith->id)
+                            : route('admin.topic-hadith.store');
 
-                        $method = $quran?->id ? 'PUT' : 'POST';
+                        $method = $hadith?->id ? 'PUT' : 'POST';
                     @endphp
 
                     <form class="row g-3 needs-validation" novalidate action="{{ $url }}" method="POST">
@@ -41,13 +41,13 @@
                         <input type="hidden" name="topic_id" value="{{ $topic->id }}">
                         <input type="hidden" name="type" value="{{ $type }}">
 
-                        @if (!$quran?->id)
-                            <div class="col-md-4">
-                                <label for="chapter_id" class="form-label">Select Chapter</label>
-                                <select id="chapter_id" name="chapter_id" class="form-control"
+                        @if (!$hadith?->id)
+                            <div class="col-md-3">
+                                <label for="hadith_book_id" class="form-label">Select Book</label>
+                                <select id="hadith_book_id" name="hadith_book_id" class="form-control"
                                     style="width: 100%;"></select>
                                 <div class="invalid-feedback">
-                                    @error('chapter_id')
+                                    @error('hadith_book_id')
                                         {{ $message }}
                                     @else
                                         {{ 'This field is required.' }}
@@ -59,11 +59,28 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
-                                <label for="quran_verse_id" class="form-label">Select Ayah</label>
-                                <select id="quran_verse_id" name="quran_verse_id" class="form-control" disabled></select>
+                            <div class="col-md-3">
+                                <label for="hadith_chapter_id" class="form-label">Select Chapter</label>
+                                <select id="hadith_chapter_id" name="hadith_chapter_id" class="form-control"
+                                    disabled></select>
                                 <div class="invalid-feedback">
-                                    @error('quran_verse_id')
+                                    @error('hadith_chapter_id')
+                                        {{ $message }}
+                                    @else
+                                        {{ 'This field is required.' }}
+                                    @enderror
+                                </div>
+
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="hadith_verse_id" class="form-label">Select Hadith</label>
+                                <select id="hadith_verse_id" name="hadith_verse_id" class="form-control" disabled></select>
+                                <div class="invalid-feedback">
+                                    @error('hadith_verse_id')
                                         {{ $message }}
                                     @else
                                         {{ 'This field is required.' }}
@@ -77,9 +94,9 @@
                         @endif
 
                         <div class="col-md-12">
-                            <label for="simplified" class="form-label">Ayah Simplified</label>
+                            <label for="simplified" class="form-label">Hadith Simplified</label>
                             <input type="text" class="form-control  @error('simplified') is-invalid @enderror"
-                                name="simplified" value="{{ old('simplified', $quran?->simplified) }}"
+                                name="simplified" value="{{ old('simplified', $hadith?->simplified) }}"
                                 placeholder="Simplified" required>
 
                             <div class="invalid-feedback">
@@ -98,7 +115,7 @@
                         <div class="col-md-12">
                             <label for="translation_json" class="form-label">Translations (JSON)</label>
                             <textarea id="translation_json" class="form-control  @error('title') is-invalid @enderror" name="translation_json"
-                                rows="6">{{ old('translation_json', $quran?->translation_json) }}</textarea>
+                                rows="6">{{ old('translation_json', $hadith?->translation_json) }}</textarea>
 
                             <div class="invalid-feedback">
                                 @error('translation_json')
@@ -125,7 +142,7 @@
                     <x-admin.alert type="success" />
                     <x-admin.alert type="error" />
 
-                    <a href="{{ route('admin.topic-quran.index', [$topic->id, 0]) }}" class="btn btn-primary btn-sm ms-1"
+                    <a href="{{ route('admin.topic-hadith.index', [$topic->id, 0]) }}" class="btn btn-primary btn-sm ms-1"
                         id="createBtn">
                         Create
                     </a>
@@ -191,7 +208,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('admin.topic-quran.dataTable') }}",
+                    url: "{{ route('admin.topic-hadith.dataTable') }}",
                     data: {
                         topic_id: "{{ $topic->id }}"
                     }
@@ -214,13 +231,13 @@
                         name: 'translation_json'
                     },
                     {
-                        data: 'quran',
-                        name: 'quran',
+                        data: 'hadith',
+                        name: 'hadith',
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row) {
-                            if (data && data.quran_chapter_id && data.number_in_chapter) {
-                                return `${data.quran_chapter_id}:${data.number_in_chapter}`;
+                            if (data && data.hadith_book_id && data.hadith_chapter_id) {
+                                return `${data.chapter.book.slug}: ${data.chapter.chapter_number}: ${data.hadith_number}`;
                             }
                             return '-';
                         },
@@ -232,9 +249,9 @@
                         searchable: false,
                         render: function(data, type, row, meta) {
                             const url =
-                                "{{ route('admin.topic-quran.index', [$topic->id, ':id']) }}"
+                                "{{ route('admin.topic-hadith.index', [$topic->id, ':id']) }}"
                                 .replace(':id', row.id);
-                            const deleteUrl = "{{ route('admin.topic-quran.destroy', [':id']) }}"
+                            const deleteUrl = "{{ route('admin.topic-hadith.destroy', [':id']) }}"
                                 .replace(':id', row.id);
 
                             return `<a href="${url}" class="btn btn-link">Edit</a>|
@@ -249,22 +266,22 @@
             });
         });
 
-        $('#chapter_id').select2({
-            placeholder: 'Search chapter by number',
+        $('#hadith_book_id').select2({
+            placeholder: 'Search books',
             ajax: {
-                url: "{{ route('admin.fetch.quran.chapters') }}",
+                url: "{{ route('fetch.hadith.books') }}",
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
                     return {
                         q: params.term
-                    }; // search term
+                    };
                 },
                 processResults: function(data) {
                     return {
                         results: data.map(item => ({
-                            id: item.quran_chapter_id,
-                            text: `${item.quran_chapter_id} - ${item.name}`
+                            id: item.hadith_book_id,
+                            text: `${item.hadith_book_id} - ${item.name}`
                         }))
                     };
                 },
@@ -272,32 +289,65 @@
             }
         });
 
-        $('#quran_verse_id').select2({
-            placeholder: 'Search ayah by number',
+        $('#hadith_chapter_id').select2({
+            placeholder: 'Search chapter',
             ajax: {
-                url: "{{ route('admin.fetch.quran.ayahs') }}",
+                url: "{{ route('fetch.hadith.chapters') }}",
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
                     return {
                         q: params.term,
-                        chapter_id: $('#chapter_id').val()
+                        hadith_book_id: $('#hadith_book_id').val()
                     };
                 },
                 processResults: function(data) {
                     return {
-                        results: data.map(item => ({
-                            id: item.id,
-                            text: `(${item.number_in_chapter}) ${item.text}`
-                        }))
+                        results: (data || []).map(item => {
+                            const translation = item.translations?.[0] || {};
+                            return {
+                                id: item.id,
+                                text: `${item.chapter_number} - ${translation.name ?? item.name}`
+                            };
+                        })
                     };
                 },
                 cache: true
             }
         });
 
-        $('#chapter_id').on('change', function() {
-            $('#quran_verse_id').prop('disabled', !$(this).val()).val(null).trigger('change');
+        $('#hadith_verse_id').select2({
+            placeholder: 'Search hadith',
+            ajax: {
+                url: "{{ route('fetch.hadith.verses') }}",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        q: params.term,
+                        hadith_chapter_id: $('#hadith_chapter_id').val()
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: (data || []).map(item => {
+                            return {
+                                id: item.id,
+                                text: `${item.hadith_number} - ${item.text}`
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        $('#hadith_book_id').on('change', function() {
+            $('#hadith_chapter_id').prop('disabled', !$(this).val()).val(null).trigger('change');
+        });
+
+        $('#hadith_chapter_id').on('change', function() {
+            $('#hadith_verse_id').prop('disabled', !$(this).val()).val(null).trigger('change');
         });
     </script>
 @endpush

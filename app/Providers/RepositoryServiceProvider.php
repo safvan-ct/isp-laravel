@@ -25,6 +25,8 @@ use App\Repository\Role\RoleInterface;
 use App\Repository\Role\RoleRepository;
 use App\Repository\Settings\SettingsInterface;
 use App\Repository\Settings\SettingsRepository;
+use App\Repository\Topic\TopicHadithInterface;
+use App\Repository\Topic\TopicHadithRepository;
 use App\Repository\Topic\TopicInterface;
 use App\Repository\Topic\TopicQuranInterface;
 use App\Repository\Topic\TopicQuranRepository;
@@ -61,6 +63,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TopicInterface::class, TopicRepository::class);
         $this->app->bind(TopicTranslationInterface::class, TopicTranslationRepository::class);
         $this->app->bind(TopicQuranInterface::class, TopicQuranRepository::class);
+        $this->app->bind(TopicHadithInterface::class, TopicHadithRepository::class);
     }
 
     /**
