@@ -96,8 +96,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     Route::get('topic-quran/dataTable', [TopicQuranController::class, 'dataTable'])->name('topic-quran.dataTable');
     Route::get('topic-quran/{topic_id}/{id?}', [TopicQuranController::class, 'index'])->name('topic-quran.index');
-    Route::get('fetch-quran-chapters', [TopicQuranController::class, 'fetchQuranChapters'])->name('fetch.quran.chapters');
-    Route::get('fetch-quran-ayahs', [TopicQuranController::class, 'fetchQuranAyahs'])->name('fetch.quran.ayahs');
     Route::resource('topic-quran', TopicQuranController::class)->only('store', 'update', 'destroy');
 
     Route::get('topic-hadith/dataTable', [TopicHadithController::class, 'dataTable'])->name('topic-hadith.dataTable');

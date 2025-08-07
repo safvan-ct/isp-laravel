@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Topic\QuranStoreRequest;
 use App\Http\Requests\Topic\QuranUpdateRequest;
-use App\Models\QuranChapterTranslation;
-use App\Models\QuranVerse;
 use App\Models\TopicQuranVerse;
 use App\Repository\Topic\TopicInterface;
 use App\Repository\Topic\TopicQuranInterface;
@@ -75,32 +73,5 @@ class TopicQuranController extends Controller
     public function dataTable(Request $request)
     {
         return DataTables::of($this->topicQuranRepository->dataTable($request->topic_id))->make(true);
-    }
-
-    public function fetchQuranChapters(Request $request)
-    {
-        $chapterId = $request->q;
-
-        $chapters = QuranChapterTranslation::select(['quran_chapter_id', 'name'])
-            ->lang('en')
-            ->where('quran_chapter_id', $chapterId)
-            ->active()
-            ->get();
-
-        return response()->json($chapters);
-    }
-
-    public function fetchQuranAyahs(Request $request)
-    {
-        $chapterId  = $request->get('chapter_id');
-        $ayahNumber = $request->get('q', '');
-
-        $chapters = QuranVerse::select(['id', 'number_in_chapter', 'text'])
-            ->where('quran_chapter_id', $chapterId)
-            ->when($ayahNumber, fn($q) => $q->where('number_in_chapter', $ayahNumber))
-            ->active()
-            ->get();
-
-        return response()->json($chapters);
     }
 }

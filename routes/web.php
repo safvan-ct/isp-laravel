@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HadithFetchController;
+use App\Http\Controllers\QuranFetchController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,11 @@ Route::get('modules/{slug}/show', [HomeController::class, 'modules'])->name('mod
 Route::get('questions/{module_id}', [HomeController::class, 'questions'])->name('questions');
 Route::get('answers/{question_id}', [HomeController::class, 'answers'])->name('answers');
 
-Route::get('fetch-quran-verse/{id}', [HomeController::class, 'fetchQuranVerse'])->name('fetch.quran.verse');
-
 // Fetch
+Route::get('fetch-quran-chapters', [QuranFetchController::class, 'chapters'])->name('fetch.quran.chapters');
+Route::get('fetch-quran-ayahs', [QuranFetchController::class, 'verses'])->name('fetch.quran.ayahs');
+Route::get('fetch-quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('fetch.quran.verse');
+
 Route::get('fetch-hadith-books', [HadithFetchController::class, 'books'])->name('fetch.hadith.books');
 Route::get('fetch-hadith-chapters', [HadithFetchController::class, 'chapters'])->name('fetch.hadith.chapters');
 Route::get('fetch-hadith-verses', [HadithFetchController::class, 'verses'])->name('fetch.hadith.verses');

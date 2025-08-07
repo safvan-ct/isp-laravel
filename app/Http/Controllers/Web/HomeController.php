@@ -6,7 +6,6 @@ use App\Models\HadithBook;
 use App\Models\HadithChapter;
 use App\Models\HadithVerse;
 use App\Models\QuranChapter;
-use App\Models\QuranVerse;
 use App\Models\Topic;
 
 class HomeController extends Controller
@@ -303,25 +302,5 @@ class HomeController extends Controller
         }
 
         return view('web.answers', compact('question'));
-    }
-
-    public function fetchQuranVerse($id)
-    {
-        $verse = QuranVerse::select(['id', 'quran_chapter_id', 'number_in_chapter', 'text'])
-            ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'quran_verse_id', 'text')
-                    ->active()
-                    ->lang(),
-
-                'chapter'      => fn($q)      => $q
-                    ->select('id', 'name')
-                    ->with(['translations' => fn($q) => $q->select('id', 'quran_chapter_id', 'name')->active()->lang('en')]),
-            ])
-            ->where('id', $id)
-            ->active()
-            ->first();
-
-        return response()->json($verse);
     }
 }

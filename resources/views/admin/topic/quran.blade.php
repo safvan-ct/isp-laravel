@@ -252,7 +252,7 @@
         $('#chapter_id').select2({
             placeholder: 'Search chapter by number',
             ajax: {
-                url: "{{ route('admin.fetch.quran.chapters') }}",
+                url: "{{ route('fetch.quran.chapters') }}",
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
@@ -275,7 +275,7 @@
         $('#quran_verse_id').select2({
             placeholder: 'Search ayah by number',
             ajax: {
-                url: "{{ route('admin.fetch.quran.ayahs') }}",
+                url: "{{ route('fetch.quran.ayahs') }}",
                 dataType: 'json',
                 delay: 250,
                 data: function(params) {
