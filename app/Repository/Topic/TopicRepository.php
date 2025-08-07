@@ -47,4 +47,11 @@ class TopicRepository implements TopicInterface
             Topic::where('id', $item['id'])->update(['position' => $item['position']]);
         }
     }
+
+    public function get(int $id, ?string $type = null): Topic
+    {
+        return Topic::with('translations')
+            ->when($type, fn($q) => $q->where('type', $type))
+            ->findOrFail($id);
+    }
 }

@@ -31,19 +31,3 @@
         </div>
     </main>
 @endsection
-
-@push('scripts')
-    <script>
-        function toArabicNumber(number) {
-            const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return String(number).split('').map(d => arabicDigits[d] || d).join('');
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.ar-number').forEach(span => {
-                const number = span.textContent.trim();
-                span.textContent = toArabicNumber(number);
-            });
-        });
-    </script>
-@endpush

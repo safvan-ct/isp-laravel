@@ -35,18 +35,23 @@
                     <p class="mb-0">{!! $item->translation?->content !!}</p>
                 @endif
 
-                {{--
-                if (quran.length) {
-                quran.forEach(({ ar = "", text = "", reference = "", sura = "", ayah = "" }) => {
-                html += `
-                <blockquote class="m-0 mt-1" onclick="viewQuran(${sura}, ${ayah})" style="cursor: pointer;">
-                    ${ar ? `<p dir="rtl" class="quran-text">${ar}</p>` : ""}
-                    ${text}
-                    ${reference ? `<br><span class="text-muted small fst-italic">🔖 ${reference}</span>` : ""}
-                </blockquote>`;
-                });
-                }
+                @foreach ($item->quranVerses as $quranVerse)
+                    <blockquote class="m-0 mt-1" onclick="viewQuran({{ $quranVerse->quran_verse_id }})"
+                        style="cursor: pointer;">
+                        <p dir="rtl" class="quran-text">{{ $quranVerse->simplified }}</p>
 
+                        @php
+                            $json = json_decode($quranVerse->translation_json, true);
+                        @endphp
+                        {{ $json['ml'] }}
+
+                        <br><span class="text-muted small fst-italic">
+                            🔖 {{ $quranVerse->quran->quran_chapter_id }}:{{ $quranVerse->quran->number_in_chapter }}
+                        </span>
+                    </blockquote>
+                @endforeach
+
+                {{--
                 if (hadiths.length) {
                 hadiths.forEach(({ ar = "", text = "", reference = "", book_slug = "", hadith_number = "" }) =>
                 {
@@ -140,4 +145,49 @@
 @endsection
 
 @push('scripts')
+    <script>
+        function viewQuran(quranVerseId) {
+            const modalElement = document.getElementById("quranModal");
+            const modalBody = document.getElementById("quranModalBody");
+
+            modalBody.innerHTML = `<div class="text-center text-muted py-3">{{ __('Loading Data') }}...</div>`;
+
+            const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+            modal.show();
+
+            const url = "{{ route('fetch.quran.verse', ':id') }}".replace(':id', quranVerseId);
+
+            fetch(url)
+                .then(res => res.json())
+                .then(quran => {
+                    if (!quran) {
+                        modalBody.innerHTML =
+                            `<div class="text-danger text-center py-3">ഖുർആൻ ലഭിച്ചില്ല. ദയവായി മറ്റൊന്ന് ശ്രമിക്കുക.</div>`;
+                        return;
+                    }
+
+                    const translation = quran.translations[0];
+                    const chapter = quran.chapter.translations[0];
+
+                    modalBody.innerHTML = `
+                        <blockquote class="border-start ps-3 mb-3 notranslate">
+                            <p dir="rtl">
+                                <span class="fs-5 mt-3 quran-text" style="line-height: 2.2;">${quran.text}</span>
+                                <span class="ayah-number ar-number">${toArabicNumber(quran.number_in_chapter)}</span>
+                            </p>
+
+                            <p class="mt-2">${translation.text || "<em>No translation available</em>"}</p>
+
+                            <p class="text-muted small fst-italic mt-2">
+                                🔖 ${chapter.quran_chapter_id}. ${chapter.name}: ${quran.number_in_chapter}
+                            </p>
+                        </blockquote>
+                    `;
+                })
+                .catch(err => {
+                    modalBody.innerHTML =
+                        `<div class="text-danger text-center py-3">ഖുർആൻ ലോഡ് ചെയ്യാനാകുന്നില്ല.</div>`;
+                });
+        };
+    </script>
 @endpush

@@ -25,7 +25,7 @@
                     <x-admin.alert type="success" />
                     <x-admin.alert type="error" />
 
-                    <x-admin.table :headers="['Position', 'Slug', 'Status', 'Actions']"></x-admin.table>
+                    <x-admin.table :headers="['Position', 'Slug', 'Status', 'Add-On', 'Actions']"></x-admin.table>
                 </div>
             </div>
         </div>
@@ -99,6 +99,22 @@
 
                             return `<button onclick="toggleActive('${url}')" class="${text} btn btn-link">${label}</button>`;
                         }
+                    },
+                    {
+                        data: null,
+                        name: 'add_on',
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row, meta) {
+                            const videoUrl = '';
+                            const hadithUrl = '';
+                            const quranUrl = "{{ route('admin.topic-quran.index', ':id') }}"
+                                .replace(':id', row.id);
+
+                            return `<a href="${quranUrl}" class="btn btn-link text-info">Quran</a>|<a href="${hadithUrl}" class="btn btn-link text-info">Hadiths</a>|<a href="${videoUrl}" class="btn btn-link text-info">Videos</a>`;
+                        },
+                        visible: {{ $type === 'answer' ? 'true' : 'false' }}
+
                     },
                     {
                         data: 'action',

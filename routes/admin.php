@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\TopicController;
+use App\Http\Controllers\Admin\TopicQuranController;
 use App\Http\Controllers\Admin\TopicTranslationController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -90,6 +91,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('topic/{type}/translations/{id}/{translation?}', [TopicTranslationController::class, 'index'])->name('topic-translations.index');
     Route::patch('topic-translations/status/{id}', [TopicTranslationController::class, 'status'])->name('topic-translations.status');
     Route::resource('topic-translations', TopicTranslationController::class)->only('store', 'update');
+
+    Route::get('topic-quran/dataTable', [TopicQuranController::class, 'dataTable'])->name('topic-quran.dataTable');
+    Route::get('topic-quran/{topic_id}/{id?}', [TopicQuranController::class, 'index'])->name('topic-quran.index');
+    Route::get('fetch-quran-chapters', [TopicQuranController::class, 'fetchQuranChapters'])->name('fetch.quran.chapters');
+    Route::get('fetch-quran-ayahs', [TopicQuranController::class, 'fetchQuranAyahs'])->name('fetch.quran.ayahs');
+    Route::resource('topic-quran', TopicQuranController::class)->only('store', 'update', 'destroy');
     // End Topic
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');

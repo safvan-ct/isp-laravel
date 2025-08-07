@@ -18,5 +18,7 @@ Route::get('modules/{slug}/show', [HomeController::class, 'modules'])->name('mod
 Route::get('questions/{module_id}', [HomeController::class, 'questions'])->name('questions');
 Route::get('answers/{question_id}', [HomeController::class, 'answers'])->name('answers');
 
+Route::get('fetch-quran-verse/{id}', [HomeController::class, 'fetchQuranVerse'])->name('fetch.quran.verse');
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

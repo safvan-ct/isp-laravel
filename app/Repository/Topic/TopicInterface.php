@@ -12,4 +12,6 @@ interface TopicInterface
     public function toggleActive(Topic $topic);
 
     public function sort(array $data);
+
+    public function get(int $id, ?string $type = null);
 }

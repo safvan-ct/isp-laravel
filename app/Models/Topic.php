@@ -53,6 +53,6 @@ class Topic extends Model
 
     public function quranVerses()
     {
-        return $this->belongsToMany(QuranVerse::class, 'topic_quran_verse');
+        return $this->hasMany(TopicQuranVerse::class);
     }
 }

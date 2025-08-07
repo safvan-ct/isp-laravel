@@ -14,39 +14,17 @@ function handleShare() {
     }
 }
 
-async function saveData(fs_db, filePath) {
-    const res = await fetch(filePath);
-    const topics = await res.json();
-
-    for (const topic of topics) {
-        const ref = doc(db, fs_db, topic.id.toString());
-        await setDoc(ref, topic);
-        console.log("✅ Uploaded:", topic.title);
-    }
+function toArabicNumber(number) {
+    const arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+    return String(number)
+        .split("")
+        .map((d) => arabicDigits[d] || d)
+        .join("");
 }
 
-async function exportCollectionToJson(collectionName) {
-    try {
-        const colRef = collection(db, collectionName);
-        const snapshot = await getDocs(colRef);
-        const data = [];
-
-        snapshot.forEach((doc) => {
-            data.push({ id: doc.id, ...doc.data() });
-        });
-
-        const jsonStr = JSON.stringify(data, null, 2);
-
-        const blob = new Blob([jsonStr], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${collectionName}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-
-        console.log("✅ Exported:", collectionName);
-    } catch (err) {
-        console.error("❌ Export failed:", err);
-    }
-}
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".ar-number").forEach((span) => {
+        const number = span.textContent.trim();
+        span.textContent = toArabicNumber(number);
+    });
+});
