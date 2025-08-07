@@ -135,7 +135,6 @@
             $('#email').val($(`#editBtn${id}`).data('email') ?? '');
             $('#phone').val($(`#editBtn${id}`).data('phone') ?? '');
             $('#password').val('');
-            console.log($(`#editBtn${id}`).data('role'));
 
             $('#role').val($(`#editBtn${id}`).data('role') ?? '');
         }

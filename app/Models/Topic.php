@@ -41,16 +41,6 @@ class Topic extends Model
         return $this->hasOne(TopicTranslation::class)->where('lang', $lang);
     }
 
-    public function videos()
-    {
-        return $this->hasMany(TopicVideo::class);
-    }
-
-    public function hadiths()
-    {
-        return $this->belongsToMany(HadithVerse::class, 'topic_hadith');
-    }
-
     public function quranVerses()
     {
         return $this->hasMany(TopicQuranVerse::class);
@@ -59,5 +49,10 @@ class Topic extends Model
     public function hadithVerses()
     {
         return $this->hasMany(TopicHadithVerse::class);
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(TopicVideo::class);
     }
 }

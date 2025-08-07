@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('topics')->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('type')->default('topic'); // menu, module, question, answer
-            $table->integer('position')->default(0);
+            $table->unsignedSmallInteger('position')->default(0);
             $table->boolean('is_primary')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
@@ -41,7 +41,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('topic_id')->constrained()->onDelete('cascade');
             $table->string('video_id')->index();
-            $table->string('title')->nullable(); // optional title
+            $table->json('title')->nullable(); // optional title
+            $table->unsignedSmallInteger('position')->default(0);
             $table->timestamps();
 
             $table->unique(['topic_id', 'video_id']);
@@ -53,6 +54,7 @@ return new class extends Migration
             $table->foreignId('hadith_verse_id')->constrained('hadith_verses')->onDelete('cascade');
             $table->text('simplified')->nullable();
             $table->json('translation_json')->nullable();
+            $table->unsignedSmallInteger('position')->default(0);
             $table->timestamps();
 
             $table->unique(['topic_id', 'hadith_verse_id']);
@@ -64,6 +66,7 @@ return new class extends Migration
             $table->foreignId('quran_verse_id')->constrained('quran_verses')->onDelete('cascade');
             $table->text('simplified')->nullable();
             $table->json('translation_json')->nullable();
+            $table->unsignedSmallInteger('position')->default(0);
             $table->timestamps();
 
             $table->unique(['topic_id', 'quran_verse_id']);

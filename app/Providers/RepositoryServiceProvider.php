@@ -33,6 +33,8 @@ use App\Repository\Topic\TopicQuranRepository;
 use App\Repository\Topic\TopicRepository;
 use App\Repository\Topic\TopicTranslationInterface;
 use App\Repository\Topic\TopicTranslationRepository;
+use App\Repository\Topic\TopicVideoInterface;
+use App\Repository\Topic\TopicVideoRepository;
 use App\Repository\User\UserInterface;
 use App\Repository\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -64,6 +66,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TopicTranslationInterface::class, TopicTranslationRepository::class);
         $this->app->bind(TopicQuranInterface::class, TopicQuranRepository::class);
         $this->app->bind(TopicHadithInterface::class, TopicHadithRepository::class);
+        $this->app->bind(TopicVideoInterface::class, TopicVideoRepository::class);
     }
 
     /**

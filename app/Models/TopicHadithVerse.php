@@ -12,6 +12,7 @@ class TopicHadithVerse extends Model
         'hadith_verse_id',
         'simplified',
         'translation_json',
+        'position',
     ];
 
     protected $casts = [

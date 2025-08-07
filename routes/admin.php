@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\TopicController;
 use App\Http\Controllers\Admin\TopicHadithController;
 use App\Http\Controllers\Admin\TopicQuranController;
 use App\Http\Controllers\Admin\TopicTranslationController;
+use App\Http\Controllers\Admin\TopicVideoController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('topic-hadith/dataTable', [TopicHadithController::class, 'dataTable'])->name('topic-hadith.dataTable');
     Route::get('topic-hadith/{topic_id}/{id?}', [TopicHadithController::class, 'index'])->name('topic-hadith.index');
     Route::resource('topic-hadith', TopicHadithController::class)->only('store', 'update', 'destroy');
+
+    Route::get('topic-video/dataTable', [TopicVideoController::class, 'dataTable'])->name('topic-video.dataTable');
+    Route::get('topic-video/{topic_id}/{id?}', [TopicVideoController::class, 'index'])->name('topic-video.index');
+    Route::resource('topic-video', TopicVideoController::class)->only('store', 'update', 'destroy');
     // End Topic
 
     Route::get('users/datatable', [UserController::class, 'dataTable'])->name('users.datatable');

@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class TopicQuranVerse extends Pivot
@@ -13,6 +12,7 @@ class TopicQuranVerse extends Pivot
         'quran_verse_id',
         'simplified',
         'translation_json',
+        'position',
     ];
 
     protected $casts = [

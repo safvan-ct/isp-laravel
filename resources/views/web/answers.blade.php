@@ -69,14 +69,25 @@
                     </blockquote>
                 @endforeach
 
-                {{--
-                if (video) {
-                html += `<div class="mt-3 text-center">
-                    <button class="btn btn-outline-primary" onclick="openVideo('${video}', '${title}')">
-                        🎥 വീഡിയോ കാണുക
-                    </button>
-                </div>`;
-                } --}}
+                @if ($item->videos->isNotEmpty())
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                        @foreach ($item->videos as $video)
+                            @php
+                                $json = json_decode($video->title, true);
+                                $title = empty($json['ml'])
+                                    ? ($question->translation?->title ?:
+                                    $question->slug)
+                                    : $json['ml'];
+                            @endphp
+
+                            <button class="btn btn-outline-primary"
+                                onclick="openAddOnModal('video', '{{ $video->video_id }}', '{{ $title }}')">
+                                🎥 {{ $title }}
+                                {{-- {{ __('View Video') }} --}}
+                            </button>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         @endforeach
 
@@ -102,29 +113,10 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
-                <div id="google_translate_element" class="mt-2 text-center d-none"></div>
+                <div id="google_translate_element" class="mt-2 mb-2 text-center d-none"></div>
 
-                <div class="modal-body p-2" id="addOnModalBody">
+                <div class="modal-body p-0" id="addOnModalBody">
                     <div class="text-center text-muted">{{ __('Loading Data') }}...</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Video Modal -->
-    <div class="modal fade notranslate" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-black">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title" id="videoModalLabel"></h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div class="ratio ratio-16x9">
-                        <iframe id="videoIframe" src="" title="Video video player" allowfullscreen
-                            allow="autoplay"></iframe>
-                    </div>
                 </div>
             </div>
         </div>
@@ -148,10 +140,11 @@
     </script>
 
     <script>
-        function openAddOnModal(type, id) {
+        function openAddOnModal(type, id, title = '') {
             const modalElement = document.getElementById("addOnModal");
             const modalLabel = document.getElementById("addOnModalLabel");
             const modalBody = document.getElementById("addOnModalBody");
+            modalBody.removeAttribute("style");
 
             let addOnModalLabel = '';
             let url = '';
@@ -165,7 +158,7 @@
                 url = "{{ route('fetch.hadith.verse', ':id') }}".replace(':id', id);
                 document.getElementById("google_translate_element").classList.remove("d-none");
             } else if (type === 'video') {
-                addOnModalLabel = "🎥 {{ __('Video Information') }}";
+                addOnModalLabel = `🎥 ${title}`;
             } else {
                 return;
             }
@@ -187,7 +180,7 @@
                         }
 
                         let arHeading = type === 'hadith' ? result.heading : '';
-                        let trHeading = type === 'hadith' ? result.translation?.[0]?.heading || "" : '';
+                        let trHeading = type === 'hadith' ? result.translations?.[0]?.heading || "" : '';
                         let arVerse = result.text;
                         let trVerse = result.translations?.[0]?.text || '<em>No translation available</em>';
                         let verseNumber = type === 'quran' ? result.number_in_chapter : result.hadith_number;
@@ -199,10 +192,9 @@
                                 Status: ${result.status || 'Unknown'}` :
                             `${result.quran_chapter_id}. ${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
 
-
                         modalBody.innerHTML = `
-                            <blockquote class="border-start mb-3 ${type === 'quran' ? 'notranslate' : ''}">
-                                ${arHeading ? `<p class="notranslate fw-bold m-0 fs-5" dir="rtl">${arHeading}</p> <p class="fw-bold">${trHeading}</p>` : ""}
+                            <blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">
+                                ${arHeading ? `<p class="notranslate fw-bold m-0 fs-5" dir="rtl">${arHeading}</p> <p class="fw-bold mb-2">${trHeading}</p>` : ""}
 
                                 <p dir="rtl" class="notranslate">
                                     <span class="fs-5 ${type === 'hadith' ? 'mt-1' : 'mt-3 quran-text'}" ${type === 'quran' ? 'style="line-height: 2.2;"' : ''}>
@@ -220,13 +212,24 @@
                         `;
                     })
                     .catch(err => {
-                        console.log(err);
-
                         modalBody.innerHTML =
                             `<div class="text-danger text-center py-3">{{ __('Informations not found') }}</div>`;
                     });
 
                 return;
+            } else {
+                modalBody.setAttribute("style", "margin: -1px;");
+                modalBody.innerHTML = `
+                    <div class="ratio ratio-16x9">
+                        <iframe id="videoIframe" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&&modestbranding=1&rel=0" title="Video player" allowfullscreen allow="autoplay"></iframe>
+                    </div>
+                `;
+
+                modalElement.addEventListener("hidden.bs.modal", () => {
+                    document.getElementById("videoIframe").src = "";
+                }, {
+                    once: true
+                });
             }
         }
     </script>

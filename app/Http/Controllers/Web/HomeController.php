@@ -288,6 +288,7 @@ class HomeController extends Controller
                         'translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang(),
                         'quranVerses'  => fn($q)  => $q->with(['quran.chapter.translations' => fn($q) => $q->lang('en')->active()]),
                         'hadithVerses' => fn($q) => $q->with('hadith.chapter.book'),
+                        'videos',
                     ])
                     ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),

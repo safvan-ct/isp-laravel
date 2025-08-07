@@ -106,7 +106,8 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row, meta) {
-                            const videoUrl = '';
+                            const videoUrl = "{{ route('admin.topic-video.index', ':id') }}"
+                                .replace(':id', row.id);
                             const hadithUrl = "{{ route('admin.topic-hadith.index', ':id') }}"
                                 .replace(':id', row.id);
                             const quranUrl = "{{ route('admin.topic-quran.index', ':id') }}"

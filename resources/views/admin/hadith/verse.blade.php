@@ -182,13 +182,10 @@
                         }))
                     ];
 
-
                     chapterChoices.setChoices(options, 'value', 'label', true);
                 })
                 .catch(error => {
                     toastr.error(error);
-                    console.log(error);
-
                 });
 
             if (localStorage.getItem("HadithVerseChapter")) {
