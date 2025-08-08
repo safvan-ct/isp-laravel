@@ -31,24 +31,34 @@ class QuranChapterRepository implements QuranChapterInterface
         return QuranChapter::updateOrCreate(['id' => $quranChapter->id], $data);
     }
 
-    public function getAll(bool $withTranslations = false, bool $withVerses = false, $id = null)
+    public function getAll()
     {
-        $obj = QuranChapter::select(['id', 'name'])
-            ->when($withTranslations, fn($q) =>
-                $q->with(['translations' => fn($q) => $q->select(['id', 'quran_chapter_id', 'name', 'translation'])->active()->lang()])
-            )
-            ->when($withVerses, function ($q) {
-                $q->with(['verses' => function ($q) {
-                    $q->select(['id', 'quran_chapter_id', 'number_in_chapter', 'text'])
-                        ->with(['translations' => fn($q) => $q->select(['id', 'quran_verse_id', 'text'])->active()->lang()]);
-                }]);
-            })
+        return QuranChapter::select('id', 'name')
+            ->active()
+            ->get();
+    }
+
+    public function getWithTranslations()
+    {
+        return QuranChapter::select('id', 'name')
+            ->with('translations')
+            ->active()
+            ->get();
+    }
+
+    public function getWithVerses($id = null)
+    {
+        $obj = QuranChapter::select('id', 'name', 'no_of_verses')
+            ->with([
+                'translations',
+                'verses' => fn($q) => $q
+                    ->select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+                    ->with('translations')
+                    ->active(),
+            ])
+            ->whereHas('verses', fn($q) => $q->active())
             ->active();
 
-        if ($id) {
-            return $obj->where('id', $id)->first();
-        }
-
-        return $obj->get();
+        return $id ? $obj->find($id) : $obj->get();
     }
 }

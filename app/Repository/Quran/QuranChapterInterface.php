@@ -14,4 +14,8 @@ interface QuranChapterInterface
     public function update(array $data, QuranChapter $quranChapter);
 
     public function getAll();
+
+    public function getWithTranslations();
+
+    public function getWithVerses($id = null);
 }
