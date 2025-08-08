@@ -9,21 +9,21 @@
 
     <div class="row">
         <div class="col-sm-12">
+            <x-admin.alert type="success" />
+            <x-admin.alert type="error" />
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="card">
                 <div class="card-body">
-                    <x-admin.alert type="success" />
-                    <x-admin.alert type="error" />
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
                     @php
                         $url = $translation?->id
                             ? route('admin.topic-translations.update', $translation->id)
@@ -84,24 +84,26 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12">
-                            <label for="sub_title" class="form-label">Sub Title</label>
-                            <textarea id="sub_title" class="form-control  @error('title') is-invalid @enderror" name="sub_title">{{ old('sub_title', $translation?->sub_title) }}</textarea>
+                        @if (in_array($type, ['module', 'answer']))
+                            @if (in_array($type, ['module']))
+                                <div class="col-md-12">
+                                    <label for="sub_title" class="form-label">Sub Title</label>
+                                    <textarea id="sub_title" class="form-control  @error('title') is-invalid @enderror" name="sub_title">{{ old('sub_title', $translation?->sub_title) }}</textarea>
 
-                            <div class="invalid-feedback">
-                                @error('sub_title')
-                                    {{ $message }}
-                                @else
-                                    {{ 'This field is required.' }}
-                                @enderror
-                            </div>
+                                    <div class="invalid-feedback">
+                                        @error('sub_title')
+                                            {{ $message }}
+                                        @else
+                                            {{ 'This field is required.' }}
+                                        @enderror
+                                    </div>
 
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
-                        </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            @endif
 
-                        @if ($type != 'menu')
                             <div class="col-md-12">
                                 <label for="content" class="form-label">Content</label>
                                 <textarea id="content" name="content">{{ old('content', $translation?->content) }}</textarea>

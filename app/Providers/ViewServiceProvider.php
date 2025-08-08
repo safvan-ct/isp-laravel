@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
                             ->active()
                             ->lang(),
                     ])
-                // ->whereHas('translations', fn($q) => $q->lang()->active())
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->where('type', 'menu')
                     ->whereNull('parent_id')
                     ->where('is_primary', 1)

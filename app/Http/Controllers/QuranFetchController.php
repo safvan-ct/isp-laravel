@@ -45,7 +45,7 @@ class QuranFetchController extends Controller
 
                 'chapter'      => fn($q)      => $q
                     ->select('id', 'name')
-                    ->with(['translations' => fn($q) => $q->select('id', 'quran_chapter_id', 'name')->active()->lang('en')]),
+                    ->with(['translations' => fn($q) => $q->select('id', 'quran_chapter_id', 'name')->active()->lang()]),
             ])
             ->where('id', $id)
             ->active()

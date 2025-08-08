@@ -20,6 +20,7 @@ class HomeController extends Controller
                     ->lang(),
             ])
             ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
             ->where('type', 'module')
             ->where('is_primary', 1)
             ->whereNotNull('parent_id')
@@ -135,7 +136,7 @@ class HomeController extends Controller
                     ->with(['translations' => fn($q) => $q
                             ->select(['id', 'hadith_verse_id', 'heading', 'text'])
                             ->active()
-                            ->lang(),
+                            ->lang('en'),
                     ])
                     ->active(),
 
@@ -221,7 +222,8 @@ class HomeController extends Controller
                     ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),
             ])
-        // ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
             ->where('type', 'menu')
             ->whereNull('parent_id')
             ->first();
@@ -245,6 +247,7 @@ class HomeController extends Controller
                 'parent'       => fn($q)       => $q
                     ->select('id', 'slug', 'parent_id')
                     ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
+                    ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),
 
                 'children'     => fn($q)     => $q
@@ -254,6 +257,8 @@ class HomeController extends Controller
                     ->active(),
             ])
             ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
+            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
             ->where('type', 'module')
             ->where('id', $module_id)
             ->first();
@@ -284,14 +289,16 @@ class HomeController extends Controller
                     ->select('id', 'slug', 'parent_id')
                     ->with([
                         'translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang(),
-                        'quranVerses'  => fn($q)  => $q->with(['quran.chapter.translations' => fn($q) => $q->lang('en')->active()]),
-                        'hadithVerses' => fn($q) => $q->with('hadith.chapter.book'),
+                        'quranVerses'  => fn($q)  => $q->with(['quran.chapter.translations' => fn($q) => $q->lang()->active()]),
+                        'hadithVerses' => fn($q) => $q->with(['hadith.chapter.book.translations' => fn($q) => $q->lang()->active()]),
                         'videos',
                     ])
                     ->whereHas('translations', fn($q) => $q->lang()->active())
                     ->active(),
             ])
             ->whereHas('translations', fn($q) => $q->lang()->active())
+            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
+            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
             ->where('type', 'question')
             ->where('id', $question_id)
             ->first();

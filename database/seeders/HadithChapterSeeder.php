@@ -69,6 +69,22 @@ class HadithChapterSeeder extends Seeder
                         'created_at'        => $now,
                         'updated_at'        => $now,
                     ];
+
+                    $path       = database_path("hadith/{$book->slug}.json");
+                    $chaptersMl = file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+                    $chapterMap = count($chaptersMl) > 0 ? array_column($chaptersMl, null, 'id') : [];
+
+                    if (isset($chapterMap[$chapterId])) {
+                        $found          = $chapterMap[$chapterId];
+                        $translations[] = [
+                            'hadith_chapter_id' => $chapterId,
+                            'lang'              => 'ml',
+                            'name'              => $found['name'],
+                            'created_by'        => 1,
+                            'created_at'        => $now,
+                            'updated_at'        => $now,
+                        ];
+                    }
                 }
 
                 DB::transaction(function () use ($chapters, $translations) {

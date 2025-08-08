@@ -36,35 +36,40 @@
                 @endif
 
                 @foreach ($item->quranVerses as $quranVerse)
+                    @php
+                        $verse = $quranVerse->quran;
+                        $chapter = $quranVerse->quran->chapter;
+                        $json = json_decode($quranVerse->translation_json, true);
+                    @endphp
+
                     <blockquote class="m-0 mt-1 notranslate"
                         onclick="openAddOnModal('quran', {{ $quranVerse->quran_verse_id }})" style="cursor: pointer;">
                         <p dir="rtl" class="quran-text">{{ $quranVerse->simplified }}</p>
 
-                        @php
-                            $json = json_decode($quranVerse->translation_json, true);
-                        @endphp
                         {{ $json['ml'] }}
 
-                        <br><span class="text-muted small fst-italic">
-                            🔖
-                            {{ $quranVerse->quran->quran_chapter_id }}.{{ $quranVerse->quran->chapter->translation->name }}:
+                        <br>
+                        <span class="text-muted small fst-italic">
+                            🔖 {{ $chapter->id }}.{{ $chapter->translation?->name ?: $chapter->name }}:
                             {{ $quranVerse->quran->number_in_chapter }}
                         </span>
                     </blockquote>
                 @endforeach
 
                 @foreach ($item->hadithVerses as $hadithVerse)
+                    @php
+                        $book = $hadithVerse->hadith->chapter->book;
+                        $json = json_decode($hadithVerse->translation_json, true);
+                    @endphp
+
                     <blockquote class="m-0 mt-1 notranslate"
                         onclick="openAddOnModal('hadith', {{ $hadithVerse->hadith_verse_id }})" style="cursor: pointer;">
                         <p dir="rtl" class="quran-text">{{ $hadithVerse->simplified }}</p>
 
-                        @php
-                            $json = json_decode($hadithVerse->translation_json, true);
-                        @endphp
                         {{ $json['ml'] }}
 
                         <br><span class="text-muted small fst-italic">
-                            🔖 {{ $hadithVerse->hadith->chapter->book->slug }}:{{ $hadithVerse->hadith->hadith_number }}
+                            🔖 {{ $book->translation?->name ?: $book->name }}: {{ $hadithVerse->hadith->hadith_number }}
                         </span>
                     </blockquote>
                 @endforeach
@@ -186,11 +191,11 @@
                         let verseNumber = type === 'quran' ? result.number_in_chapter : result.hadith_number;
 
                         let reference = type === 'hadith' ? `${result.book.translations?.[0]?.name || result.book.name},
-                                Volume: ${result.volume},
-                                Chapter: #${result.chapter.chapter_number} - ${result.chapter.translations?.[0]?.name || result.chapter.name},
-                                Hadith: #${result.hadith_number},
-                                Status: ${result.status || 'Unknown'}` :
-                            `${result.quran_chapter_id}. ${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
+                                {{ __('Volume') }}: ${result.volume},
+                                {{ __('Chapter') }}: #${result.chapter.chapter_number} - ${result.chapter.translations?.[0]?.name || result.chapter.name},
+                                {{ __('Hadith') }}: #${result.hadith_number},
+                                {{ __('Status') }}: ${result.status || 'Unknown'}` :
+                            `${result.quran_chapter_id}.${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
 
                         modalBody.innerHTML = `
                             <blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">

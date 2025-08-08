@@ -43,6 +43,19 @@ class HadithBookSeeder extends Seeder
             $books        = [];
             $translations = [];
 
+            $booksMl = [
+                ["id" => 1, "name" => "സഹീഹ് ബുഖാരി", "writer" => "ഇമാം ബുഖാരി"],
+                ["id" => 2, "name" => "സഹീഹ് മുസ്ലിം", "writer" => "ഇമാം മുസ്ലിം"],
+                ["id" => 4, "name" => "ജാമി അൽ-തിർമിധി", "writer" => "ആബു ഇസാ മുഹമ്മദ് അൽ-തിർമിധി"],
+                ["id" => 5, "name" => "സുനാൻ അബു ദാവൂദ്", "writer" => "ഇമാം അബു ദാവൂദ് (സുലൈമാൻ ഇബ്നു അൽ-അഷ'ആത്ത് അസ്-സിജിസ്ഥാനി)"],
+                ["id" => 6, "name" => "സുനാൻ ഇബ്‍ൻ മാജഹ്", "writer" => "ഇമാം മുഹമ്മദ് ബിൻ യസീദ് ഇബ്ന്‍ മാജഹ് അൽ-ഖാസ്വിനി"],
+                ["id" => 7, "name" => "സുന്നാൻ അന-നസാഈ", "writer" => "ഇമാം അഹ്മദ് അൽ-നസാഈ"],
+                ["id" => 8, "name" => "മിഷ്‌കാത് അൽ-മസാബിഹ്", "writer" => "ഖാതിബ് അൽ-തബ്രീസി"],
+                ["id" => 9, "name" => "മുസ്നദ് അഹ്മദ്", "writer" => "ഇമാം അഹ്മദ് ഇബ്ന്‍ ഹൻബൽ"],
+                ["id" => 10, "name" => "അൽ-സിൽസിലാ സഹീഹ", "writer" => "അല്ലാമാ മുഹമ്മദ് നാസിർഉദ്ദീൻ അൽ-ബാണി"],
+            ];
+            $bookMap = array_column($booksMl, null, 'id');
+
             foreach ($booksData as $book) {
                 if (empty($book['hadiths_count'])) {
                     continue; // Skip books with 0 hadiths
@@ -72,6 +85,19 @@ class HadithBookSeeder extends Seeder
                     'created_at'     => $now,
                     'updated_at'     => $now,
                 ];
+
+                if (isset($bookMap[$bookId])) {
+                    $found          = $bookMap[$bookId];
+                    $translations[] = [
+                        'hadith_book_id' => $bookId,
+                        'lang'           => 'ml',
+                        'name'           => $found['name'],
+                        'writer'         => $found['writer'] ?? null,
+                        'created_by'     => 1,
+                        'created_at'     => $now,
+                        'updated_at'     => $now,
+                    ];
+                }
             }
 
             DB::transaction(function () use ($books, $translations) {

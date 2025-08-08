@@ -85,15 +85,15 @@ class HadithFetchController extends Controller
                     ->with([
                         'translations' => fn($q) => $q->select('id', 'hadith_chapter_id', 'name')
                             ->active()
-                            ->lang('en'),
+                            ->lang(),
                     ]),
 
                 'book'         => fn($q)         => $q
-                    ->select('id', 'name', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')
+                    ->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')
                     ->with([
                         'translations' => fn($q) => $q->select('id', 'hadith_book_id', 'name', 'writer')
                             ->active()
-                            ->lang('en'),
+                            ->lang(),
                     ]),
             ])
             ->where('id', $id)
