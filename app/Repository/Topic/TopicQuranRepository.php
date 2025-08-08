@@ -17,6 +17,8 @@ class TopicQuranRepository implements TopicQuranInterface
 
     public function create(array $data): TopicQuranVerse
     {
+        $position         = TopicQuranVerse::count() + 1;
+        $data['position'] = $position;
         return TopicQuranVerse::create($data);
     }
 

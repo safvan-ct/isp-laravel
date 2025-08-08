@@ -17,6 +17,8 @@ class TopicHadithRepository implements TopicHadithInterface
 
     public function create(array $data): TopicHadithVerse
     {
+        $position         = TopicHadithVerse::count() + 1;
+        $data['position'] = $position;
         return TopicHadithVerse::create($data);
     }
 

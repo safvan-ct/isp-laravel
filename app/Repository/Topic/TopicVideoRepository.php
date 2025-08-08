@@ -17,6 +17,8 @@ class TopicVideoRepository implements TopicVideoInterface
 
     public function create(array $data): TopicVideo
     {
+        $position         = TopicVideo::count() + 1;
+        $data['position'] = $position;
         return TopicVideo::create($data);
     }
 
