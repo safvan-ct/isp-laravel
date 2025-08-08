@@ -76,6 +76,16 @@ class TopicRepository implements TopicInterface
             ->first();
     }
 
+    public function getModulesHasMenu()
+    {
+        return Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
+            ->where('type', 'module')
+            ->where('is_primary', 1)
+            ->get();
+    }
+
     public function getQuestionWithAll($slug)
     {
         return Topic::select('id', 'slug', 'parent_id')

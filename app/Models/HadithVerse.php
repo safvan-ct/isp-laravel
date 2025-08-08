@@ -40,7 +40,7 @@ class HadithVerse extends Model
         return $this->hasMany(HadithVerseTranslation::class)
             ->select('id', 'hadith_verse_id', 'heading', 'text')
             ->active()
-            ->lang();
+            ->lang('en');
     }
 
     // --------------------

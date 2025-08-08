@@ -19,5 +19,7 @@ interface TopicInterface
 
     public function getModuleWithAll($slug);
 
+    public function getModulesHasMenu();
+
     public function getQuestionWithAll($slug);
 }

@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
 
+// Fetch
+Route::prefix('fetch')->name('fetch.')->group(function () {
+    Route::get('quran-chapters', [QuranFetchController::class, 'chapters'])->name('quran.chapters');
+    Route::get('quran-ayahs', [QuranFetchController::class, 'verses'])->name('quran.ayahs');
+    Route::get('quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('quran.verse');
+
+    Route::get('hadith-books', [HadithFetchController::class, 'books'])->name('hadith.books');
+    Route::get('hadith-chapters', [HadithFetchController::class, 'chapters'])->name('hadith.chapters');
+    Route::get('hadith-verses', [HadithFetchController::class, 'verses'])->name('hadith.verses');
+    Route::get('hadith-verse/{id}', [HadithFetchController::class, 'verse'])->name('hadith.verse');
+});
+// End Fetch
+
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');
 
@@ -22,16 +35,6 @@ Route::get('hadith/{book}/verse/{verse}', [HadithController::class, 'hadithVerse
 Route::get('{slug}', [TopicController::class, 'modules'])->name('modules.show');
 Route::get('{menu_slug}/{module_slug}', [TopicController::class, 'questions'])->name('questions.show');
 Route::get('{menu_slug}/{module_slug}/{question_slug}', [TopicController::class, 'answers'])->name('answers.show');
-
-// Fetch
-Route::get('fetch-quran-chapters', [QuranFetchController::class, 'chapters'])->name('fetch.quran.chapters');
-Route::get('fetch-quran-ayahs', [QuranFetchController::class, 'verses'])->name('fetch.quran.ayahs');
-Route::get('fetch-quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('fetch.quran.verse');
-
-Route::get('fetch-hadith-books', [HadithFetchController::class, 'books'])->name('fetch.hadith.books');
-Route::get('fetch-hadith-chapters', [HadithFetchController::class, 'chapters'])->name('fetch.hadith.chapters');
-Route::get('fetch-hadith-verses', [HadithFetchController::class, 'verses'])->name('fetch.hadith.verses');
-Route::get('fetch-hadith-verse/{id}', [HadithFetchController::class, 'verse'])->name('fetch.hadith.verse');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

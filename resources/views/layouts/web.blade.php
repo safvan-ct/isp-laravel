@@ -48,6 +48,10 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                @php
+                    $menu_slug = isset($menuSlug) ? $menuSlug : null;
+                @endphp
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }} text-uppercase"
@@ -64,7 +68,8 @@
 
                     @foreach ($menus as $item)
                         <li class="nav-item">
-                            <a class="nav-link text-uppercase" href="{{ route('modules.show', $item->slug) }}">
+                            <a class="nav-link text-uppercase {{ $item->slug == $menu_slug ? 'active' : '' }}"
+                                href="{{ route('modules.show', $item->slug) }}">
                                 {{ $item->translation?->title ?: $item->slug }}
                             </a>
                         </li>

@@ -36,16 +36,10 @@ class QuranFetchController extends Controller
 
     public function verse($id)
     {
-        $verse = QuranVerse::select(['id', 'quran_chapter_id', 'number_in_chapter', 'text'])
+        $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
             ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'quran_verse_id', 'text')
-                    ->active()
-                    ->lang(),
-
-                'chapter'      => fn($q)      => $q
-                    ->select('id', 'name')
-                    ->with(['translations' => fn($q) => $q->select('id', 'quran_chapter_id', 'name')->active()->lang()]),
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
             ])
             ->where('id', $id)
             ->active()

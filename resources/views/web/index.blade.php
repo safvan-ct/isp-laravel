@@ -43,7 +43,10 @@
                         </div>
 
                         <div class="card-footer bg-transparent border-0 pb-3">
-                            <a href="{{ route('questions', $item->id) }}" class="btn btn-primary">{{ __('Know More') }}</a>
+                            <a href="{{ route('questions.show', ['menu_slug' => $item->parent->slug, 'module_slug' => $item->slug]) }}"
+                                class="btn btn-primary">
+                                {{ __('Know More') }}
+                            </a>
                         </div>
                     </div>
                 </div>

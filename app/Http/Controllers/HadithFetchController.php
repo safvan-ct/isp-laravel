@@ -73,28 +73,11 @@ class HadithFetchController extends Controller
 
     public function verse($id)
     {
-        $verse = HadithVerse::select(['id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status'])
+        $verse = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
             ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'hadith_verse_id', 'lang', 'heading', 'text')
-                    ->active()
-                    ->lang('en'),
-
-                'chapter'      => fn($q)      => $q
-                    ->select('id', 'hadith_book_id', 'chapter_number', 'name')
-                    ->with([
-                        'translations' => fn($q) => $q->select('id', 'hadith_chapter_id', 'name')
-                            ->active()
-                            ->lang(),
-                    ]),
-
-                'book'         => fn($q)         => $q
-                    ->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')
-                    ->with([
-                        'translations' => fn($q) => $q->select('id', 'hadith_book_id', 'name', 'writer')
-                            ->active()
-                            ->lang(),
-                    ]),
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
+                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
             ])
             ->where('id', $id)
             ->active()

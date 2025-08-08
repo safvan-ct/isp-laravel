@@ -2,22 +2,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Topic;
+use App\Repository\Topic\TopicInterface;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        $modules = Topic::select('id', 'slug')
-            ->withWhereHas('translations')
-            ->withWhereHas('parent.translations')
-            ->where('type', 'module')
-            ->where('is_primary', 1)
-            ->whereNotNull('parent_id')
-            ->get();
-
-        return view('web.index', compact('modules'));
-    }
+    public function __construct(protected TopicInterface $topicRepository)
+    {}
 
     public function changeLanguage($lang)
     {
@@ -28,4 +18,11 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
+
+    public function index()
+    {
+        $modules = $this->topicRepository->getModulesHasMenu();
+        return view('web.index', compact('modules'));
+    }
+
 }

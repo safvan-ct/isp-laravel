@@ -9,14 +9,14 @@ class TopicController extends Controller
     public function __construct(protected TopicInterface $topicRepository)
     {}
 
-    public function modules($slug)
+    public function modules($menuSlug)
     {
-        $topic = $this->topicRepository->getMenuWithAll($slug);
+        $topic = $this->topicRepository->getMenuWithAll($menuSlug);
         if (! $topic) {
             abort(404);
         }
 
-        return view('web.modules', compact('topic'));
+        return view('web.modules', compact('topic', 'menuSlug'));
     }
 
     public function questions($menuSlug, $moduleSlug)
@@ -26,7 +26,7 @@ class TopicController extends Controller
             abort(404);
         }
 
-        return view('web.questions', compact('module'));
+        return view('web.questions', compact('module', 'menuSlug'));
     }
 
     public function answers($menuSlug, $moduleSlug, $questionSlug)
