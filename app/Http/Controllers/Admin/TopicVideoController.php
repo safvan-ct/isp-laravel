@@ -73,4 +73,10 @@ class TopicVideoController extends Controller
     {
         return DataTables::of($this->topicVideoRepository->dataTable($request->topic_id))->make(true);
     }
+
+    public function sort(Request $request)
+    {
+        $this->topicVideoRepository->sort($request->order);
+        return response()->json(['message' => 'Items sorted successfully']);
+    }
 }

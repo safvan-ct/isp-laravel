@@ -96,14 +96,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     Route::get('topic-quran/dataTable', [TopicQuranController::class, 'dataTable'])->name('topic-quran.dataTable');
     Route::get('topic-quran/{topic_id}/{id?}', [TopicQuranController::class, 'index'])->name('topic-quran.index');
+    Route::post('topic-quran/sort', [TopicQuranController::class, 'sort'])->name('topic-quran.sort');
     Route::resource('topic-quran', TopicQuranController::class)->only('store', 'update', 'destroy');
 
     Route::get('topic-hadith/dataTable', [TopicHadithController::class, 'dataTable'])->name('topic-hadith.dataTable');
     Route::get('topic-hadith/{topic_id}/{id?}', [TopicHadithController::class, 'index'])->name('topic-hadith.index');
+    Route::post('topic-hadith/sort', [TopicHadithController::class, 'sort'])->name('topic-hadith.sort');
     Route::resource('topic-hadith', TopicHadithController::class)->only('store', 'update', 'destroy');
 
     Route::get('topic-video/dataTable', [TopicVideoController::class, 'dataTable'])->name('topic-video.dataTable');
     Route::get('topic-video/{topic_id}/{id?}', [TopicVideoController::class, 'index'])->name('topic-video.index');
+    Route::post('topic-video/sort', [TopicVideoController::class, 'sort'])->name('topic-video.sort');
     Route::resource('topic-video', TopicVideoController::class)->only('store', 'update', 'destroy');
     // End Topic
 

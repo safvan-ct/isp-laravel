@@ -129,6 +129,10 @@
                         id="createBtn">
                         Create
                     </a>
+                    <button type="button" class="btn btn-info btn-sm" id="reorderBtn"
+                        onclick="sortData('{{ route('admin.topic-quran.sort') }}', '{{ csrf_token() }}')">
+                        Sort
+                    </button>
 
                     <x-admin.table :headers="['#', 'Simplified', 'Translation (JSON)', 'Surah', 'Actions']"></x-admin.table>
                 </div>
@@ -245,7 +249,11 @@
                 columnDefs: [{
                     targets: '_all',
                     className: 'text-center'
-                }]
+                }],
+                rowId: 'id',
+                drawCallback: function(settings) {
+                    makeSortable();
+                },
             });
         });
 

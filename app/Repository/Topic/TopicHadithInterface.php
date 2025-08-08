@@ -12,4 +12,6 @@ interface TopicHadithInterface
     public function create(array $data);
 
     public function update(array $data, TopicHadithVerse $topicHadithVerse);
+
+    public function sort(array $data);
 }

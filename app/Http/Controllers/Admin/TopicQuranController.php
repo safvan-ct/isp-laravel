@@ -74,4 +74,10 @@ class TopicQuranController extends Controller
     {
         return DataTables::of($this->topicQuranRepository->dataTable($request->topic_id))->make(true);
     }
+
+    public function sort(Request $request)
+    {
+        $this->topicQuranRepository->sort($request->order);
+        return response()->json(['message' => 'Items sorted successfully']);
+    }
 }

@@ -12,7 +12,7 @@ class TopicVideoRepository implements TopicVideoInterface
 
     public function dataTable($topicId)
     {
-        return TopicVideo::where('topic_id', $topicId);
+        return TopicVideo::where('topic_id', $topicId)->orderBy('position');
     }
 
     public function create(array $data): TopicVideo
@@ -23,5 +23,12 @@ class TopicVideoRepository implements TopicVideoInterface
     public function update(array $data, TopicVideo $topicVideo): void
     {
         $topicVideo->update($data);
+    }
+
+    public function sort(array $data): void
+    {
+        foreach ($data as $item) {
+            TopicVideo::where('id', $item['id'])->update(['position' => $item['position']]);
+        }
     }
 }

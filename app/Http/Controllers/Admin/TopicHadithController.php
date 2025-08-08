@@ -74,4 +74,10 @@ class TopicHadithController extends Controller
     {
         return DataTables::of($this->topicHadithRepository->dataTable($request->topic_id))->make(true);
     }
+
+    public function sort(Request $request)
+    {
+        $this->topicHadithRepository->sort($request->order);
+        return response()->json(['message' => 'Items sorted successfully']);
+    }
 }

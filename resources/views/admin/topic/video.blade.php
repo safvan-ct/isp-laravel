@@ -93,6 +93,10 @@
                         id="createBtn">
                         Create
                     </a>
+                    <button type="button" class="btn btn-info btn-sm" id="reorderBtn"
+                        onclick="sortData('{{ route('admin.topic-video.sort') }}', '{{ csrf_token() }}')">
+                        Sort
+                    </button>
 
                     <x-admin.table :headers="['#', 'Video ID', 'Title (JSON)', 'Actions']"></x-admin.table>
                 </div>
@@ -202,7 +206,11 @@
                 columnDefs: [{
                     targets: '_all',
                     className: 'text-center'
-                }]
+                }],
+                rowId: 'id',
+                drawCallback: function(settings) {
+                    makeSortable();
+                },
             });
         });
     </script>

@@ -12,4 +12,6 @@ interface TopicQuranInterface
     public function create(array $data);
 
     public function update(array $data, TopicQuranVerse $topicQuranVerse);
+
+    public function sort(array $data);
 }

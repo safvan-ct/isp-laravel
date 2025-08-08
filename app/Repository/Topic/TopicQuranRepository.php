@@ -12,7 +12,7 @@ class TopicQuranRepository implements TopicQuranInterface
 
     public function dataTable($topicId)
     {
-        return TopicQuranVerse::with('quran')->where('topic_id', $topicId);
+        return TopicQuranVerse::with('quran')->where('topic_id', $topicId)->orderBy('position');
     }
 
     public function create(array $data): TopicQuranVerse
@@ -23,5 +23,12 @@ class TopicQuranRepository implements TopicQuranInterface
     public function update(array $data, TopicQuranVerse $topicQuranVerse): void
     {
         $topicQuranVerse->update($data);
+    }
+
+    public function sort(array $data): void
+    {
+        foreach ($data as $item) {
+            TopicQuranVerse::where('id', $item['id'])->update(['position' => $item['position']]);
+        }
     }
 }

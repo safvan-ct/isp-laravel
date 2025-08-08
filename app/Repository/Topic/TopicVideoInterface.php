@@ -12,4 +12,6 @@ interface TopicVideoInterface
     public function create(array $data);
 
     public function update(array $data, TopicVideo $topicVideo);
+
+    public function sort(array $data);
 }
