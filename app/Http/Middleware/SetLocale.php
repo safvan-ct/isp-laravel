@@ -22,6 +22,10 @@ class SetLocale
 
         app()->setLocale(session('lang', 'ml'));
 
+        if (! request()->routeIs('admin.*')) {
+            return $next($request);
+        }
+
         if (Auth::check() && Auth::user()->hasRole(['topic staff', 'hadith staff', 'quran staff'])) {
             $lang = Config::get('app.languages')[app()->getLocale()];
             Config::set('app.languages', [app()->getLocale() => $lang]);

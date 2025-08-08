@@ -16,16 +16,9 @@ class Topic extends Model
         return $query->where('is_active', true);
     }
 
-    public function parent()
-    {
-        return $this->belongsTo(Topic::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Topic::class, 'parent_id')->orderBy('position');
-    }
-
+    // --------------------
+    // Translations
+    // --------------------
     public function getTranslationAttribute()
     {
         return $this->translations->first();
@@ -33,26 +26,59 @@ class Topic extends Model
 
     public function translations()
     {
-        return $this->hasMany(TopicTranslation::class);
+        return $this->hasMany(TopicTranslation::class)
+            ->select('id', 'topic_id', 'title', 'sub_title', 'content')
+            ->active()
+            ->lang();
     }
 
-    public function translation($lang = 'en')
+    // --------------------
+    // Parent topic
+    // --------------------
+    public function parent()
     {
-        return $this->hasOne(TopicTranslation::class)->where('lang', $lang);
+        return $this->belongsTo(Topic::class, 'parent_id')
+            ->select('id', 'slug', 'parent_id')
+            ->active();
     }
 
+    // --------------------
+    // Children
+    // --------------------
+    public function children()
+    {
+        return $this->hasMany(Topic::class, 'parent_id')
+            ->select('id', 'slug', 'parent_id')
+            ->orderBy('position')
+            ->active();
+    }
+
+    // --------------------
+    // Quran verses nested
+    // --------------------
     public function quranVerses()
     {
-        return $this->hasMany(TopicQuranVerse::class);
+        return $this->hasMany(TopicQuranVerse::class, 'topic_id')
+            ->with('quran.chapter.translations')
+            ->orderBy('position');
     }
 
+    // --------------------
+    // Hadith verses nested
+    // --------------------
     public function hadithVerses()
     {
-        return $this->hasMany(TopicHadithVerse::class);
+        return $this->hasMany(TopicHadithVerse::class, 'topic_id')
+            ->with('hadith.chapter.book.translations')
+            ->orderBy('position');
     }
 
+    // --------------------
+    // Videos
+    // --------------------
     public function videos()
     {
-        return $this->hasMany(TopicVideo::class);
+        return $this->hasMany(TopicVideo::class)
+            ->orderBy('position');
     }
 }

@@ -19,12 +19,6 @@ class TopicQuranVerse extends Pivot
         'translation_json' => 'array',
     ];
 
-    // Optional relationships
-    public function topic()
-    {
-        return $this->belongsTo(Topic::class);
-    }
-
     public function quran()
     {
         return $this->belongsTo(QuranVerse::class, 'quran_verse_id');

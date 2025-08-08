@@ -27,6 +27,9 @@ class QuranChapter extends Model
         return $query->where('is_active', true);
     }
 
+    // --------------------
+    // Translations
+    // --------------------
     public function getTranslationAttribute()
     {
         return $this->translations->first();
@@ -34,9 +37,15 @@ class QuranChapter extends Model
 
     public function translations()
     {
-        return $this->hasMany(QuranChapterTranslation::class);
+        return $this->hasMany(QuranChapterTranslation::class)
+            ->select('id', 'quran_chapter_id', 'name', 'translation')
+            ->active()
+            ->lang();
     }
 
+    // --------------------
+    // Verses
+    // --------------------
     public function verses()
     {
         return $this->hasMany(QuranVerse::class);

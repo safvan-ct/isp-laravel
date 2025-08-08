@@ -27,6 +27,9 @@ class HadithVerse extends Model
         return $query->where('is_active', 1);
     }
 
+    // --------------------
+    // Translations
+    // --------------------
     public function getTranslationAttribute()
     {
         return $this->translations->first();
@@ -34,21 +37,25 @@ class HadithVerse extends Model
 
     public function translations()
     {
-        return $this->hasMany(HadithVerseTranslation::class);
+        return $this->hasMany(HadithVerseTranslation::class)
+            ->select('id', 'hadith_verse_id', 'heading', 'text')
+            ->active()
+            ->lang();
     }
 
+    // --------------------
+    // Chapter
+    // --------------------
     public function chapter()
     {
         return $this->belongsTo(HadithChapter::class, 'hadith_chapter_id');
     }
 
+    // --------------------
+    // Book
+    // --------------------
     public function book()
     {
         return $this->belongsTo(HadithBook::class, 'hadith_book_id');
-    }
-
-    public function topics()
-    {
-        return $this->belongsToMany(Topic::class, 'topic_hadith');
     }
 }

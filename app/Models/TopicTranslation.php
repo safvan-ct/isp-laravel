@@ -21,9 +21,4 @@ class TopicTranslation extends Model
         $lang = $lang ?? app()->getLocale();
         return $query->where('lang', $lang);
     }
-
-    public function topic()
-    {
-        return $this->belongsTo(Topic::class);
-    }
 }

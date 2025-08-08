@@ -33,11 +33,6 @@ class HadithChapterTranslation extends Model
         return $query->where('lang', $lang);
     }
 
-    public function chapter()
-    {
-        return $this->belongsTo(HadithChapter::class);
-    }
-
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');

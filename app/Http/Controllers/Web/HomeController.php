@@ -13,14 +13,8 @@ class HomeController extends Controller
     public function index()
     {
         $modules = Topic::select('id', 'slug')
-            ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'topic_id', 'title', 'sub_title')
-                    ->active()
-                    ->lang(),
-            ])
-            ->whereHas('translations', fn($q) => $q->lang()->active())
-            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
             ->where('type', 'module')
             ->where('is_primary', 1)
             ->whereNotNull('parent_id')
@@ -210,20 +204,8 @@ class HomeController extends Controller
     public function modules($slug)
     {
         $topic = Topic::select('id', 'slug')
-            ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'topic_id', 'title')
-                    ->active()
-                    ->lang(),
-
-                'children'     => fn($q)     => $q
-                    ->select('id', 'slug', 'parent_id')
-                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang()])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
-                    ->active(),
-            ])
-            ->whereHas('translations', fn($q) => $q->lang()->active())
-            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
+            ->withWhereHas('translations')
+            ->withWhereHas('children.translations')
             ->where('type', 'menu')
             ->whereNull('parent_id')
             ->first();
@@ -238,27 +220,9 @@ class HomeController extends Controller
     public function questions($module_id)
     {
         $module = Topic::select('id', 'slug', 'parent_id')
-            ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'topic_id', 'title', 'sub_title')
-                    ->active()
-                    ->lang(),
-
-                'parent'       => fn($q)       => $q
-                    ->select('id', 'slug', 'parent_id')
-                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
-                    ->active(),
-
-                'children'     => fn($q)     => $q
-                    ->select('id', 'slug', 'parent_id')
-                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
-                    ->active(),
-            ])
-            ->whereHas('translations', fn($q) => $q->lang()->active())
-            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
-            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
+            ->withWhereHas('children.translations')
             ->where('type', 'module')
             ->where('id', $module_id)
             ->first();
@@ -273,34 +237,17 @@ class HomeController extends Controller
     public function answers($question_id)
     {
         $question = Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
+            ->withWhereHas('children.translations')
             ->with([
-                'translations' => fn($q) => $q
-                    ->select('id', 'topic_id', 'title', 'sub_title')
-                    ->active()
-                    ->lang(),
-
-                'parent'       => fn($q)       => $q
-                    ->select('id', 'slug', 'parent_id')
-                    ->with(['translations' => fn($q) => $q->select('id', 'topic_id', 'title')->active()->lang()])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
-                    ->active(),
-
-                'children'     => fn($q)     => $q
-                    ->select('id', 'slug', 'parent_id')
-                    ->with([
-                        'translations' => fn($q) => $q->select('id', 'topic_id', 'title', 'content')->active()->lang(),
-                        'quranVerses'  => fn($q)  => $q->with(['quran.chapter.translations' => fn($q) => $q->lang()->active()]),
-                        'hadithVerses' => fn($q) => $q->with(['hadith.chapter.book.translations' => fn($q) => $q->lang()->active()]),
-                        'videos',
-                    ])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
-                    ->active(),
+                'children.quranVerses',
+                'children.hadithVerses',
+                'children.videos',
             ])
-            ->whereHas('translations', fn($q) => $q->lang()->active())
-            ->whereHas('parent', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
-            ->whereHas('children', fn($q) => $q->whereHas('translations', fn($q) => $q->lang()->active()))
             ->where('type', 'question')
             ->where('id', $question_id)
+            ->active()
             ->first();
 
         if (! $question) {

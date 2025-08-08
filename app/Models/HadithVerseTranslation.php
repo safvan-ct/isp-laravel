@@ -33,11 +33,6 @@ class HadithVerseTranslation extends Model
         return $query->where('lang', $lang);
     }
 
-    public function hadith()
-    {
-        return $this->belongsTo(HadithVerse::class);
-    }
-
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');

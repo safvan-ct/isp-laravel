@@ -19,11 +19,6 @@ class TopicHadithVerse extends Model
         'translation_json' => 'array',
     ];
 
-    public function topic()
-    {
-        return $this->belongsTo(Topic::class);
-    }
-
     public function hadith()
     {
         return $this->belongsTo(HadithVerse::class, 'hadith_verse_id');

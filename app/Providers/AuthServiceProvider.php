@@ -19,6 +19,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (! request()->routeIs('admin.*')) {
+            return;
+        }
+
         Gate::before(function ($user, $ability) {
             return $user->hasAnyRole('Developer', 'Owner') ? true : null;
         });

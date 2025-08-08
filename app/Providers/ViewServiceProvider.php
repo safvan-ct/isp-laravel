@@ -27,15 +27,9 @@ class ViewServiceProvider extends ServiceProvider
             }
 
             $menus = Cache::remember(app()->getLocale() . '_primary_menus', now()->addHours(6), function () {
-                return Topic::select('id', 'slug', 'position')
-                    ->with(['translations' => fn($q) => $q
-                            ->select('id', 'topic_id', 'title')
-                            ->active()
-                            ->lang(),
-                    ])
-                    ->whereHas('translations', fn($q) => $q->lang()->active())
+                return Topic::select('id', 'slug')
+                    ->withWhereHas('translations')
                     ->where('type', 'menu')
-                    ->whereNull('parent_id')
                     ->where('is_primary', 1)
                     ->active()
                     ->orderBy('position')

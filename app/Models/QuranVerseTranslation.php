@@ -33,16 +33,6 @@ class QuranVerseTranslation extends Model
         return $query->where('lang', $lang);
     }
 
-    public function verse()
-    {
-        return $this->belongsTo(QuranVerse::class, 'quran_verse_id');
-    }
-
-    public function chapter()
-    {
-        return $this->belongsTo(QuranChapter::class, 'quran_chapter_id');
-    }
-
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
