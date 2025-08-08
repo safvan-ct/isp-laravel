@@ -14,7 +14,8 @@
                         <a href="{{ route('home') }}" class="text-decoration-none">{{ __('Home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{{ route('questions', $question->parent->id) }}" class="text-decoration-none">
+                        <a href="{{ route('questions.show', ['menu_slug' => $menuSlug, 'module_slug' => $moduleSlug]) }}"
+                            class="text-decoration-none">
                             {{ $question->parent->translation?->title ?: $question->parent->slug }}
                         </a>
                     </li>

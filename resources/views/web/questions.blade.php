@@ -29,11 +29,13 @@
     <main class="container my-3 col-two flex-grow-1">
         @foreach ($module->children as $item)
             <div class="guide-card mb-2">
-                <a href="{{ route('answers', $item->id) }}" class="guide-title text-decoration-none">
+                <a href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}"
+                    class="guide-title text-decoration-none">
                     <span class="guide-number m-0">{{ $loop->iteration }}</span> -
                     {{ $item->translation?->title ?: $item->slug }}
                 </a>
-                <a href="{{ route('answers', $item->id) }}" class="view-btn">
+                <a href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}"
+                    class="view-btn">
                     <i class="bi bi-arrow-right-circle-fill"></i>
                 </a>
             </div>

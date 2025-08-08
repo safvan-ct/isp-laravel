@@ -14,7 +14,7 @@ class TopicRepository implements TopicInterface
             ->when($parentId, fn($q) => $q->where('parent_id', $parentId));
     }
 
-    public function create(array $data, string $type): Topic
+    public function create(array $data, string $type)
     {
         $position = Topic::where('type', $type)->count() + 1;
 
@@ -48,10 +48,48 @@ class TopicRepository implements TopicInterface
         }
     }
 
-    public function get(int $id, ?string $type = null): Topic
+    public function get(int $id, ?string $type = null)
     {
         return Topic::with('translations')
             ->when($type, fn($q) => $q->where('type', $type))
             ->findOrFail($id);
+    }
+
+    public function getMenuWithAll($slug)
+    {
+        return Topic::select('id', 'slug')
+            ->withWhereHas('translations')
+            ->withWhereHas('children.translations')
+            ->where('type', 'menu')
+            ->where('slug', $slug)
+            ->first();
+    }
+
+    public function getModuleWithAll($slug)
+    {
+        return Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
+            ->withWhereHas('children.translations')
+            ->where('type', 'module')
+            ->where('slug', $slug)
+            ->first();
+    }
+
+    public function getQuestionWithAll($slug)
+    {
+        return Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->withWhereHas('parent.translations')
+            ->withWhereHas('children.translations')
+            ->with([
+                'children.quranVerses',
+                'children.hadithVerses',
+                'children.videos',
+            ])
+            ->where('type', 'question')
+            ->where('slug', $slug)
+            ->active()
+            ->first();
     }
 }

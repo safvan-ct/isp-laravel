@@ -1,0 +1,41 @@
+<?php
+namespace App\Http\Controllers\Web;
+
+use App\Http\Controllers\Controller;
+use App\Repository\Topic\TopicInterface;
+
+class TopicController extends Controller
+{
+    public function __construct(protected TopicInterface $topicRepository)
+    {}
+
+    public function modules($slug)
+    {
+        $topic = $this->topicRepository->getMenuWithAll($slug);
+        if (! $topic) {
+            abort(404);
+        }
+
+        return view('web.modules', compact('topic'));
+    }
+
+    public function questions($menuSlug, $moduleSlug)
+    {
+        $module = $this->topicRepository->getModuleWithAll($moduleSlug);
+        if (! $module) {
+            abort(404);
+        }
+
+        return view('web.questions', compact('module'));
+    }
+
+    public function answers($menuSlug, $moduleSlug, $questionSlug)
+    {
+        $question = $this->topicRepository->getQuestionWithAll($questionSlug);
+        if (! $question) {
+            abort(404);
+        }
+
+        return view('web.answers', compact('question', 'menuSlug', 'moduleSlug'));
+    }
+}

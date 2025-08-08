@@ -18,7 +18,8 @@
                             <div class="cat-title">{{ $item->translation?->title ?: $item->slug }}</div>
                             {!! $item->translation?->content !!}
                         </div>
-                        <a href="{{ route('questions', $item->id) }}" class="btn btn-primary mt-3 mb-0">
+                        <a href="{{ route('questions.show', ['menu_slug' => $topic->slug, 'module_slug' => $item->slug]) }}"
+                            class="btn btn-primary mt-3 mb-0">
                             {{ __('Know More') }}
                         </a>
                     </div>
