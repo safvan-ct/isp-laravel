@@ -48,6 +48,13 @@
 
         <x-admin.input name="slug" label="Slug" error="0" placeholder="Slug" required />
 
+        @if (in_array($type, ['menu', 'module']))
+            <div class="form-check mb-2">
+                <input type="checkbox" class="form-check-input" id="is_primary" name="is_primary" value="1">
+                <label class="form-check-label" for="is_primary">Mark As Primary</label>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-end">
             <x-admin.button class="btn btn-primary" onclick="createUpdatePost()">Save</x-admin.button>
         </div>
@@ -129,7 +136,7 @@
                                 .replace(':id', row.id);
 
                             return `<a href="${url}" class="btn btn-link">Translations</a>|<button type="button" class="btn btn-link" onclick="createUpdate(${row.id})"
-                                data-slug="${row.slug}" id="editBtn${row.id}">Edit</button>`;
+                                data-slug="${row.slug}" data-primary="${row.is_primary}" id="editBtn${row.id}">Edit</button>`;
                         }
                     }
                 ],
@@ -160,6 +167,7 @@
 
             $('#edit_id').val(id);
             $('#slug').val($(`#editBtn${id}`).data('slug') ?? '');
+            $('#is_primary').prop('checked', $(`#editBtn${id}`).data('primary') ?? false);
             $('#parent_id').val(localStorage.getItem("TopicParent{{ $type }}") ?? '');
         }
 
@@ -168,6 +176,7 @@
                 _token: "{{ csrf_token() }}",
                 id: $('#edit_id').val(),
                 slug: $('#slug').val(),
+                is_primary: $('#is_primary').is(':checked') ? 1 : 0
             };
 
             if ('{{ $type }}' !== 'menu' && data.id == 0) {

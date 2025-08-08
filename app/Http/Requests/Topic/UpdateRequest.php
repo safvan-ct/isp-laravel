@@ -22,7 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'slug' => ['required', Rule::unique('topics', 'slug')->ignore($this->route('topic')->id),],
+            'slug'       => ['required', Rule::unique('topics', 'slug')->ignore($this->route('topic')->id)],
+            'is_primary' => 'nullable',
         ];
     }
 }

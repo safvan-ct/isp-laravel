@@ -8,6 +8,9 @@ use App\Http\Controllers\Web\QuranController;
 use App\Http\Controllers\Web\TopicController;
 use Illuminate\Support\Facades\Route;
 
+require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
 
@@ -35,6 +38,3 @@ Route::get('hadith/{book}/verse/{verse}', [HadithController::class, 'hadithVerse
 Route::get('{slug}', [TopicController::class, 'modules'])->name('modules.show');
 Route::get('{menu_slug}/{module_slug}', [TopicController::class, 'questions'])->name('questions.show');
 Route::get('{menu_slug}/{module_slug}/{question_slug}', [TopicController::class, 'answers'])->name('answers.show');
-
-require __DIR__ . '/auth.php';
-require __DIR__ . '/admin.php';

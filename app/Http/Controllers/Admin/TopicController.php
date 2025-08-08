@@ -70,7 +70,7 @@ class TopicController extends Controller
 
     public function update(UpdateRequest $request, $type, Topic $topic)
     {
-        $topic->update(['slug' => Str::slug($request->slug)]);
+        $topic->update(['slug' => Str::slug($request->slug), 'is_primary' => $request->is_primary]);
         return response()->json(['message' => ucwords($type) . ' updated successfully']);
     }
 

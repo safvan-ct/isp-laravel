@@ -23,8 +23,9 @@ class StoreRequest extends FormRequest
         $type = $this->route('type');
 
         return [
-            'slug'      => 'required|unique:topics,slug',
-            'parent_id' => [$type !== 'menu' ? 'required' : 'nullable', 'exists:topics,id'],
+            'slug'       => 'required|unique:topics,slug',
+            'parent_id'  => [$type !== 'menu' ? 'required' : 'nullable', 'exists:topics,id'],
+            'is_primary' => 'nullable',
         ];
     }
 

@@ -9,7 +9,7 @@ class TopicRepository implements TopicInterface
 {
     public function dataTable(string $type, $parentId = null)
     {
-        return Topic::select('id', 'slug', 'is_active', 'position')
+        return Topic::select('id', 'slug', 'is_active', 'position', 'is_primary')
             ->where('type', $type)
             ->when($parentId, fn($q) => $q->where('parent_id', $parentId));
     }
@@ -19,10 +19,11 @@ class TopicRepository implements TopicInterface
         $position = Topic::where('type', $type)->count() + 1;
 
         $obj = Topic::create([
-            'slug'      => Str::slug($data['slug']),
-            'type'      => $type,
-            'position'  => $position,
-            'parent_id' => $data['parent_id'] ?? null,
+            'slug'       => Str::slug($data['slug']),
+            'type'       => $type,
+            'position'   => $position,
+            'parent_id'  => $data['parent_id'] ?? null,
+            'is_primary' => $data['is_primary'] ?? 0,
         ]);
 
         if (in_array($type, ['menu', 'module', 'question'])) {
