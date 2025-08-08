@@ -12,4 +12,6 @@ interface HadithVerseInterface
     public function status($id);
 
     public function update(array $data, HadithVerse $hadithVerse);
+
+    public function getByWhere($where = []);
 }

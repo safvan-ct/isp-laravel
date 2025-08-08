@@ -31,24 +31,33 @@ class HadithBookRepository implements HadithBookInterface
         return HadithBook::updateOrCreate(['id' => $hadithBook->id], $data);
     }
 
-    public function getAll(bool $withTranslations = false, bool $withChapters = false, $id = null)
+    public function getAll()
     {
-        $obj = HadithBook::select(['id', 'name', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count'])
-            ->when($withTranslations, function ($q) {
-                $q->with(['translations' => fn($q) => $q->select(['id', 'hadith_book_id', 'name', 'writer', 'description'])->active()->lang()]);
-            })
-            ->when($withChapters, function ($q) {
-                $q->with([
-                    'chapters' => fn($q) => $q->select(['id', 'hadith_book_id', 'chapter_number', 'name'])->active()
-                        ->with(['translations' => fn($q) => $q->active()->lang()]),
-                ]);
-            })
+        return HadithBook::select('id', 'name', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')
+            ->active()
+            ->get();
+    }
+
+    public function getWithTranslations()
+    {
+        return HadithBook::select('id', 'name', 'slug', 'writer', 'writer_death_year', 'chapter_count', 'hadith_count')
+            ->with('translations')
+            ->active()
+            ->get();
+    }
+
+    public function getWithChapters($id = null)
+    {
+        $obj = HadithBook::select('id', 'name', 'slug', 'writer')
+            ->with([
+                'translations',
+                'chapters' => fn($q) => $q
+                    ->select('id', 'hadith_book_id', 'chapter_number', 'name')
+                    ->with('translations')
+                    ->active(),
+            ])
             ->active();
 
-        if ($id) {
-            return $obj->where('id', $id)->first();
-        }
-
-        return $obj->get();
+        return $id ? $obj->find($id) : $obj->get();
     }
 }

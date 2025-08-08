@@ -27,7 +27,7 @@
                         style="color: #4E2D45;">{{ __('Chapters') }}</a>
 
                     @if (isset($verseNumber))
-                        | <a href="{{ route('hadith.chapter.verses', [$chapter->id]) }}"
+                        | <a href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}"
                             style="color: #4E2D45;">{{ $chapter->translation?->name ?: $chapter->name }}</a>
                     @endif
                 </div>
@@ -43,7 +43,7 @@
                 <div id="google_translate_element" class="mt-2 mb-0"></div>
             </div>
 
-            @foreach ($chapter->verses as $index => $hadith)
+            @foreach ($chapter->verses as $hadith)
                 <div class="ayah-card">
                     @if ($hadith->heading)
                         <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6">
@@ -64,7 +64,7 @@
 
                         {{ __('Volume') }}: {{ $hadith->volume }},
 
-                        {{ __('Chapter') }}: #{{ $hadith->chapter->chapter_number }} -
+                        {{ __('Chapter') }}: #{{ $chapter->chapter_number }} -
                         {{ $chapter->translation?->name ?: $chapter->name }},
 
                         {{ __('Hadith') }}: #{{ $hadith->hadith_number }},

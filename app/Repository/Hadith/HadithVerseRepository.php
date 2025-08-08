@@ -34,4 +34,9 @@ class HadithVerseRepository implements HadithVerseInterface
         $hadithVerse->update($data);
         return $hadithVerse;
     }
+
+    public function getByWhere($where = [])
+    {
+        return HadithVerse::where($where)->first();
+    }
 }

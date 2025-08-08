@@ -32,27 +32,25 @@ class HadithChapterRepository implements HadithChapterInterface
         return $hadithChapter;
     }
 
-    public function getAll($id = null, bool $withTranslations = false, bool $withVerses = false, $withBook = false)
+    public function getWithAll($id = null, $hadithNumber = null)
     {
-        $obj = HadithChapter::select(['id', 'hadith_book_id', 'chapter_number', 'name'])
-            ->when($withTranslations, function ($q) {
-                $q->with(['translations' => fn($q) => $q->select(['id', 'hadith_chapter_id', 'name'])->active()->lang()]);
-            })
-            ->when($withVerses, function ($q) {
-                $q->with(['verses' => function ($q) {
-                    $q->select(['id', 'hadith_chapter_id', 'hadith_number', 'heading', 'text', 'status'])->active()
-                        ->with(['translations' => fn($q) => $q->select(['id', 'hadith_verse_id', 'heading', 'text'])->active()->lang()]);
-                }]);
-            })
-            ->when($withBook, function ($q) {
-                $q->with(['book' => fn($q) => $q->select(['id', 'name'])->active()]);
-            })
+        $obj = HadithChapter::select('id', 'hadith_book_id', 'name', 'chapter_number')
+            ->with([
+                'translations',
+                'verses' => fn($q) => $q
+                    ->select('id', 'hadith_chapter_id', 'heading', 'text', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+                    ->with('translations')
+                    ->when($hadithNumber, fn($q) => $q->where('hadith_number', $hadithNumber))
+                    ->active(),
+
+                'book'   => fn($q)   => $q
+                    ->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')
+                    ->with('translations')
+                    ->active(),
+            ])
+            ->whereHas('verses', fn($q) => $q->active()->when($hadithNumber, fn($q) => $q->where('hadith_number', $hadithNumber)))
             ->active();
 
-        if ($id) {
-            return $obj->where('id', $id)->first();
-        }
-
-        return $obj->get();
+        return $id ? $obj->find($id) : $obj->get();
     }
 }

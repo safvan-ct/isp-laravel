@@ -13,5 +13,9 @@ interface HadithBookInterface
 
     public function update(array $data, HadithBook $hadithBook);
 
-    public function getAll(bool $withTranslations = false, bool $withChapters = false, $id = null);
+    public function getAll();
+
+    public function getWithTranslations();
+
+    public function getWithChapters($id = null);
 }

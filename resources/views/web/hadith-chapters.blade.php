@@ -24,7 +24,8 @@
 
             <ul class="index-list col-two">
                 @foreach ($book->chapters as $item)
-                    <a href="{{ route('hadith.chapter.verses', $item->id) }}" class="text-decoration-none">
+                    <a href="{{ route('hadith.chapter.verses', ['book' => $book->slug, 'chapter' => $item->id]) }}"
+                        class="text-decoration-none">
                         <li class="mb-2">
                             {{ $loop->iteration }}. {{ $item->translation?->name ?: $item->name }}
                             <i class="bi bi-play-fill"></i>
