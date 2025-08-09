@@ -201,13 +201,8 @@
                     }
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false,
-                        render: function(data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }
+                        data: 'position',
+                        name: 'position',
                     },
                     {
                         data: 'simplified',

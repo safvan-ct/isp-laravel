@@ -71,7 +71,7 @@ class TopicVideoController extends Controller
 
     public function dataTable(Request $request)
     {
-        return DataTables::of($this->topicVideoRepository->dataTable($request->topic_id))->make(true);
+        return DataTables::of($this->topicVideoRepository->dataTable($request))->make(true);
     }
 
     public function sort(Request $request)

@@ -2,6 +2,7 @@
 namespace App\Repository\Topic;
 
 use App\Models\TopicVideo;
+use Illuminate\Http\Request;
 
 class TopicVideoRepository implements TopicVideoInterface
 {
@@ -10,9 +11,15 @@ class TopicVideoRepository implements TopicVideoInterface
         return $id == 0 ? new TopicVideo() : TopicVideo::findOrFail($id);
     }
 
-    public function dataTable($topicId)
+    public function dataTable(Request $request)
     {
-        return TopicVideo::where('topic_id', $topicId)->orderBy('position');
+        $obj = TopicVideo::where('topic_id', $request->topic_id);
+
+        if (! $request->order) {
+            return $obj->orderBy('position');
+        }
+
+        return $obj;
     }
 
     public function create(array $data): TopicVideo

@@ -72,7 +72,7 @@ class TopicHadithController extends Controller
 
     public function dataTable(Request $request)
     {
-        return DataTables::of($this->topicHadithRepository->dataTable($request->topic_id))->make(true);
+        return DataTables::of($this->topicHadithRepository->dataTable($request))->make(true);
     }
 
     public function sort(Request $request)

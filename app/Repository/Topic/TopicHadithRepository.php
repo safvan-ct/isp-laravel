@@ -2,6 +2,7 @@
 namespace App\Repository\Topic;
 
 use App\Models\TopicHadithVerse;
+use Illuminate\Http\Request;
 
 class TopicHadithRepository implements TopicHadithInterface
 {
@@ -10,9 +11,15 @@ class TopicHadithRepository implements TopicHadithInterface
         return $id == 0 ? new TopicHadithVerse() : TopicHadithVerse::findOrFail($id);
     }
 
-    public function dataTable($topicId)
+    public function dataTable(Request $request)
     {
-        return TopicHadithVerse::with('hadith.chapter.book')->where('topic_id', $topicId)->orderBy('position');
+        $obj = TopicHadithVerse::with('hadith.chapter.book')->where('topic_id', $request->topic_id);
+
+        if (! $request->order) {
+            return $obj->orderBy('position');
+        }
+
+        return $obj;
     }
 
     public function create(array $data): TopicHadithVerse

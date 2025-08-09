@@ -2,6 +2,7 @@
 namespace App\Repository\Topic;
 
 use App\Models\TopicQuranVerse;
+use Illuminate\Http\Request;
 
 class TopicQuranRepository implements TopicQuranInterface
 {
@@ -10,9 +11,15 @@ class TopicQuranRepository implements TopicQuranInterface
         return $id == 0 ? new TopicQuranVerse() : TopicQuranVerse::findOrFail($id);
     }
 
-    public function dataTable($topicId)
+    public function dataTable(Request $request)
     {
-        return TopicQuranVerse::with('quran')->where('topic_id', $topicId)->orderBy('position');
+        $obj = TopicQuranVerse::with('quran')->where('topic_id', $request->topic_id);
+
+        if (! $request->order) {
+            return $obj->orderBy('position');
+        }
+
+        return $obj;
     }
 
     public function create(array $data): TopicQuranVerse
