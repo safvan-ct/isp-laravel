@@ -2,25 +2,42 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\HadithBook;
+use App\Models\HadithChapter;
+use App\Models\HadithVerse;
+use App\Models\QuranChapter;
+use App\Models\QuranVerse;
 use App\Models\User;
+use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Activitylog\Models\Activity;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class DashboardController extends Controller
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view activity-logs'), only: ['activityLog']),
+        ];
+    }
+
     public function index()
     {
-        $userCount  = User::whereHas('roles', fn($q) => $q->whereIn('name', ['User']))->count();
-        $staffCount = User::whereHas('roles', fn($q) => $q->whereNotIn('name', ['User']))->count();
-        $rolesCount = Role::count();
+        $counts = [
+            'users'           => User::whereHas('roles', fn($q) => $q->whereIn('name', ['Customer']))->count(),
+            'staff'           => User::whereHas('roles', fn($q) => $q->whereNotIn('name', ['Customer', 'Developer', 'Owner']))->count(),
+            'quran_chapters'  => QuranChapter::count(),
+            'quran_verses'    => QuranVerse::count(),
+            'hadith_books'    => HadithBook::count(),
+            'hadith_chapters' => HadithChapter::count(),
+            'hadith_verses'   => HadithVerse::count(),
+        ];
 
-        return view('admin.dashboard', compact('userCount', 'staffCount', 'rolesCount'));
+        return view('admin.dashboard', compact('counts'));
     }
 
     public function activityLog($logName = null, $eventName = null, $causerId = null, $subjectId = null)
     {
-        // $this->authorizeAction('activity-log', 'view');
-
         $logs      = Activity::selectRaw('log_name, event, MAX(id) as id')->whereNotNull('causer_id')->groupBy('log_name', 'event')->get();
         $logTables = $logs->pluck('log_name')->unique()->toArray();
         $logEvents = $logs->pluck('event')->unique()->toArray();

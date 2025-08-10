@@ -129,6 +129,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::resource('permissions', PermissionController::class)->except('show', 'create', 'edit');
     });
 
-    Route::get('activity-log/{logName?}/{eventName?}/{causerId?}/{subjectId?}', [DashboardController::class, 'activityLog'])
-        ->middleware('can:view activity-logs')->name('activity-log');
+    Route::get('activity-log/{logName?}/{eventName?}/{causerId?}/{subjectId?}', [DashboardController::class, 'activityLog'])->name('activity-log');
 });
