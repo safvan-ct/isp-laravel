@@ -70,7 +70,7 @@ class HadithChapterSeeder extends Seeder
                         'updated_at'        => $now,
                     ];
 
-                    $path       = database_path("hadith/{$book->slug}.json");
+                    $path       = database_path("json/hadith/{$book->slug}.json");
                     $chaptersMl = file_exists($path) ? json_decode(file_get_contents($path), true) : [];
                     $chapterMap = count($chaptersMl) > 0 ? array_column($chaptersMl, null, 'id') : [];
 

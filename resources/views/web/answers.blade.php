@@ -40,7 +40,9 @@
                     @php
                         $verse = $quranVerse->quran;
                         $chapter = $quranVerse->quran->chapter;
-                        $json = json_decode($quranVerse->translation_json, true);
+                        $json = is_array($quranVerse->translation_json)
+                            ? $quranVerse->translation_json
+                            : json_decode($quranVerse->translation_json, true);
                     @endphp
 
                     <blockquote class="m-0 mt-1 notranslate"
@@ -60,7 +62,9 @@
                 @foreach ($item->hadithVerses as $hadithVerse)
                     @php
                         $book = $hadithVerse->hadith->chapter->book;
-                        $json = json_decode($hadithVerse->translation_json, true);
+                        $json = is_array($hadithVerse->translation_json)
+                            ? $hadithVerse->translation_json
+                            : json_decode($hadithVerse->translation_json, true);
                     @endphp
 
                     <blockquote class="m-0 mt-1 notranslate"
