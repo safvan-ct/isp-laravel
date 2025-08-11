@@ -164,10 +164,10 @@
 
             <div class="col-12 col-md-4">
                 <div class="card">
-                    <h2 class="text-center mb-2">Prayer Times</h2>
+                    <h2 class="text-center mb-2">{{ __('Prayer Times') }}</h2>
                     <div class="date" id="date"></div>
-                    <div class="location" id="locationName">Location</div>
-                    <div class="countdown" id="countdown">Loading...</div>
+                    <div class="location" id="locationName">{{ __('Location') }}</div>
+                    <div class="countdown" id="countdown">{{ __('Loading...') }}</div>
 
                     <div id="prayerTimes"></div>
                 </div>
@@ -178,6 +178,7 @@
 
 @push('scripts')
     <script>
+        LOCALE = "en-US";
         (function() {
             const grid = document.getElementById('calendarGrid');
             const monthLabel = document.getElementById('monthLabel');
@@ -190,6 +191,7 @@
             /** Format Hijri Date */
             const getHijriDate = (date, locale) => {
                 const calendars = ['islamic-umalqura', 'islamic'];
+
                 for (const cal of calendars) {
                     try {
                         return new Intl.DateTimeFormat(`${locale}-u-ca-${cal}`, {
@@ -223,13 +225,14 @@
                 let lang = document.getElementById('languageDropdown').textContent.trim().toLowerCase();
                 let locale = 'en-US';
 
-                // if (lang == 'ml') {
-                //     locale = 'ml-IN';
-                // } else if (lang == 'hi') {
-                //     locale = 'hi-IN';
-                // } else if (lang == 'ar') {
-                //     locale = 'ar-SA';
-                // }
+                if (lang == 'ml') {
+                    locale = 'ml-IN';
+                } else if (lang == 'hi') {
+                    locale = 'hi-IN';
+                } else if (lang == 'ar') {
+                    locale = 'ar-SA';
+                }
+                LOCALE = locale;
 
                 const year = viewDate.getFullYear();
                 const month = viewDate.getMonth();
@@ -260,7 +263,7 @@
                         <div class="day-cell muted-day">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="day-number">${cellDate.getDate()}</div>
-                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
                             </div>
                             <div class="hijri">${hijri}</div>
                         </div>`;
@@ -276,7 +279,7 @@
                         <div class="day-cell ${isToday ? 'today' : ''}" onclick="fetchPrayerTimes('${cellDate.toISOString()}')" style="cursor: pointer;">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="day-number">${dayNumber}</div>
-                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
                             </div>
                             <div class="hijri">${hijri}</div>
                         </div>`;
@@ -295,7 +298,7 @@
                         <div class="day-cell muted-day">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="day-number">${cellDate.getDate()}</div>
-                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
                             </div>
                             <div class="hijri">${hijri}</div>
                         </div>`;
@@ -324,6 +327,14 @@
         let LATITUDE = 21.3891;
         let LONGITUDE = 39.8579;
         let prayerOrder = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        let trPrayerName = {
+            Fajr: "{{ __('Fajr') }}",
+            Sunrise: "{{ __('Sunrise') }}",
+            Dhuhr: "{{ __('Dhuhr') }}",
+            Asr: "{{ __('Asr') }}",
+            Maghrib: "{{ __('Maghrib') }}",
+            Isha: "{{ __('Isha') }}"
+        }
         let prayerTimings = {};
 
         function fetchPrayerTimes(selectedDate = null) {
@@ -341,19 +352,36 @@
                     const hijri = data.data.date.hijri;
                     const gregorian = data.data.date.gregorian;
 
+                    const gDate = new Date();
+                    const gWeekday = gDate.toLocaleString(LOCALE, {
+                        weekday: 'long'
+                    });
+                    const gDay = gDate.getDate();
+                    const gMonth = gDate.toLocaleString(LOCALE, {
+                        month: 'long'
+                    });
+                    const gYear = gDate.getFullYear();
+
+                    const hDate = new Intl.DateTimeFormat(`${LOCALE}-u-ca-islamic`, {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric'
+                    }).format(gDate);
+
                     document.getElementById('date').innerHTML =
-                        `${gregorian.weekday.en}, ${gregorian.date} / ${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+                        `${gWeekday}, ${gDay} ${gMonth} ${gYear} / ${hDate} AH`;
 
                     let html = '';
                     prayerTimings = timings; // store globally
 
                     const now = new Date();
                     let currentPrayerIndex = -1;
+
                     const prayerTimesArr = prayerOrder.map(prayer => {
                         const [hour, minute] = timings[prayer].split(':').map(Number);
                         const prayerDate = new Date(year, month - 1, day, hour, minute);
                         return {
-                            name: prayer,
+                            name: trPrayerName[prayer],
                             time: timings[prayer],
                             date: prayerDate
                         };
@@ -395,7 +423,7 @@
                 let [hours, minutes] = prayerTimings[prayer].split(":").map(Number);
                 let prayerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
                 if (prayerDate > now) {
-                    nextPrayer = prayer;
+                    nextPrayer = trPrayerName[prayer];
                     nextPrayerTime = prayerDate;
                     break;
                 }
@@ -413,7 +441,7 @@
             let secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
 
             document.getElementById('countdown').innerHTML =
-                `Next: ${nextPrayer} in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+                `{{ __('Next') }}: ${nextPrayer} in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
         }
 
         function fetchLocationName(lat, lon) {
