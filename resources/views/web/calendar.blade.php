@@ -6,18 +6,13 @@
     <style>
         :root {
             --col-min-width: 96px;
-            /* Minimum column width before scroll */
-        }
-
-        .calendar {
-            max-width: 1100px;
-            margin: 1.25rem auto;
-            padding: 0.5rem;
         }
 
         .calendar-scroll {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 0px;
         }
 
         .calendar-grid {
@@ -91,27 +86,92 @@
             }
         }
     </style>
+
+    <style>
+        .card {
+            margin: auto;
+            background: #eaddc43a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .date {
+            text-align: center;
+            font-size: 14px;
+            color: #4e2d45ca;
+        }
+
+        .prayer-time {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #4E2D452e;
+        }
+
+        .prayer-time:last-child {
+            border-bottom: none;
+        }
+
+        .name {
+            font-weight: bold;
+            color: #4E2D45
+        }
+
+        .current-prayer {
+            background: #4E2D452e;
+            border-radius: 2px;
+        }
+
+        .location {
+            text-align: center;
+            font-size: 13px;
+            color: #4e2d4583;
+            margin-bottom: 5px;
+        }
+
+        .countdown {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #4E2D45;
+            margin-bottom: 10px;
+        }
+    </style>
 @endpush
 
 @section('content')
-    <main class="container-fluid calendar my-3 flex-grow-1 notranslate" style="background: #f9f5ef">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-                <button id="prevBtn" class="btn btn-outline-primary btn-sm">&larr; Prev</button>
+    <main class="container my-3 flex-grow-1 notranslate">
+        <div class="mb-2 index-card row">
+            <div class="d-flex justify-content-between align-items-center mb-3 col-12 col-md-12">
+                <div>
+                    <button id="prevBtn" class="btn btn-outline-primary btn-sm">&larr; Prev</button>
+                </div>
+
+                <div class="text-center">
+                    <h3 id="monthLabel" class="mb-0"></h3>
+                    <small id="yearLabel" class="text-muted"></small>
+                </div>
+
+                <div>
+                    <button id="nextBtn" class="btn btn-outline-primary btn-sm">Next &rarr;</button>
+                </div>
             </div>
 
-            <div class="text-center">
-                <h3 id="monthLabel" class="mb-0"></h3>
-                <small id="yearLabel" class="text-muted"></small>
+            <div class="calendar-scroll col-12 col-md-8 mb-2">
+                <div id="calendarGrid" class="calendar-grid"></div>
             </div>
 
-            <div>
-                <button id="nextBtn" class="btn btn-outline-primary btn-sm">Next &rarr;</button>
-            </div>
-        </div>
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <h2 class="text-center mb-2">Prayer Times</h2>
+                    <div class="date" id="date"></div>
+                    <div class="location" id="locationName">Location</div>
+                    <div class="countdown" id="countdown">Loading...</div>
 
-        <div class="calendar-scroll">
-            <div id="calendarGrid" class="calendar-grid"></div>
+                    <div id="prayerTimes"></div>
+                </div>
+            </div>
         </div>
     </main>
 @endsection
@@ -213,7 +273,7 @@
                     const hijri = getHijriDate(cellDate, locale);
 
                     html += `
-                        <div class="day-cell ${isToday ? 'today' : ''}">
+                        <div class="day-cell ${isToday ? 'today' : ''}" onclick="fetchPrayerTimes('${cellDate.toISOString()}')" style="cursor: pointer;">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="day-number">${dayNumber}</div>
                                 <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
@@ -258,5 +318,127 @@
             // Initial render
             renderCalendar();
         })();
+    </script>
+
+    <script>
+        let LATITUDE = 21.3891;
+        let LONGITUDE = 39.8579;
+        let prayerOrder = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
+        let prayerTimings = {};
+
+        function fetchPrayerTimes(selectedDate = null) {
+            const today = selectedDate ? new Date(selectedDate) : new Date();
+            const day = today.getDate();
+            const month = today.getMonth() + 1;
+            const year = today.getFullYear();
+
+            fetch(
+                    `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${LATITUDE}&longitude=${LONGITUDE}&method=2`
+                )
+                .then(response => response.json())
+                .then(data => {
+                    const timings = data.data.timings;
+                    const hijri = data.data.date.hijri;
+                    const gregorian = data.data.date.gregorian;
+
+                    document.getElementById('date').innerHTML =
+                        `${gregorian.weekday.en}, ${gregorian.date} / ${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+
+                    let html = '';
+                    prayerTimings = timings; // store globally
+
+                    const now = new Date();
+                    let currentPrayerIndex = -1;
+                    const prayerTimesArr = prayerOrder.map(prayer => {
+                        const [hour, minute] = timings[prayer].split(':').map(Number);
+                        const prayerDate = new Date(year, month - 1, day, hour, minute);
+                        return {
+                            name: prayer,
+                            time: timings[prayer],
+                            date: prayerDate
+                        };
+                    });
+
+                    for (let i = 0; i < prayerTimesArr.length; i++) {
+                        if (now >= prayerTimesArr[i].date && (i === prayerTimesArr.length - 1 || now < prayerTimesArr[
+                                i + 1].date)) {
+                            currentPrayerIndex = i;
+                            break;
+                        }
+                    }
+
+                    prayerTimesArr.forEach((p, index) => {
+                        html += `
+                        <div class="prayer-time ${index === currentPrayerIndex ? 'current-prayer' : ''}">
+                            <div class="name">${p.name}</div>
+                            <div class="time">${p.time}</div>
+                        </div>`;
+                    });
+
+                    document.getElementById('prayerTimes').innerHTML = html;
+                    fetchLocationName(LATITUDE, LONGITUDE);
+                    updateCountdown(); // first run
+                    setInterval(updateCountdown, 1000); // update every second
+                })
+                .catch(err => {
+                    document.getElementById('prayerTimes').innerHTML = "<p>Error fetching prayer times</p>";
+                    console.error(err);
+                });
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            let nextPrayer = null;
+            let nextPrayerTime = null;
+
+            for (let prayer of prayerOrder) {
+                let [hours, minutes] = prayerTimings[prayer].split(":").map(Number);
+                let prayerDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+                if (prayerDate > now) {
+                    nextPrayer = prayer;
+                    nextPrayerTime = prayerDate;
+                    break;
+                }
+            }
+
+            if (!nextPrayer) { // next day fajr
+                let [hours, minutes] = prayerTimings["Fajr"].split(":").map(Number);
+                nextPrayer = "Fajr";
+                nextPrayerTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes);
+            }
+
+            let diff = nextPrayerTime - now;
+            let hoursLeft = Math.floor(diff / (1000 * 60 * 60));
+            let minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML =
+                `Next: ${nextPrayer} in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+        }
+
+        function fetchLocationName(lat, lon) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+                .then(res => res.json())
+                .then(data => {
+                    let display_name = data.display_name || "Unknown location";
+                    document.getElementById('locationName').innerText = display_name;
+                })
+                .catch(() => {
+                    document.getElementById('locationName').innerText = "Location unavailable";
+                });
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                pos => {
+                    LATITUDE = pos.coords.latitude;
+                    LONGITUDE = pos.coords.longitude;
+                    fetchPrayerTimes();
+                },
+                () => fetchPrayerTimes()
+            );
+        } else {
+            fetchPrayerTimes();
+        }
     </script>
 @endpush

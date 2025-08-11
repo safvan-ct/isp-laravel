@@ -65,6 +65,10 @@
                         <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
                             href="{{ route('hadith.index') }}">{{ __('Hadith') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::is('calendar', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                            href="{{ route('calendar') }}">{{ __('Calendar') }}</a>
+                    </li>
 
                     @foreach ($menus as $item)
                         <li class="nav-item">
@@ -92,7 +96,6 @@
                             @endforeach
                         </ul>
                     </li>
-
                 </ul>
             </div>
         </div>
