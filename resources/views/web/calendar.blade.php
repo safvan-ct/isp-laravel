@@ -57,7 +57,7 @@
         }
 
         .today {
-            /* box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.06) inset; */
+            box-shadow: 0 0 0 2px #4E2D452e inset;
             border-left: 4px solid #4E2D45;
         }
 
