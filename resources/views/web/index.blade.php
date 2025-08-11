@@ -12,7 +12,7 @@
                 <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
                     <div class="card-body">
                         <h5 class="card-title">{{ __('📖 Quran') }}</h5>
-                        <p class="card-text">{{ __('Quran verses, meaning, tafseer, audio') }}</p>
+                        <p class="card-text">{{ __('Quran verses, meaning') }}</p>
                     </div>
 
                     <div class="card-footer bg-transparent border-0 pb-3">
@@ -30,6 +30,19 @@
 
                     <div class="card-footer bg-transparent border-0 pb-3">
                         <a href="{{ route('hadith.index') }}" class="btn btn-primary">{{ __('See') }}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
+                    <div class="card-body">
+                        <h5 class="card-title">📅 {{ __('Islamic Calendar') }}</h5>
+                        <p class="card-text">{{ __('Islamic Days, Ramadan, Hajj') }}</p>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a href="{{ route('calendar') }}" class="btn btn-primary">{{ __('View Days') }}</a>
                     </div>
                 </div>
             </div>

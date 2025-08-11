@@ -27,6 +27,8 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
 });
 // End Fetch
 
+Route::get('calendar', [HomeController::class, 'calendar'])->name('calendar');
+
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');
 

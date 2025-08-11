@@ -46,20 +46,35 @@
             @foreach ($chapter->verses as $hadith)
                 <div class="ayah-card">
                     @if ($hadith->heading)
-                        <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6">
-                            {{ $hadith->heading }}
-                        </h6>
-                        <h6 class="fw-bold fs-6">{{ $hadith->translation?->heading }}</h6>
+                        <div class="row flex-column flex-md-row">
+                            <div class="col-12 col-md-6 order-1 order-md-2">
+                                <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
+                                    {{ $hadith->heading }}
+                                </h6>
+                            </div>
+
+                            <div class="col-12 col-md-6 order-2 order-md-1">
+                                <h6 class="fw-bold fs-6 hadith-tr-text">{{ $hadith->translation?->heading }}</h6>
+                            </div>
+                        </div>
+                        <hr>
                     @endif
 
-                    <div class="ayah-arabic notranslate hadith-text" style="font-size: 20px; line-height: 1.6">
-                        {{ $hadith->text }}
-                        (<span class="fst-italic fs-6 ar-number">{{ $loop->iteration }}</span>)
+                    <div class="row flex-column flex-md-row">
+                        <div class="col-12 col-md-6 order-1 order-md-2">
+                            <div class="ayah-arabic notranslate hadith-text" style="font-size: 20px; line-height: 1.6;">
+                                {{ $hadith->text }}
+                                (<span class="fst-italic fs-6 ar-number">{{ $loop->iteration }}</span>)
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 order-2 order-md-1">
+                            <div class="text-en hadith-tr-text">{{ $hadith->translation?->text }}</div>
+                        </div>
                     </div>
 
-                    <div class="text-en">{{ $hadith->translation?->text }}</div>
-
-                    <p class="text-muted small notranslate mt-1 fst-italic">
+                    <hr>
+                    <p class="text-muted small notranslate fst-italic">
                         {{ $chapter->book->translation?->name ?: $chapter->book->name }},
 
                         {{ __('Volume') }}: {{ $hadith->volume }},

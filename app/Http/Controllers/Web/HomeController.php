@@ -25,4 +25,8 @@ class HomeController extends Controller
         return view('web.index', compact('modules'));
     }
 
+    public function calendar()
+    {
+        return view('web.calendar');
+    }
 }

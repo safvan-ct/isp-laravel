@@ -257,6 +257,7 @@ ul.step-list li {
 
 .hadith-text {
     font-family: 'Noto Naskh Arabic', serif;
+    text-align: justify !important;
 }
 
 /* Button styles */
@@ -324,6 +325,10 @@ ul.step-list li {
     color: #EADDC4;
 }
 
+.hadith-tr-text {
+    text-align: justify !important;
+}
+
 @media (max-width: 768px) {
 
     /* Index card styles */
@@ -350,6 +355,11 @@ ul.step-list li {
 
     .ayah-trans {
         font-size: 14px;
+    }
+
+    .hadith-text,
+    .hadith-tr-text {
+        text-align: inherit !important;
     }
 }
 
