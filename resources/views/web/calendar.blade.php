@@ -106,13 +106,6 @@
             </div>
 
             <div>
-                {{-- <select id="localeSelect" class="form-select form-select-sm" style="width:170px;">
-                    <option value="en-US">English</option>
-                    <option value="ar-SA">العربية</option>
-                    <option value="ml-IN">Malayalam</option>
-                    <option value="ur-PK">اردو</option>
-                </select> --}}
-
                 <button id="nextBtn" class="btn btn-outline-primary btn-sm">Next &rarr;</button>
             </div>
         </div>
@@ -197,31 +190,55 @@
                 const prevMonthDays = new Date(year, month, 0).getDate();
                 const today = new Date();
 
-                for (let i = 0; i < 42; i++) {
-                    let dayNumber = i - startWeekday + 1;
-                    let cellDate, isMuted = false;
+                // Add empty cells before the first day for alignment
+                for (let i = 0; i < startWeekday; i++) {
+                    const day = prevMonthDays - (startWeekday - 1 - i);
+                    const cellDate = new Date(year, month - 1, day);
+                    const hijri = getHijriDate(cellDate, locale);
 
-                    if (i < startWeekday) {
-                        isMuted = true;
-                        cellDate = new Date(year, month - 1, prevMonthDays - (startWeekday - 1 - i));
-                    } else if (dayNumber > daysInMonth) {
-                        isMuted = true;
-                        cellDate = new Date(year, month + 1, dayNumber - daysInMonth);
-                    } else {
-                        cellDate = new Date(year, month, dayNumber);
-                    }
+                    html += `
+                        <div class="day-cell muted-day">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="day-number">${cellDate.getDate()}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                            </div>
+                            <div class="hijri">${hijri}</div>
+                        </div>`;
+                }
 
+                // Current month days
+                for (let dayNumber = 1; dayNumber <= daysInMonth; dayNumber++) {
+                    let cellDate = new Date(year, month, dayNumber);
                     const isToday = cellDate.toDateString() === today.toDateString();
                     const hijri = getHijriDate(cellDate, locale);
 
                     html += `
-            <div class="day-cell ${isMuted ? 'muted-day' : ''} ${isToday ? 'today' : ''}">
-              <div class="d-flex justify-content-between align-items-start">
-                <div class="day-number">${cellDate.getDate()}</div>
-                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
-              </div>
-              <div class="hijri">${hijri}</div>
-            </div>`;
+                        <div class="day-cell ${isToday ? 'today' : ''}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="day-number">${dayNumber}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                            </div>
+                            <div class="hijri">${hijri}</div>
+                        </div>`;
+                }
+
+                // Fill remaining cells for full weeks
+                const totalCells = startWeekday + daysInMonth;
+                const remainingCells = (7 - (totalCells % 7)) % 7;
+                const nextMonthDate = new Date(year, month + 1, 1);
+
+                for (let i = 0; i < remainingCells; i++) {
+                    const cellDate = new Date(nextMonthDate.getFullYear(), nextMonthDate.getMonth(), i + 1);
+                    const hijri = getHijriDate(cellDate, locale);
+
+                    html += `
+                        <div class="day-cell muted-day">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="day-number">${cellDate.getDate()}</div>
+                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'short' })}</div>
+                            </div>
+                            <div class="hijri">${hijri}</div>
+                        </div>`;
                 }
 
                 grid.innerHTML = html;

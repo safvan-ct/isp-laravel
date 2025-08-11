@@ -202,11 +202,21 @@
                                 {{ __('Status') }}: ${result.status || 'Unknown'}` :
                             `${result.quran_chapter_id}.${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
 
-                        modalBody.innerHTML = `
-                            <blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">
-                                ${arHeading ? `<p class="notranslate fw-bold m-0 fs-5" dir="rtl">${arHeading}</p> <p class="fw-bold mb-2">${trHeading}</p>` : ""}
+                        let row = type === 'hadith' ? `<div class="row flex-column flex-md-row">` : '';
+                        let col1 = type === 'hadith' ? `col-12 col-md-6 order-1 order-md-2` : '';
+                        let col2 = type === 'hadith' ? `col-12 col-md-6 order-2 order-md-1` : '';
+                        let endRow = type === 'hadith' ? `</div>` : '';
+                        let textjustify = type === 'hadith' ? `hadith-tr-text` : '';
 
-                                <p dir="rtl" class="notranslate">
+                        let innerHtml =
+                            `<blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">`;
+                        if (arHeading) {
+                            innerHtml += `${row}<p class="notranslate fw-bold m-0 fs-5 ${col1} ${textjustify}" dir="rtl">${arHeading}</p>
+                                    <p class="fw-bold mb-2 ${col2} ${textjustify}">${trHeading}</p>${endRow}`;
+                        }
+
+                        innerHtml += `${row}
+                                <p dir="rtl" class="notranslate ${col1} ${textjustify}">
                                     <span class="fs-5 ${type === 'hadith' ? 'mt-1' : 'mt-3 quran-text'}" ${type === 'quran' ? 'style="line-height: 2.2;"' : ''}>
                                         ${arVerse}
                                     </span>
@@ -215,11 +225,14 @@
                                     </span>
                                 </p>
 
-                                <p class="mt-2">${trVerse}</p>
-
-                                <p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>
-                            </blockquote>
+                                <p class="mt-2 ${col2} ${textjustify}">${trVerse}</p>
+                            ${endRow}
                         `;
+
+                        innerHtml +=
+                            `<p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p></blockquote>`;
+
+                        modalBody.innerHTML = innerHtml;
                     })
                     .catch(err => {
                         modalBody.innerHTML =
@@ -231,7 +244,7 @@
                 modalBody.setAttribute("style", "margin: -1px;");
                 modalBody.innerHTML = `
                     <div class="ratio ratio-16x9">
-                        <iframe id="videoIframe" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&&modestbranding=1&rel=0" title="Video player" allowfullscreen allow="autoplay"></iframe>
+                        <iframe id="videoIframe" src="https://www.youtube.com/embed/${id}?autoplay=1&mute=0&&modestbranding=1&rel=0" title="${addOnModalLabel}" allowfullscreen allow="autoplay"></iframe>
                     </div>
                 `;
 
