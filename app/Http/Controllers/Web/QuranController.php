@@ -25,4 +25,9 @@ class QuranController extends Controller
 
         return view('web.quran-verses', compact('chapter'));
     }
+
+    public function likes()
+    {
+        return view('web.likes');
+    }
 }

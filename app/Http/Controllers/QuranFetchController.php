@@ -47,4 +47,19 @@ class QuranFetchController extends Controller
 
         return response()->json($verse);
     }
+
+    public function bookmarks(Request $request)
+    {
+        $ids   = array_values(array_filter($request->ids));
+        $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
+            ])
+            ->whereIn('id', $ids)
+            ->active()
+            ->get();
+
+        return response()->json($verse);
+    }
 }

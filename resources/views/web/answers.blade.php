@@ -134,6 +134,9 @@
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('web/js/bookmark.js') }}"></script>
+    <script src="{{ asset('web/js/quran-audio.js') }}"></script>
+
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -150,6 +153,9 @@
     </script>
 
     <script>
+        BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
+        LIKED_ITEMS = JSON.parse(localStorage.getItem('likes') || '{}');
+
         function openAddOnModal(type, id, title = '') {
             const modalElement = document.getElementById("addOnModal");
             const modalLabel = document.getElementById("addOnModalLabel");
@@ -209,7 +215,7 @@
                         let textjustify = type === 'hadith' ? `hadith-tr-text` : '';
 
                         let innerHtml =
-                            `<blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">`;
+                            `<blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''} learn-item" data-type="${type}" data-id="${result.id}">`;
                         if (arHeading) {
                             innerHtml += `${row}<p class="notranslate fw-bold m-0 fs-5 ${col1} ${textjustify}" dir="rtl">${arHeading}</p>
                                     <p class="fw-bold mb-2 ${col2} ${textjustify}">${trHeading}</p>${endRow}`;
@@ -229,16 +235,45 @@
                             ${endRow}
                         `;
 
-                        innerHtml +=
-                            `<p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p></blockquote>`;
 
+                        innerHtml += `<div class="ayah-actions d-flex align-items-center justify-content-between mt-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" style="color:#4E2D45;" data-type="${type}" data-id="${result.id}">
+                                        <i class="far fa-bookmark"></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="like-btn" title="Like" style="color:#4E2D45;" data-type="${type}" data-id="${result.id}">
+                                        <i class="far fa-heart"></i>
+                                    </a>`;
+
+                        if (type === 'quran') {
+                            innerHtml += `<a href="javascript:void(0);" class="play-btn" data-surah="${result.chapter?.id}" data-ayah="${result.number_in_chapter}" title="Play" style="color:#4E2D45;">
+                                        <i class="fas fa-play"></i>
+                                    </a>
+                                    </div>
+                                    <p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>
+                                </div>`;
+                        } else {
+                            innerHtml +=
+                                `</div></div><p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>`;
+                        }
+
+                        innerHtml += `</blockquote>`;
                         modalBody.innerHTML = innerHtml;
+
+                        $('.learn-item').each(function() {
+                            const cardId = parseInt($(this).data('id'), 10);
+                            updateIconState(cardId, $(this).data('type'));
+                            updateLikeIconState(cardId, $(this).data('type'));
+                        });
+
+                        $(".play-btn").on("click", async function() {
+                            playAudio.call(this);
+                        });
                     })
                     .catch(err => {
                         modalBody.innerHTML =
                             `<div class="text-danger text-center py-3">{{ __('Informations not found') }}</div>`;
                     });
-
                 return;
             } else {
                 modalBody.setAttribute("style", "margin: -1px;");

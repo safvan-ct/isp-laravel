@@ -5,8 +5,8 @@
 
 @section('content')
     <main class="container my-3 flex-grow-1">
-        <div class="index-card">
-            <div class="chapter-header mb-3">
+        <div class="index-card" style="padding: 5px">
+            <div class="chapter-header mb-2">
                 <div class="chapter-name">
                     {{ optional($chapter->translation)->name ? $chapter->translation->name . ' | ' : '' }}
                     <span class="notranslate">{{ $chapter->name }}</span>

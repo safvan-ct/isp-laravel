@@ -149,8 +149,16 @@ ul.step-list li {
     background-color: #fff;
     padding: 1rem;
     border-radius: 8px;
-    margin-bottom: .5rem;
+    margin-top: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.ayah-card.playing {
+    border: 2px solid #4E2D45;
+    background-color: rgba(78, 45, 69, 0.1);
+    /* light tint */
+    box-shadow: 0 0 12px rgba(78, 45, 69, 0.4);
+    transition: all 0.3s ease;
 }
 
 .ayah-arabic {

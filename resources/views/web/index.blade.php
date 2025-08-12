@@ -47,6 +47,36 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-bookmark" style="color: #4E2D45;"></i> {{ __('Bookmarks') }}
+                        </h5>
+                        <p class="card-text">{{ __('Bookmarked Quran, Hadith and Topics') }}</p>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a href="{{ route('calendar') }}" class="btn btn-primary">{{ __('View') }}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-heart" style="color: #4E2D45;"></i> {{ __('Likes') }}
+                        </h5>
+                        <p class="card-text">{{ __('Liked Quran, Hadith and Topics') }}</p>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a href="{{ route('likes') }}" class="btn btn-primary">{{ __('View') }}</a>
+                    </div>
+                </div>
+            </div>
+
             @foreach ($modules as $item)
                 <div class="col-md-4">
                     <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">

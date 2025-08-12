@@ -19,10 +19,14 @@
     <link rel="apple-touch-icon" href="{{ asset('img/apple-touch-icon.png') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cairo&family=Noto+Naskh+Arabic&display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('web/css/custom.css') }}">
 
     @stack('styles')
@@ -103,19 +107,52 @@
 
     @yield('content')
 
+    <!-- Save to Collection Modal -->
+    <div class="modal fade" id="collectionModal" tabindex="-1" aria-labelledby="collectionModalLabel"
+        aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="collectionModalLabel">Save to Collection</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h6>Choose existing collection:</h6>
+                    <ul id="collectionList" class="list-group mb-3"></ul>
+
+                    <hr>
+                    <h6>Create new collection:</h6>
+                    <div class="input-group mt-2">
+                        <input type="text" id="newCollectionName" class="form-control"
+                            placeholder="New collection name">
+                        <button id="createCollectionBtn" class="btn btn-primary">
+                            Create & Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="notranslate">
         © {{ date('Y') }} Islamic Life &nbsp;|&nbsp; All Rights Reserved &nbsp;|&nbsp;
 
-        <a href="https://www.instagram.com/islamicstudyportal" target="_blank" class="text-white text-decoration-none">
+        <a href="https://www.instagram.com/islamicstudyportal" target="_blank"
+            class="text-white text-decoration-none">
             <i class="bi bi-instagram"></i>
         </a>
         &nbsp;|&nbsp;
-        <a href="https://www.youtube.com/@islamic_study_portal" target="_blank" class="text-white text-decoration-none">
+        <a href="https://www.youtube.com/@islamic_study_portal" target="_blank"
+            class="text-white text-decoration-none">
             <i class="bi bi-youtube"></i>
         </a>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{ asset('web/js/custom.js') }}"></script>
 
     <script>

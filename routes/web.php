@@ -19,6 +19,7 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
     Route::get('quran-chapters', [QuranFetchController::class, 'chapters'])->name('quran.chapters');
     Route::get('quran-ayahs', [QuranFetchController::class, 'verses'])->name('quran.ayahs');
     Route::get('quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('quran.verse');
+    Route::post('quran-bookmark', [QuranFetchController::class, 'bookmarks'])->name('quran.bookmark');
 
     Route::get('hadith-books', [HadithFetchController::class, 'books'])->name('hadith.books');
     Route::get('hadith-chapters', [HadithFetchController::class, 'chapters'])->name('hadith.chapters');
@@ -28,6 +29,7 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
 // End Fetch
 
 Route::get('calendar', [HomeController::class, 'calendar'])->name('calendar');
+Route::get('likes', [QuranController::class, 'likes'])->name('likes');
 
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');
