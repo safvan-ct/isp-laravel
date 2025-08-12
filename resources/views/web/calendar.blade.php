@@ -132,10 +132,16 @@
 
         .countdown {
             text-align: center;
-            font-size: 16px;
-            font-weight: bold;
+            font-size: 14px;
+            padding: 5px;
             color: #4E2D45;
             margin-bottom: 10px;
+            border: 2px solid #4E2D45;
+            border-radius: 12px
+        }
+
+        .active-day {
+            border: 1px solid #4E2D45;
         }
     </style>
 @endpush
@@ -178,7 +184,27 @@
 
 @push('scripts')
     <script>
+        LATITUDE = 21.3891;
+        LONGITUDE = 39.8579;
         LOCALE = "en-US";
+
+        /** Format Hijri Date */
+        function getHijriDate(date, locale = LOCALE) {
+            const calendars = ['islamic-umalqura', 'islamic'];
+
+            for (const cal of calendars) {
+                try {
+                    return new Intl.DateTimeFormat(`${LOCALE}-u-ca-${cal}`, {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    }).format(date);
+                } catch {}
+            }
+
+            return '';
+        };
+
         (function() {
             const grid = document.getElementById('calendarGrid');
             const monthLabel = document.getElementById('monthLabel');
@@ -187,24 +213,6 @@
             const nextBtn = document.getElementById('nextBtn');
 
             let viewDate = new Date();
-
-            /** Format Hijri Date */
-            const getHijriDate = (date, locale) => {
-                const calendars = ['islamic-umalqura', 'islamic'];
-
-                for (const cal of calendars) {
-                    try {
-                        return new Intl.DateTimeFormat(`${locale}-u-ca-${cal}`, {
-                            day: 'numeric',
-                            month: 'short',
-                            year: 'numeric'
-                        }).format(date);
-                    } catch {
-                        /* fallback */
-                    }
-                }
-                return '';
-            };
 
             /** Get weekday names starting Sunday */
             const getWeekdayNames = (locale) => {
@@ -273,10 +281,11 @@
                 for (let dayNumber = 1; dayNumber <= daysInMonth; dayNumber++) {
                     let cellDate = new Date(year, month, dayNumber);
                     const isToday = cellDate.toDateString() === today.toDateString();
+                    const dt = cellDate.toDateString()
                     const hijri = getHijriDate(cellDate, locale);
 
                     html += `
-                        <div class="day-cell ${isToday ? 'today' : ''}" onclick="fetchPrayerTimes('${cellDate.toISOString()}')" style="cursor: pointer;">
+                        <div class="day-cell ${isToday ? 'today' : ''} ${dt}" onclick="fetchPrayerTimes('${dt}')" style="cursor: pointer;">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="day-number">${dayNumber}</div>
                                 <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
@@ -324,8 +333,6 @@
     </script>
 
     <script>
-        let LATITUDE = 21.3891;
-        let LONGITUDE = 39.8579;
         let prayerOrder = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
         let trPrayerName = {
             Fajr: "{{ __('Fajr') }}",
@@ -342,6 +349,28 @@
             const day = today.getDate();
             const month = today.getMonth() + 1;
             const year = today.getFullYear();
+            const hijri = getHijriDate(today);
+
+            const weekday = today.toLocaleString(LOCALE, {
+                weekday: 'long',
+            });
+
+            const monthLoc = today.toLocaleString(LOCALE, {
+                month: 'long'
+            });
+
+            document.getElementById('date').innerHTML = `${weekday}, ${day} ${monthLoc} ${year} / ${hijri}`;
+
+            document.querySelectorAll('.day-cell').forEach(cell =>
+                cell.classList.remove('active-day')
+            );
+
+            if (new Date().toLocaleDateString() !== today.toLocaleDateString()) {
+                const selectedCell = document.getElementsByClassName(selectedDate)[0];
+                if (selectedCell) {
+                    selectedCell.classList.add('active-day');
+                }
+            }
 
             fetch(
                     `https://api.aladhan.com/v1/timings/${day}-${month}-${year}?latitude=${LATITUDE}&longitude=${LONGITUDE}&method=2`
@@ -349,27 +378,6 @@
                 .then(response => response.json())
                 .then(data => {
                     const timings = data.data.timings;
-                    const hijri = data.data.date.hijri;
-                    const gregorian = data.data.date.gregorian;
-
-                    const gDate = new Date();
-                    const gWeekday = gDate.toLocaleString(LOCALE, {
-                        weekday: 'long'
-                    });
-                    const gDay = gDate.getDate();
-                    const gMonth = gDate.toLocaleString(LOCALE, {
-                        month: 'long'
-                    });
-                    const gYear = gDate.getFullYear();
-
-                    const hDate = new Intl.DateTimeFormat(`${LOCALE}-u-ca-islamic`, {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    }).format(gDate);
-
-                    document.getElementById('date').innerHTML =
-                        `${gWeekday}, ${gDay} ${gMonth} ${gYear} / ${hDate} AH`;
 
                     let html = '';
                     prayerTimings = timings; // store globally
@@ -388,8 +396,12 @@
                     });
 
                     for (let i = 0; i < prayerTimesArr.length; i++) {
-                        if (now >= prayerTimesArr[i].date && (i === prayerTimesArr.length - 1 || now < prayerTimesArr[
-                                i + 1].date)) {
+                        const prayerStart = prayerTimesArr[i].date;
+                        const prayerEnd = (i === prayerTimesArr.length - 1) ?
+                            new Date(year, month - 1, day, 23, 59, 59) :
+                            prayerTimesArr[i + 1].date;
+
+                        if (now >= prayerStart && now < prayerEnd) {
                             currentPrayerIndex = i;
                             break;
                         }
@@ -431,7 +443,7 @@
 
             if (!nextPrayer) { // next day fajr
                 let [hours, minutes] = prayerTimings["Fajr"].split(":").map(Number);
-                nextPrayer = "Fajr";
+                nextPrayer = "{{ __('Fajr') }}";
                 nextPrayerTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes);
             }
 
