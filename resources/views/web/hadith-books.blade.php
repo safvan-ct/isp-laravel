@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', __('Hadith Books'))
+@section('title', __('app.hadith_books'))
 
 @section('content')
     <main class="container my-3 flex-grow-1">
@@ -16,14 +16,14 @@
                                 <span class="opacity-75">({{ $item->writer_death_year }})</span>
                             </div>
                             <div class="small">
-                                <span class="fw-bold">{{ $item->hadith_count }}</span> {{ __('Hadiths') }} |
-                                <span class="fw-bold">{{ $item->chapter_count }}</span> {{ __('Chapters') }}
+                                <span class="fw-bold">{{ $item->hadith_count }}</span> {{ __('app.hadiths') }} |
+                                <span class="fw-bold">{{ $item->chapter_count }}</span> {{ __('app.chapters') }}
                             </div>
                         </div>
 
                         <div class="mt-4">
                             <a href="{{ route('hadith.chapters', [$item->id]) }}" class="btn btn-primary w-100 fw-bold">
-                                {{ __('View Chapters') }}
+                                {{ __('app.view_chapters') }}
                             </a>
                         </div>
                     </div>

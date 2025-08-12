@@ -11,7 +11,7 @@
             <nav aria-label="breadcrumb" class="custom-breadcrumb rounded p-2 mt-1">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}" class="text-decoration-none">{{ __('Home') }}</a>
+                        <a href="{{ route('home') }}" class="text-decoration-none">{{ __('app.home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('modules.show', $module->parent->slug) }}" class="text-decoration-none">

@@ -1,14 +1,12 @@
 @extends('layouts.web')
 
-@section('title', __('Quran'))
+@section('title', __('app.quran'))
 
 @section('content')
     <main class="container my-3 flex-grow-1">
         <div class="index-card">
             <h3 class="text-center quran-text">القرآن الكريم</h3>
-            <p class="text-center">
-                {{ __("The Qur'an is the final divine revelation sent to humanity through Prophet Muhammad ﷺ. It consists of 114 Surahs (chapters), each offering divine guidance, laws, morals, stories, and reflections for life. This sacred text has been preserved unchanged and continues to be a source of light and wisdom.") }}
-            </p>
+            <p class="text-center"> {{ __('app.quran_desc') }} </p>
 
             <ul class="index-list mt-2">
                 @foreach ($chapters as $chapter)

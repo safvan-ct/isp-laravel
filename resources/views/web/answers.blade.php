@@ -11,7 +11,7 @@
             <nav aria-label="breadcrumb" class="custom-breadcrumb rounded p-2 mt-1">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}" class="text-decoration-none">{{ __('Home') }}</a>
+                        <a href="{{ route('home') }}" class="text-decoration-none">{{ __('app.home') }}</a>
                     </li>
                     <li class="breadcrumb-item">
                         <a href="{{ route('questions.show', ['menu_slug' => $menuSlug, 'module_slug' => $moduleSlug]) }}"
@@ -93,7 +93,6 @@
                             <button class="btn btn-outline-primary"
                                 onclick="openAddOnModal('video', '{{ $video->video_id }}', '{{ $title }}')">
                                 🎥 {{ $title }}
-                                {{-- {{ __('View Video') }} --}}
                             </button>
                         @endforeach
                     </div>
@@ -103,12 +102,12 @@
 
         <div class="text-center" id="shareBox">
             <div class="p-4 rounded-4 shadow-sm share-box">
-                <h4 class="fw-bold mb-3">📤 {{ __('Please share this information on to others.') }}</h4>
+                <h4 class="fw-bold mb-3">📤 {{ __('app.share_box_title') }}</h4>
                 <p class="mb-4">
-                    {{ __('Prayer and goodness can continue even after death. Your contribution can remind someone else.') }}
+                    {{ __('app.share_box_desc') }}
                 </p>
                 <a href="javascript:void(0)" onclick="handleShare()" class="btn btn-primary rounded-pill px-4">
-                    🔗 {{ __('Share It') }}
+                    🔗 {{ __('app.share') }}
                 </a>
             </div>
         </div>
@@ -126,7 +125,7 @@
                 <div id="google_translate_element" class="mt-2 mb-2 text-center d-none"></div>
 
                 <div class="modal-body p-0" id="addOnModalBody">
-                    <div class="text-center text-muted">{{ __('Loading Data') }}...</div>
+                    <div class="text-center text-muted">{{ __('app.loading') }}...</div>
                 </div>
             </div>
         </div>
@@ -167,10 +166,10 @@
             document.getElementById("google_translate_element").classList.add("d-none");
 
             if (type === 'quran') {
-                addOnModalLabel = "📖 {{ __('Quran Revelation') }}";
+                addOnModalLabel = "📖 {{ __('app.quran_revelation') }}";
                 url = "{{ route('fetch.quran.verse', ':id') }}".replace(':id', id);
             } else if (type === 'hadith') {
-                addOnModalLabel = "📜 {{ __('Hadith Details') }}";
+                addOnModalLabel = "📜 {{ __('app.hadith_details') }}";
                 url = "{{ route('fetch.hadith.verse', ':id') }}".replace(':id', id);
                 document.getElementById("google_translate_element").classList.remove("d-none");
             } else if (type === 'video') {
@@ -180,7 +179,7 @@
             }
 
             modalLabel.innerHTML = addOnModalLabel;
-            modalBody.innerHTML = `<div class="text-center text-muted py-3">{{ __('Loading Data') }}...</div>`;
+            modalBody.innerHTML = `<div class="text-center text-muted py-3">{{ __('app.loading') }}...</div>`;
 
             const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
             modal.show();
@@ -191,7 +190,7 @@
                     .then(result => {
                         if (!result) {
                             modalBody.innerHTML =
-                                `<div class="text-danger text-center py-3">{{ __('No data found. Please try another.') }}</div>`;
+                                `<div class="text-danger text-center py-3">{{ __('app.not_found') }}</div>`;
                             return;
                         }
 
@@ -202,10 +201,10 @@
                         let verseNumber = type === 'quran' ? result.number_in_chapter : result.hadith_number;
 
                         let reference = type === 'hadith' ? `${result.book.translations?.[0]?.name || result.book.name},
-                                {{ __('Volume') }}: ${result.volume},
-                                {{ __('Chapter') }}: #${result.chapter.chapter_number} - ${result.chapter.translations?.[0]?.name || result.chapter.name},
-                                {{ __('Hadith') }}: #${result.hadith_number},
-                                {{ __('Status') }}: ${result.status || 'Unknown'}` :
+                                {{ __('app.volume') }}: ${result.volume},
+                                {{ __('app.chapter') }}: #${result.chapter.chapter_number} - ${result.chapter.translations?.[0]?.name || result.chapter.name},
+                                {{ __('app.hadith') }}: #${result.hadith_number},
+                                {{ __('app.status') }}: ${result.status || 'Unknown'}` :
                             `${result.quran_chapter_id}.${result.chapter.translations?.[0]?.name || result.chapter.name}: ${verseNumber}`;
 
                         let row = type === 'hadith' ? `<div class="row flex-column flex-md-row">` : '';
@@ -272,7 +271,7 @@
                     })
                     .catch(err => {
                         modalBody.innerHTML =
-                            `<div class="text-danger text-center py-3">{{ __('Informations not found') }}</div>`;
+                            `<div class="text-danger text-center py-3">{{ __('app.not_found') }}</div>`;
                     });
                 return;
             } else {

@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', __('Islamic Calendar'))
+@section('title', __('app.islamic_calendar'))
 
 @push('styles')
     <style>
@@ -170,10 +170,10 @@
 
             <div class="col-12 col-md-4">
                 <div class="card">
-                    <h2 class="text-center mb-2">{{ __('Prayer Times') }}</h2>
+                    <h2 class="text-center mb-2">{{ __('app.prayer_times') }}</h2>
                     <div class="date" id="date"></div>
-                    <div class="location" id="locationName">{{ __('Location') }}</div>
-                    <div class="countdown" id="countdown">{{ __('Loading...') }}</div>
+                    <div class="location" id="locationName">{{ __('app.location') }}</div>
+                    <div class="countdown" id="countdown">{{ __('app.loading') }}</div>
 
                     <div id="prayerTimes"></div>
                 </div>
@@ -335,12 +335,12 @@
     <script>
         let prayerOrder = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"];
         let trPrayerName = {
-            Fajr: "{{ __('Fajr') }}",
-            Sunrise: "{{ __('Sunrise') }}",
-            Dhuhr: "{{ __('Dhuhr') }}",
-            Asr: "{{ __('Asr') }}",
-            Maghrib: "{{ __('Maghrib') }}",
-            Isha: "{{ __('Isha') }}"
+            Fajr: "{{ __('app.Fajr') }}",
+            Sunrise: "{{ __('app.Sunrise') }}",
+            Dhuhr: "{{ __('app.Dhuhr') }}",
+            Asr: "{{ __('app.Asr') }}",
+            Maghrib: "{{ __('app.Maghrib') }}",
+            Isha: "{{ __('app.Isha') }}"
         }
         let prayerTimings = {};
 
@@ -443,7 +443,7 @@
 
             if (!nextPrayer) { // next day fajr
                 let [hours, minutes] = prayerTimings["Fajr"].split(":").map(Number);
-                nextPrayer = "{{ __('Fajr') }}";
+                nextPrayer = "{{ __('app.Fajr') }}";
                 nextPrayerTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hours, minutes);
             }
 
@@ -453,7 +453,7 @@
             let secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
 
             document.getElementById('countdown').innerHTML =
-                `{{ __('Next') }}: ${nextPrayer} in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+                `{{ __('app.next') }}: ${nextPrayer} in ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
         }
 
         function fetchLocationName(lat, lon) {

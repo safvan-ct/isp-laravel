@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', __('Hadith') . ' | ' . ($book->translation?->name ?: $book->name))
+@section('title', __('app.hadith') . ' | ' . ($book->translation?->name ?: $book->name))
 
 @section('content')
     <main class="container my-3 flex-grow-1">

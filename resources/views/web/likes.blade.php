@@ -1,16 +1,16 @@
 @extends('layouts.web')
 
-@section('title', __('Likes'))
+@section('title', __('app.likes'))
 
 @section('content')
     <main class="container my-3 flex-grow-1">
         <div class="index-card" style="padding: 5px">
             <div class="chapter-header mb-2">
-                <div class="chapter-name"><i class="fas fa-heart"></i> {{ __('Likes') }}</div>
+                <div class="chapter-name"><i class="fas fa-heart"></i> {{ __('app.likes') }}</div>
             </div>
 
             <div id="bookmarks-container">
-                <p class="text-center">Loading {{ __('Likes') }}...</p>
+                <p class="text-center">{{ __('app.loading') }}...</p>
             </div>
         </div>
     </main>

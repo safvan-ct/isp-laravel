@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title class="notranslate">@yield('title', __('Islamic Study Portal'))</title>
+    <title class="notranslate">@yield('title', __('app.islamic_study_portal'))</title>
 
     <!-- Favicon for most browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
@@ -59,19 +59,19 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }} text-uppercase"
-                            href="{{ route('home') }}">{{ __('Home') }}</a>
+                            href="{{ route('home') }}">{{ __('app.home') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Str::is('quran.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
-                            href="{{ route('quran.index') }}">{{ __('Quran') }}</a>
+                            href="{{ route('quran.index') }}">{{ __('app.quran') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
-                            href="{{ route('hadith.index') }}">{{ __('Hadith') }}</a>
+                            href="{{ route('hadith.index') }}">{{ __('app.hadith') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Str::is('calendar', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
-                            href="{{ route('calendar') }}">{{ __('Calendar') }}</a>
+                            href="{{ route('calendar') }}">{{ __('app.calendar') }}</a>
                     </li>
 
                     @foreach ($menus as $item)
@@ -82,6 +82,34 @@
                             </a>
                         </li>
                     @endforeach
+
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::is('calendar', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                            href="{{ route('calendar') }}">{{ __('app.login') }}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="profileDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ __('app.profile') }}
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.account') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-uppercase" href="{{ route('likes') }}">
+                                    {{ __('app.likes') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.bookmarks') }}</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.logout') }}</a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase" href="#" id="languageDropdown"

@@ -64,6 +64,11 @@ ul.step-list li {
     margin-bottom: 0.5rem;
 }
 
+.fas,
+.far {
+    color: #4E2D45;
+}
+
 /* Navbar styles */
 .navbar {
     background-color: #C3B29F;

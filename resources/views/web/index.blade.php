@@ -2,8 +2,8 @@
 
 @section('content')
     <header class="header">
-        <h1>{{ __('Islamic Study Portal') }}</h1>
-        <p>{{ __('You can study Islamic education in depth through this portal.') }}</p>
+        <h1>{{ __('app.islamic_study_portal') }}</h1>
+        <p>{{ __('app.home_sub_title') }}</p>
     </header>
 
     <main class="container my-3 flex-grow-1">
@@ -11,25 +11,12 @@
             <div class="col-md-4">
                 <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
                     <div class="card-body">
-                        <h5 class="card-title">{{ __('📖 Quran') }}</h5>
-                        <p class="card-text">{{ __('Quran verses, meaning') }}</p>
+                        <h5 class="card-title"><i class="fas fa-quran"></i> {{ __('app.quran_study') }}</h5>
+                        <p class="card-text">{{ __('app.quran_sub_title') }}</p>
                     </div>
 
-                    <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('quran.index') }}" class="btn btn-primary">{{ __('Start learning') }}</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ __('🕋 Hadith') }}</h5>
-                        <p class="card-text">{{ __('Bukhari, Muslim and other Sahih Hadiths') }}</p>
-                    </div>
-
-                    <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('hadith.index') }}" class="btn btn-primary">{{ __('See') }}</a>
+                    <div class="card-footer bg-transparent border-0 pb-0">
+                        <a href="{{ route('quran.index') }}" class="btn btn-primary">{{ __('app.start_learning') }}</a>
                     </div>
                 </div>
             </div>
@@ -37,27 +24,12 @@
             <div class="col-md-4">
                 <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
                     <div class="card-body">
-                        <h5 class="card-title">📅 {{ __('Islamic Calendar') }}</h5>
-                        <p class="card-text">{{ __('Islamic Days, Ramadan, Hajj') }}</p>
+                        <h5 class="card-title"><i class="fas fa-book"></i> {{ __('app.hadith') }}</h5>
+                        <p class="card-text">{{ __('app.hadith_sub_title') }}</p>
                     </div>
 
-                    <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('calendar') }}" class="btn btn-primary">{{ __('View Days') }}</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fas fa-bookmark" style="color: #4E2D45;"></i> {{ __('Bookmarks') }}
-                        </h5>
-                        <p class="card-text">{{ __('Bookmarked Quran, Hadith and Topics') }}</p>
-                    </div>
-
-                    <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('calendar') }}" class="btn btn-primary">{{ __('View') }}</a>
+                    <div class="card-footer bg-transparent border-0 pb-0">
+                        <a href="{{ route('hadith.index') }}" class="btn btn-primary">{{ __('app.view') }}</a>
                     </div>
                 </div>
             </div>
@@ -65,14 +37,12 @@
             <div class="col-md-4">
                 <div class="card section-card h-100 text-center d-flex flex-column justify-content-between">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <i class="fas fa-heart" style="color: #4E2D45;"></i> {{ __('Likes') }}
-                        </h5>
-                        <p class="card-text">{{ __('Liked Quran, Hadith and Topics') }}</p>
+                        <h5 class="card-title"><i class="fas fa-calendar-alt"></i> {{ __('app.islamic_calendar') }}</h5>
+                        <p class="card-text">{{ __('app.islamic_calendar_sub_title') }}</p>
                     </div>
 
-                    <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('likes') }}" class="btn btn-primary">{{ __('View') }}</a>
+                    <div class="card-footer bg-transparent border-0 pb-0">
+                        <a href="{{ route('calendar') }}" class="btn btn-primary">{{ __('app.view_days') }}</a>
                     </div>
                 </div>
             </div>
@@ -85,10 +55,10 @@
                             <p class="card-text">{!! $item->translation?->sub_title !!}</p>
                         </div>
 
-                        <div class="card-footer bg-transparent border-0 pb-3">
+                        <div class="card-footer bg-transparent border-0 pb-0">
                             <a href="{{ route('questions.show', ['menu_slug' => $item->parent->slug, 'module_slug' => $item->slug]) }}"
                                 class="btn btn-primary">
-                                {{ __('Know More') }}
+                                {{ __('app.know_more') }}
                             </a>
                         </div>
                     </div>

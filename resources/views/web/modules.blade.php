@@ -20,7 +20,7 @@
                         </div>
                         <a href="{{ route('questions.show', ['menu_slug' => $topic->slug, 'module_slug' => $item->slug]) }}"
                             class="btn btn-primary mt-3 mb-0">
-                            {{ __('Know More') }}
+                            {{ __('app.know_more') }}
                         </a>
                     </div>
                 </div>

@@ -17,14 +17,15 @@
 
                 @if (!isset($verseNumber))
                     <div class="notranslate">
-                        {{ __('Chapter') }}: <strong class="ar-number">{{ $chapter->chapter_number }}</strong> |
-                        {{ __('Hadiths') }}: <strong class="ar-number">{{ $chapter->verses->count() }}</strong>
+                        {{ __('app.chapter') }}: <strong class="ar-number">{{ $chapter->chapter_number }}</strong> |
+                        {{ __('app.hadiths') }}: <strong class="ar-number">{{ $chapter->verses->count() }}</strong>
                     </div>
                 @endif
 
                 <div class="notranslate">
-                    <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url"
-                        style="color: #4E2D45;">{{ __('Chapters') }}</a>
+                    <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url" style="color: #4E2D45;">
+                        {{ __('app.chapters') }}
+                    </a>
 
                     @if (isset($verseNumber))
                         | <a href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}"
@@ -77,14 +78,14 @@
                     <p class="text-muted small notranslate fst-italic">
                         {{ $chapter->book->translation?->name ?: $chapter->book->name }},
 
-                        {{ __('Volume') }}: {{ $hadith->volume }},
+                        {{ __('app.volume') }}: {{ $hadith->volume }},
 
-                        {{ __('Chapter') }}: #{{ $chapter->chapter_number }} -
+                        {{ __('app.chapter') }}: #{{ $chapter->chapter_number }} -
                         {{ $chapter->translation?->name ?: $chapter->name }},
 
-                        {{ __('Hadith') }}: #{{ $hadith->hadith_number }},
+                        {{ __('app.hadith') }}: #{{ $hadith->hadith_number }},
 
-                        {{ __('Status') }}: {{ __($hadith->status) }}
+                        {{ __('app.status') }}: {{ __('app.' . strtolower($hadith->status)) }}
                     </p>
                 </div>
             @endforeach
