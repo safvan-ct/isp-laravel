@@ -2,7 +2,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Topic;
 use App\Repository\Topic\TopicInterface;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -28,5 +30,23 @@ class HomeController extends Controller
     public function calendar()
     {
         return view('web.calendar');
+    }
+
+    public function likes(Request $request)
+    {
+        $ids = array_values(array_filter($request->ids));
+
+        $verse = Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->with([
+                'parent.translations',
+                'parent.parent.translations',
+                'parent.parent.parent.translations',
+            ])
+            ->where('type', 'answer')
+            ->whereIn('id', $ids)
+            ->get();
+
+        return response()->json($verse);
     }
 }

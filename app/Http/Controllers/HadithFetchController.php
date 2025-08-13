@@ -85,4 +85,20 @@ class HadithFetchController extends Controller
 
         return response()->json($verse);
     }
+
+    public function likes(Request $request)
+    {
+        $ids   = array_values(array_filter($request->ids));
+        $verse = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
+                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
+            ])
+            ->whereIn('id', $ids)
+            ->active()
+            ->get();
+
+        return response()->json($verse);
+    }
 }

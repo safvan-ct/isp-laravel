@@ -21,12 +21,15 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
     Route::get('quran-chapters', [QuranFetchController::class, 'chapters'])->name('quran.chapters');
     Route::get('quran-ayahs', [QuranFetchController::class, 'verses'])->name('quran.ayahs');
     Route::get('quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('quran.verse');
-    Route::post('quran-bookmark', [QuranFetchController::class, 'bookmarks'])->name('quran.bookmark');
+    Route::post('quran-like', [QuranFetchController::class, 'likes'])->name('quran.like');
 
     Route::get('hadith-books', [HadithFetchController::class, 'books'])->name('hadith.books');
     Route::get('hadith-chapters', [HadithFetchController::class, 'chapters'])->name('hadith.chapters');
     Route::get('hadith-verses', [HadithFetchController::class, 'verses'])->name('hadith.verses');
     Route::get('hadith-verse/{id}', [HadithFetchController::class, 'verse'])->name('hadith.verse');
+    Route::post('hadith-like', [HadithFetchController::class, 'likes'])->name('hadith.like');
+
+    Route::post('topic-like', [HomeController::class, 'likes'])->name('topic.like');
 });
 // End Fetch
 

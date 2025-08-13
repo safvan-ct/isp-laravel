@@ -55,6 +55,9 @@ return [
     "Maghrib"                    => "Maghrib",
     "Isha"                       => "Isha",
 
+    // Likes Page
+    "topics"                     => "Topics",
+
     // Share Box
     "share_box_title"            => "Please share this information on to others.",
     "share_box_desc"             => "Prayer and goodness can continue even after death. Your contribution can remind someone else.",
