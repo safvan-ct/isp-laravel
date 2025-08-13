@@ -236,7 +236,6 @@
                 const likes = JSON.parse(localStorage.getItem("likes") || "{}");
                 likedIds = likes[type] || [];
             }
-            console.log(likedIds);
 
             likedIds.forEach(function(id) {
                 updateLikeIconState(type, id, true);

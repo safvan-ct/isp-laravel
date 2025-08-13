@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'first_name' => 'Customer',
-                'email'      => 'customer@email.com',
+                'email'      => 'safvan@email.com',
                 'password'   => bcrypt('password'),
                 'role'       => 'Customer',
             ],
