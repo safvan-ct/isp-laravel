@@ -7,7 +7,7 @@
         <x-admin.alert type="error" :message="$errors->first('email')" />
     @endif
 
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('admin.login') }}">
         @csrf
 
         <x-admin.input type="email" name="email" label="Email Address / Username" error="0"
@@ -18,19 +18,10 @@
 
         <div class="d-flex mt-1 justify-content-between">
             <x-admin.check-box name="remember" label="Remember me" />
-
-            <h5 class="text-secondary">
-                <x-admin.link :url="route('password.request')">Forgot Password?</x-admin.link>
-            </h5>
         </div>
 
         <div class="d-grid mt-4">
             <x-admin.button>Sign In</x-admin.button>
         </div>
     </form>
-
-    <hr />
-    <h5 class="d-flex justify-content-center">
-        <x-admin.link :url="route('register')">Don't have an account?</x-admin.link>
-    </h5>
 @endsection

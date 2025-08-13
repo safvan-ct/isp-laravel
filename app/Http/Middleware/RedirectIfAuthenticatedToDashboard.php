@@ -19,6 +19,10 @@ class RedirectIfAuthenticatedToDashboard
             return redirect()->route('admin.dashboard');
         }
 
+        if (Auth::check() && Auth::user()->role == 'Customer') {
+            return redirect()->route('home');
+        }
+
         return $next($request);
     }
 }

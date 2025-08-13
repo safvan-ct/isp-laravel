@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission'             => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission'     => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'redirect.authenticated' => \App\Http\Middleware\RedirectIfAuthenticatedToDashboard::class,
+            'not.customer'           => \App\Http\Middleware\EnsureUserIsNotCustomer::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

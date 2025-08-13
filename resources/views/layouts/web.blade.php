@@ -53,24 +53,26 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 @php
+                    $routeName = Route::currentRouteName();
                     $menu_slug = isset($menuSlug) ? $menuSlug : null;
+                    $menus = isset($menus) ? $menus : [];
                 @endphp
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }} text-uppercase"
+                        <a class="nav-link {{ $routeName == 'home' ? 'active' : '' }} text-uppercase"
                             href="{{ route('home') }}">{{ __('app.home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Str::is('quran.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                        <a class="nav-link {{ Str::is('quran.*', $routeName) ? 'active' : '' }} text-uppercase"
                             href="{{ route('quran.index') }}">{{ __('app.quran') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Str::is('hadith.*', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                        <a class="nav-link {{ Str::is('hadith.*', $routeName) ? 'active' : '' }} text-uppercase"
                             href="{{ route('hadith.index') }}">{{ __('app.hadith') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Str::is('calendar', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
+                        <a class="nav-link {{ Str::is('calendar', $routeName) ? 'active' : '' }} text-uppercase"
                             href="{{ route('calendar') }}">{{ __('app.calendar') }}</a>
                     </li>
 
@@ -83,33 +85,46 @@
                         </li>
                     @endforeach
 
-                    <li class="nav-item">
-                        <a class="nav-link {{ Str::is('calendar', Route::currentRouteName()) ? 'active' : '' }} text-uppercase"
-                            href="{{ route('calendar') }}">{{ __('app.login') }}</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-uppercase" href="#" id="profileDropdown"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ __('app.profile') }}
-                        </a>
+                    @if (Auth::check() && Auth::user()->role == 'Customer')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-uppercase" href="#" id="profileDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ __('app.profile') }}
+                            </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <li>
-                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.account') }}</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-uppercase" href="{{ route('likes') }}">
-                                    {{ __('app.likes') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.bookmarks') }}</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-uppercase" href="#">{{ __('app.logout') }}</a>
-                            </li>
-                        </ul>
-                    </li>
+                            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item text-uppercase" href="#">{{ __('app.account') }}</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-uppercase" href="{{ route('likes') }}">
+                                        {{ __('app.likes') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-uppercase"
+                                        href="#">{{ __('app.bookmarks') }}</a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+
+                                        <a href="javascript:void(0);" class="dropdown-item text-uppercase"
+                                            onclick="event.preventDefault(); this.closest('form').submit();">
+                                            {{ __('app.logout') }}
+                                        </a>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link {{ Str::is('login', $routeName) || Str::is('register', $routeName) ? 'active' : '' }} text-uppercase"
+                                href="{{ route('login') }}">
+                                {{ __('app.login') }}
+                            </a>
+                        </li>
+                    @endif
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-uppercase" href="#" id="languageDropdown"

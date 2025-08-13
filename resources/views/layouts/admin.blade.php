@@ -319,10 +319,10 @@
                                         <span>Account Settings</span>
                                     </a>
 
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <form method="POST" action="{{ route('admin.logout') }}">
                                         @csrf
 
-                                        <a href="{{ route('logout') }}" class="dropdown-item"
+                                        <a href="javascript:void(0);" class="dropdown-item"
                                             onclick="event.preventDefault(); this.closest('form').submit();">
                                             <i class="ti ti-logout"></i>
                                             <span>Logout</span>

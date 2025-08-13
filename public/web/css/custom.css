@@ -69,6 +69,10 @@ ul.step-list li {
     color: #4E2D45;
 }
 
+.text-primary {
+    color: #4E2D45 !important;
+}
+
 /* Navbar styles */
 .navbar {
     background-color: #C3B29F;

@@ -8,8 +8,8 @@ use App\Http\Controllers\Web\QuranController;
 use App\Http\Controllers\Web\TopicController;
 use Illuminate\Support\Facades\Route;
 
-require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
