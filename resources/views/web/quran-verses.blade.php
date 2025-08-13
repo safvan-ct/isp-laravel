@@ -51,11 +51,13 @@
 @endsection
 
 @push('scripts')
-    {{-- <script src="{{ asset('web/js/bookmark.js') }}"></script>--}}
+    {{-- <script src="{{ asset('web/js/bookmark.js') }}"></script> --}}
 
     <script>
+        $(function() {
+            updateAllLikeIcon('quran');
+        })
         // BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
-        // LIKED_ITEMS = JSON.parse(localStorage.getItem('likes') || '{}');
 
         // $('.learn-item').each(function() {
         //     const id = parseInt($(this).data('id'), 10);

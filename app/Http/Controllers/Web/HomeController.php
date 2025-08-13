@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Topic;
 use App\Repository\Topic\TopicInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -34,7 +35,9 @@ class HomeController extends Controller
 
     public function likes(Request $request)
     {
-        $ids = array_values(array_filter($request->ids));
+        $ids = Auth::check() && Auth::user()->role == 'Customer'
+        ? Auth::user()->likes()->where('likeable_type', 'App\Models\Topic')->pluck('likeable_id')->toArray()
+        : array_values(array_filter($request->ids));
 
         $verse = Topic::select('id', 'slug', 'parent_id')
             ->withWhereHas('translations')
@@ -45,8 +48,16 @@ class HomeController extends Controller
             ])
             ->where('type', 'answer')
             ->whereIn('id', $ids)
-            ->get();
+            ->paginate(5);
 
-        return response()->json($verse);
+        return response()->json([
+            'data' => $verse->items(),
+            'meta' => [
+                'current_page' => $verse->currentPage(),
+                'last_page'    => $verse->lastPage(),
+                'per_page'     => $verse->perPage(),
+                'total'        => $verse->total(),
+            ],
+        ]);
     }
 }

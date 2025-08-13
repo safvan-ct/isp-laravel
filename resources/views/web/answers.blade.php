@@ -166,6 +166,10 @@
     </script>
 
     <script>
+        $(function() {
+            updateAllLikeIcon('topic');
+        });
+
         BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
 
         function openAddOnModal(type, id, title = '') {
@@ -271,9 +275,7 @@
                         innerHtml += `</blockquote>`;
                         modalBody.innerHTML = innerHtml;
 
-                        $('.item-card').each(function() {
-                            updateLikeIcon($(this).data('type'), $(this).data('id'));
-                        });
+                        updateAllLikeIcon(type);
 
                         if (type === 'quran') {
                             $(modalElement).one("hidden.bs.modal", function() {

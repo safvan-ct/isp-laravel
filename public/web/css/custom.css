@@ -346,6 +346,38 @@ ul.step-list li {
     text-align: justify !important;
 }
 
+/* Pagination styles */
+.page-link {
+    color: #4E2D45;
+    border-color: #4E2D45;
+}
+
+/* Hover state */
+.page-link:hover {
+    background-color: #4E2D45;
+    color: #fff;
+    border-color: #4E2D45;
+}
+
+/* Active page */
+.page-item.active .page-link {
+    background-color: #4E2D45;
+    border-color: #4E2D45;
+    color: #fff;
+}
+
+.page-link:focus {
+    background-color: #4E2D45;
+    color: #fff;
+    border-color: #4E2D45;
+}
+
+/* Disabled page */
+.page-item.disabled .page-link {
+    color: #ccc;
+    border-color: #4E2D45;
+}
+
 @media (max-width: 768px) {
 
     /* Index card styles */

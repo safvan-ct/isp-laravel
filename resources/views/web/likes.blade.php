@@ -28,6 +28,10 @@
             <div id="likes-container">
                 <p class="text-center notranslate">{{ __('app.loading') }}...</p>
             </div>
+
+            <nav aria-label="Likes Pagination" class="mt-2" id="pagination-nav">
+                <ul id="likes-pagination" class="pagination justify-content-center mb-1"></ul>
+            </nav>
         </div>
     </main>
 @endsection
@@ -53,7 +57,9 @@
             await fetchLikes('quran');
         });
 
-        async function fetchLikes(type) {
+        async function fetchLikes(type, page = 1) {
+            $('#pageLoader').removeClass('d-none');
+            $('#likes-pagination').empty();
             $('#google_translate_element').addClass('d-none');
             $('.tabs').removeClass('active');
             $(`#${type}-tab`).addClass('active');
@@ -62,8 +68,12 @@
                 $('#google_translate_element').removeClass('d-none');
             }
 
-            if (!LIKED_ITEMS[type] || LIKED_ITEMS[type].length === 0) {
+            const likes = JSON.parse(localStorage.getItem('likes') || '{}');
+            const hasNoLikes = !(likes[type] && likes[type].length > 0);
+
+            if (!AUTH_USER && hasNoLikes) {
                 $('#likes-container').html("<p class='text-center'>No likes found.</p>");
+                $('#pageLoader').addClass('d-none');
                 return;
             }
 
@@ -92,19 +102,85 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     data: JSON.stringify({
-                        ids: LIKED_ITEMS[type] || []
+                        ids: Array.from(likes[type] || []) || [],
+                        page: page
                     }),
                     dataType: 'json'
                 });
 
                 renderMap[type](res);
+
+                setTimeout(() => {
+                    $('#pageLoader').addClass('d-none');
+                }, 100);
             } catch (error) {
+                $('#pageLoader').addClass('d-none');
                 console.error(error);
                 $('#likes-container').html("<p class='text-center'>Error loading likes.</p>");
             }
         }
 
-        function renderQuranVerses(items) {
+        function setPagination(type, meta) {
+            $('#pagination-nav').show();
+            const $pagination = $('#likes-pagination');
+            let paginationHtml = '';
+
+            const totalPages = meta.last_page;
+            const current = meta.current_page;
+            const delta = 3; // show 2 neighbors
+
+            $pagination.empty();
+
+            if (totalPages <= 1) {
+                $('#pagination-nav').hide();
+                return;
+            }
+
+            // Bootstrap Pagination with ellipsis
+            const createPageItem = (page, label = null, active = false, disabled = false) => {
+                return `<li class="page-item ${active ? 'active' : ''} ${disabled ? 'disabled' : ''}">
+                        <a class="page-link" href="javascript:void(0);" data-page="${page}">${label || page}</a>
+                    </li>`;
+            };
+
+            // Previous
+            paginationHtml += createPageItem(meta.current_page - 1, 'Previous', false, meta.current_page === 1);
+
+            let range = [];
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= current - delta && i <= current + delta)) {
+                    range.push(i);
+                }
+            }
+
+            let lastPage = 0;
+            range.forEach(page => {
+                if (page - lastPage > 1) {
+                    paginationHtml += `<li class="page-item disabled"><span class="page-link">…</span></li>`;
+                }
+
+                paginationHtml += createPageItem(page, null, page === current);
+                lastPage = page;
+            });
+
+            // Next
+            paginationHtml += createPageItem(meta.current_page + 1, 'Next', false, meta.current_page === totalPages);
+
+            $pagination.html(paginationHtml);
+
+            // Handle page click
+            $pagination.find('a.page-link').click(function() {
+                const page = $(this).data('page');
+                if (page >= 1 && page <= totalPages) {
+                    fetchLikes(type, page);
+                }
+            });
+        }
+
+        function renderQuranVerses(response) {
+            const items = response.data;
+            const meta = response.meta;
+
             const $container = $('#likes-container');
             $container.empty();
 
@@ -142,9 +218,13 @@
             `).join('');
 
             $container.html(html);
+            setPagination('quran', meta);
         }
 
-        function renderHadiths(items) {
+        function renderHadiths(response) {
+            const items = response.data;
+            const meta = response.meta;
+
             const $container = $('#likes-container');
             $container.empty();
 
@@ -156,19 +236,18 @@
             const html = items.map(item => `
                 <div class="ayah-card pb-0 item-card" data-id="${item.id}" data-type="hadith">
                     ${item.heading ? `
-                                <div class="row flex-column flex-md-row">
-                                    <div class="col-12 col-md-6 order-1 order-md-2">
-                                        <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
-                                            ${item.heading}
-                                        </h6>
-                                    </div>
+                                    <div class="row flex-column flex-md-row">
+                                        <div class="col-12 col-md-6 order-1 order-md-2">
+                                            <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
+                                                ${item.heading}
+                                            </h6>
+                                        </div>
 
-                                    <div class="col-12 col-md-6 order-2 order-md-1">
-                                        <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
+                                        <div class="col-12 col-md-6 order-2 order-md-1">
+                                            <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
+                                        </div>
                                     </div>
-                                </div>
-                                <hr>
-                            ` : ''}
+                                    <hr>` : ''}
 
                     <div class="row flex-column flex-md-row">
                         <div class="col-12 col-md-6 order-1 order-md-2">
@@ -212,9 +291,13 @@
             `).join('');
 
             $container.html(html);
+            setPagination('hadith', meta);
         }
 
-        function renderTopics(items) {
+        function renderTopics(response) {
+            const items = response.data;
+            const meta = response.meta;
+
             const $container = $('#likes-container');
             $container.empty();
 
@@ -263,6 +346,7 @@
             }).join('');
 
             $container.html(html);
+            setPagination('topic', meta);
         }
     </script>
 @endpush

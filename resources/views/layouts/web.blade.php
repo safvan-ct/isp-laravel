@@ -201,26 +201,50 @@
     <script src="{{ asset('web/js/custom.js') }}"></script>
     <script src="{{ asset('web/js/like-bookmark.js') }}"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const loader = document.getElementById("pageLoader");
-            if (loader) loader.style.display = "none";
-        });
+    @php
+        $quranLikedIds = auth()->check()
+            ? auth()->user()->likes()->where('likeable_type', 'App\Models\QuranVerse')->pluck('likeable_id')->toArray()
+            : [];
 
+        $hadithLikedIds = auth()->check()
+            ? auth()->user()->likes()->where('likeable_type', 'App\Models\HadithVerse')->pluck('likeable_id')->toArray()
+            : [];
+
+        $topicsLikedIds = auth()->check()
+            ? auth()->user()->likes()->where('likeable_type', 'App\Models\Topic')->pluck('likeable_id')->toArray()
+            : [];
+    @endphp
+
+    <script>
         //------------------------
         // Like functionality
         //------------------------
         window.AUTH_USER = "{{ auth()->check() && auth()->user()->role == 'Customer' }}";
         window.LIKE_URL = AUTH_USER ? "{{ route('like.toggle') }}" : null;
-        window.LIKED_ITEMS = AUTH_USER ?
-            groupLikesFromAuth(@json(auth()->check() ? auth()->user()->likes : [])) :
-            JSON.parse(localStorage.getItem('likes') || '{}');
+
+        function updateAllLikeIcon(type) {
+            let likedIds = [];
+            if (AUTH_USER) {
+                if (type === 'quran') {
+                    likedIds = @json($quranLikedIds);
+                } else if (type === 'hadith') {
+                    likedIds = @json($hadithLikedIds);
+                } else if (type === 'topic') {
+                    likedIds = @json($topicsLikedIds);
+                }
+            } else {
+                const likes = JSON.parse(localStorage.getItem("likes") || "{}");
+                likedIds = likes[type] || [];
+            }
+            console.log(likedIds);
+
+            likedIds.forEach(function(id) {
+                updateLikeIconState(type, id, true);
+            })
+        }
 
         $(function() {
-            // Apply initial icon state
-            $('.item-card').each(function() {
-                updateLikeIcon($(this).data('type'), $(this).data('id'));
-            });
+            $('#pageLoader').addClass('d-none');
 
             // Toggle on click
             $(document).on('click', '.like-btn', function() {
@@ -255,27 +279,9 @@
                         "X-CSRF-TOKEN": "{{ csrf_token() }}"
                     },
                     success: function(data) {
-                        // Append to LIKED_ITEMS
-                        if (typeof LIKED_ITEMS === "undefined") {
-                            window.LIKED_ITEMS = {};
-                        }
-
-                        // Merge new liked items into LIKED_ITEMS
-                        Object.keys(likes || {}).forEach(function(key) {
-                            if (!LIKED_ITEMS[key]) {
-                                LIKED_ITEMS[key] = [];
-                            }
-                            LIKED_ITEMS[key] = [
-                                ...new Set([
-                                    ...LIKED_ITEMS[key],
-                                    ...(likes[key] || [])
-                                ])
-                            ];
-                        });
-
-                        $('.item-card').each(function() {
-                            updateLikeIcon($(this).data('type'), $(this).data('id'));
-                        });
+                        updateAllLikeIcon('quran');
+                        updateAllLikeIcon('hadith');
+                        updateAllLikeIcon('topic');
 
                         localStorage.removeItem("likes");
                     },

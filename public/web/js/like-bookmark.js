@@ -14,70 +14,36 @@ $(function () {
  * Toggle like for a given type & id
  */
 function toggleLike(type, id) {
-    LIKED_ITEMS[type] = LIKED_ITEMS[type] || [];
-
-    let index = LIKED_ITEMS[type].indexOf(id);
-    let isAdding = index === -1;
-
-    if (isAdding) {
-        LIKED_ITEMS[type].push(id);
-    } else {
-        LIKED_ITEMS[type].splice(index, 1);
-    }
-
     if (AUTH_USER) {
-        sendLikeRequest(id, type, isAdding);
-    } else {
-        localStorage.setItem("likes", JSON.stringify(LIKED_ITEMS));
-    }
-
-    updateLikeIcon(type, id);
-}
-
-/**
- * Send like/unlike request to backend
- */
-function sendLikeRequest(id, type) {
-    if (!LIKE_URL || !AUTH_USER) {
-        return;
-    }
-
-    $.post(LIKE_URL, { id, type }).done(function (res) {
-        let status = res.status;
-        if (status === "added" && !LIKED_ITEMS[type].includes(id)) {
-            LIKED_ITEMS[type].push(id);
-        } else if (status === "removed") {
-            LIKED_ITEMS[type] = LIKED_ITEMS[type].filter((item) => item !== id);
+        if (!LIKE_URL) {
+            return;
         }
 
-        updateLikeIcon(type, id);
-    });
-}
+        $.post(LIKE_URL, { id, type }).done(function (res) {
+            let isAdding = res.status === "added";
+            updateLikeIconState(type, id, isAdding);
+        });
+    } else {
+        const likes = JSON.parse(localStorage.getItem("likes") || "{}");
+        likes[type] = likes[type] || [];
+        let index = likes[type].indexOf(id);
+        let isAdding = index === -1;
 
-/**
- * Group likes for authenticated user into type => [ids]
- */
-function groupLikesFromAuth(likes) {
-    const typeMap = {
-        "App\\Models\\QuranVerse": "quran",
-        "App\\Models\\HadithVerse": "hadith",
-        "App\\Models\\Topic": "topic",
-    };
+        if (isAdding) {
+            likes[type].push(id);
+        } else {
+            likes[type].splice(index, 1);
+        }
 
-    return likes.reduce((acc, item) => {
-        let key = typeMap[item.likeable_type] || item.likeable_type;
-        acc[key] = acc[key] || [];
-        acc[key].push(item.likeable_id);
-        return acc;
-    }, {});
+        localStorage.setItem("likes", JSON.stringify(likes));
+        updateLikeIconState(type, id, isAdding);
+    }
 }
 
 /**
  * Update the heart icon for an item
  */
-function updateLikeIcon(type, id) {
-    let isLiked = (LIKED_ITEMS[type] || []).includes(id);
-
+function updateLikeIconState(type, id, isLiked) {
     $(`.item-card[data-id="${id}"][data-type="${type}"] .like-btn i`)
         .toggleClass("fas", isLiked) // filled
         .toggleClass("far", !isLiked); // outline

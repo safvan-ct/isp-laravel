@@ -124,6 +124,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            updateAllLikeIcon('hadith');
+
             document.querySelectorAll('.ar-number').forEach(span => {
                 const number = span.textContent.trim();
                 span.textContent = toArabicNumber(number);

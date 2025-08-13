@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\QuranChapterTranslation;
 use App\Models\QuranVerse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuranFetchController extends Controller
 {
@@ -50,7 +51,10 @@ class QuranFetchController extends Controller
 
     public function likes(Request $request)
     {
-        $ids   = array_values(array_filter($request->ids));
+        $ids = Auth::check() && Auth::user()->role == 'Customer'
+        ? Auth::user()->likes()->where('likeable_type', 'App\Models\QuranVerse')->pluck('likeable_id')->toArray()
+        : array_values(array_filter($request->ids));
+
         $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
             ->with([
                 'translations',
@@ -58,8 +62,16 @@ class QuranFetchController extends Controller
             ])
             ->whereIn('id', $ids)
             ->active()
-            ->get();
+            ->paginate(5);
 
-        return response()->json($verse);
+        return response()->json([
+            'data' => $verse->items(),
+            'meta' => [
+                'current_page' => $verse->currentPage(),
+                'last_page'    => $verse->lastPage(),
+                'per_page'     => $verse->perPage(),
+                'total'        => $verse->total(),
+            ],
+        ]);
     }
 }
