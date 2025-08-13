@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title class="notranslate">@yield('title', __('app.islamic_study_portal'))</title>
 
     <!-- Favicon for most browsers -->
@@ -196,12 +197,93 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="{{ asset('web/js/custom.js') }}"></script>
+    <script src="{{ asset('web/js/like-bookmark.js') }}"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const loader = document.getElementById("pageLoader");
             if (loader) loader.style.display = "none";
+        });
+
+        //------------------------
+        // Like functionality
+        //------------------------
+        window.AUTH_USER = "{{ auth()->check() && auth()->user()->role == 'Customer' }}";
+        window.LIKE_URL = AUTH_USER ? "{{ route('like.toggle') }}" : null;
+        window.LIKED_ITEMS = AUTH_USER ?
+            groupLikesFromAuth(@json(auth()->check() ? auth()->user()->likes : [])) :
+            JSON.parse(localStorage.getItem('likes') || '{}');
+
+        $(function() {
+            // Apply initial icon state
+            $('.item-card').each(function() {
+                updateLikeIcon($(this).data('type'), $(this).data('id'));
+            });
+
+            // Toggle on click
+            $(document).on('click', '.like-btn', function() {
+                let type = $(this).data('type');
+                let id = $(this).data('id');
+                toggleLike(type, id);
+            });
+
+            // Play audio
+            $(document).on('click', '.play-btn', function() {
+                playAudio.call(this);
+            });
+
+            @if (auth()->check() && session('sync_data'))
+                let likes = JSON.parse(localStorage.getItem('likes') || '{}');
+                let bookmarks = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
+
+                $.ajax({
+                    url: "{{ route('sync.data') }}",
+                    type: "POST",
+                    data: JSON.stringify({
+                        likes: Object.entries(likes).flatMap(([type, ids]) =>
+                            ids.map(id => ({
+                                id,
+                                type
+                            }))
+                        ),
+                        bookmarks: bookmarks
+                    }),
+                    contentType: "application/json",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        // Append to LIKED_ITEMS
+                        if (typeof LIKED_ITEMS === "undefined") {
+                            window.LIKED_ITEMS = {};
+                        }
+
+                        // Merge new liked items into LIKED_ITEMS
+                        Object.keys(likes || {}).forEach(function(key) {
+                            if (!LIKED_ITEMS[key]) {
+                                LIKED_ITEMS[key] = [];
+                            }
+                            LIKED_ITEMS[key] = [
+                                ...new Set([
+                                    ...LIKED_ITEMS[key],
+                                    ...(likes[key] || [])
+                                ])
+                            ];
+                        });
+
+                        $('.item-card').each(function() {
+                            updateLikeIcon($(this).data('type'), $(this).data('id'));
+                        });
+
+                        localStorage.removeItem("likes");
+                    },
+                    error: function(xhr) {
+                        console.error("Sync failed:", xhr.responseText);
+                    }
+                });
+            @endif
         });
     </script>
 

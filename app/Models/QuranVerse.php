@@ -50,4 +50,16 @@ class QuranVerse extends Model
     {
         return $this->belongsTo(QuranChapter::class, 'quran_chapter_id');
     }
+
+    // --------------------
+    // Likes
+    // --------------------
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
+    public function isLikedByUser($userId)
+    {
+        return $this->likes()->where('user_id', $userId)->exists();
+    }
 }

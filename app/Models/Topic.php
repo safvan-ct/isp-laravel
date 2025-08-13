@@ -81,4 +81,12 @@ class Topic extends Model
         return $this->hasMany(TopicVideo::class)
             ->orderBy('position');
     }
+
+    // --------------------
+    // Likes
+    // --------------------
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 }

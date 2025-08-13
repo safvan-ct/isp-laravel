@@ -45,7 +45,7 @@
             </div>
 
             @foreach ($chapter->verses as $hadith)
-                <div class="ayah-card">
+                <div class="ayah-card pb-0 item-card" data-id="{{ $hadith->id }}" data-type="hadith">
                     @if ($hadith->heading)
                         <div class="row flex-column flex-md-row">
                             <div class="col-12 col-md-6 order-1 order-md-2">
@@ -87,6 +87,19 @@
 
                         {{ __('app.status') }}: {{ __('app.' . strtolower($hadith->status)) }}
                     </p>
+
+                    <!-- Action Icons -->
+                    <div class="d-flex align-items-center mt-1 gap-2">
+                        <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
+                            data-id="{{ $hadith->id }}" data-type="hadith" title="Bookmark">
+                            <i class="far fa-bookmark"></i>
+                        </a>
+
+                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $hadith->id }}"
+                            data-type="hadith" title="Like">
+                            <i class="far fa-heart"></i>
+                        </a>
+                    </div>
                 </div>
             @endforeach
         </div>

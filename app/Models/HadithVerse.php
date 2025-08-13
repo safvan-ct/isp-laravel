@@ -58,4 +58,12 @@ class HadithVerse extends Model
     {
         return $this->belongsTo(HadithBook::class, 'hadith_book_id');
     }
+
+    // --------------------
+    // Likes
+    // --------------------
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
+    }
 }

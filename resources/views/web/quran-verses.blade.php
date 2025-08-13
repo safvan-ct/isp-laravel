@@ -17,7 +17,7 @@
             </div>
 
             @foreach ($chapter->verses as $item)
-                <div class="ayah-card learn-item" data-id="{{ $item->id }}">
+                <div class="ayah-card item-card pb-0" data-id="{{ $item->id }}" data-type="quran">
                     <div class="ayah-arabic">
                         <span class="quran-text">{{ $item->text }}</span>
                         <span class="ayah-number ar-number">{{ $item->number_in_chapter }}</span>
@@ -28,20 +28,19 @@
                     @endif
 
                     <!-- Action Icons -->
-                    <div class="ayah-actions" style="margin-top:8px; display:flex; gap:12px; align-items:center;">
+                    <div class="d-flex align-items-center mt-1 gap-2">
                         <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
-                            data-id="{{ $item->id }}" data-type="quran" title="Bookmark" style="color: #4E2D45;">
+                            data-id="{{ $item->id }}" data-type="quran" title="Bookmark">
                             <i class="far fa-bookmark"></i>
                         </a>
 
                         <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $item->id }}"
-                            data-type="quran" title="Like" style="color: #4E2D45;">
+                            data-type="quran" title="Like">
                             <i class="far fa-heart"></i>
                         </a>
 
                         <a href="javascript:void(0);" class="play-btn text-decoration-none"
-                            data-surah="{{ $chapter->id }}" data-ayah="{{ $item->number_in_chapter }}" title="Play"
-                            style="color: #4E2D45;">
+                            data-surah="{{ $chapter->id }}" data-ayah="{{ $item->number_in_chapter }}" title="Play">
                             <i class="fas fa-play"></i>
                         </a>
                     </div>
@@ -52,17 +51,16 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('web/js/bookmark.js') }}"></script>
-    <script src="{{ asset('web/js/quran-audio.js') }}"></script>
+    {{-- <script src="{{ asset('web/js/bookmark.js') }}"></script>--}}
 
     <script>
-        BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
-        LIKED_ITEMS = JSON.parse(localStorage.getItem('likes') || '{}');
+        // BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
+        // LIKED_ITEMS = JSON.parse(localStorage.getItem('likes') || '{}');
 
-        $('.learn-item').each(function() {
-            const id = parseInt($(this).data('id'), 10);
-            updateLikeIconState(id, 'quran');
-            updateIconState(id, 'quran');
-        });
+        // $('.learn-item').each(function() {
+        //     const id = parseInt($(this).data('id'), 10);
+        //     updateLikeIconState(id, 'quran');
+        //     updateIconState(id, 'quran');
+        // });
     </script>
 @endpush

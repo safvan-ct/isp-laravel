@@ -4,7 +4,9 @@ use App\Http\Controllers\HadithFetchController;
 use App\Http\Controllers\QuranFetchController;
 use App\Http\Controllers\Web\HadithController;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\LikeController;
 use App\Http\Controllers\Web\QuranController;
+use App\Http\Controllers\Web\SyncController;
 use App\Http\Controllers\Web\TopicController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +32,9 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
 
 Route::get('calendar', [HomeController::class, 'calendar'])->name('calendar');
 Route::get('likes', [QuranController::class, 'likes'])->name('likes');
+
+Route::post('sync-data', [SyncController::class, 'store'])->name('sync.data')->middleware('auth');
+Route::post('like-item', [LikeController::class, 'store'])->name('like.toggle')->middleware('auth');
 
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');
