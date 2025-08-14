@@ -259,7 +259,7 @@
 
             @if (auth()->check() && session('sync_data'))
                 let likes = JSON.parse(localStorage.getItem('likes') || '{}');
-                let bookmarks = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
+                let bookmarks = JSON.parse(localStorage.getItem('ISPBOOKMARKS') || '{}');
 
                 $.ajax({
                     url: "{{ route('sync.data') }}",
@@ -283,6 +283,7 @@
                         updateAllLikeIcon('topic');
 
                         localStorage.removeItem("likes");
+                        localStorage.removeItem("ISPBOOKMARKS");
                     },
                     error: function(xhr) {
                         console.error("Sync failed:", xhr.responseText);
