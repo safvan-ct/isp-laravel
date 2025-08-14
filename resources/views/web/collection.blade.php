@@ -283,12 +283,12 @@
                         <div class="d-flex align-items-center mt-1 gap-2">
                             <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
                                 data-id="${item.id}" data-type="hadith" title="Bookmark">
-                                <i class="far fa-bookmark fs-5"></i>
+                                <i class="fas fa-bookmark fs-5"></i>
                             </a>
 
                             <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
                                 data-type="hadith" title="Like">
-                                <i class="fas fa-heart fs-5"></i>
+                                <i class="far fa-heart fs-5"></i>
                             </a>
                         </div>
                     </div>
