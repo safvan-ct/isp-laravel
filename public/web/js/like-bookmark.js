@@ -61,6 +61,7 @@ function showHeartAnimation(themeColor = "#4E2D45") {
                 6.86-8.55 11.54L12 21.35z"/>
         </svg>`;
     heart.style.position = "fixed";
+    heart.style.zIndex = "9999";
     heart.style.top = "50%";
     heart.style.left = "50%";
     heart.style.transform = "translate(-50%, -50%) scale(0)";
