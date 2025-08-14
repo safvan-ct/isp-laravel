@@ -73,32 +73,28 @@
                             <div class="text-en hadith-tr-text">{{ $hadith->translation?->text }}</div>
                         </div>
                     </div>
-
                     <hr>
-                    <p class="text-muted small notranslate fst-italic">
-                        {{ $chapter->book->translation?->name ?: $chapter->book->name }},
 
-                        {{ __('app.volume') }}: {{ $hadith->volume }},
+                    <div class="d-flex align-items-center justify-content-between mt-0">
+                        <p class="text-muted small notranslate fst-italic">
+                            {{ $chapter->book->translation?->name ?: $chapter->book->name }},
+                            {{ __('app.volume') }}: {{ $hadith->volume }},
+                            {{ __('app.chapter') }}: #{{ $chapter->chapter_number }} -
+                            {{ $chapter->translation?->name ?: $chapter->name }},
+                            {{ __('app.hadith') }}: #{{ $hadith->hadith_number }},
+                            {{ __('app.status') }}: {{ __('app.' . strtolower($hadith->status)) }}
+                        </p>
 
-                        {{ __('app.chapter') }}: #{{ $chapter->chapter_number }} -
-                        {{ $chapter->translation?->name ?: $chapter->name }},
-
-                        {{ __('app.hadith') }}: #{{ $hadith->hadith_number }},
-
-                        {{ __('app.status') }}: {{ __('app.' . strtolower($hadith->status)) }}
-                    </p>
-
-                    <!-- Action Icons -->
-                    <div class="d-flex align-items-center mt-1 gap-2">
-                        <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
-                            data-id="{{ $hadith->id }}" data-type="hadith" title="Bookmark">
-                            <i class="far fa-bookmark"></i>
-                        </a>
-
-                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $hadith->id }}"
-                            data-type="hadith" title="Like">
-                            <i class="far fa-heart"></i>
-                        </a>
+                        <div class="d-flex align-items-center mt-1 gap-2">
+                            <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
+                                data-id="{{ $hadith->id }}" data-type="hadith" title="Bookmark">
+                                <i class="far fa-bookmark fs-5"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="like-btn text-decoration-none"
+                                data-id="{{ $hadith->id }}" data-type="hadith" title="Like">
+                                <i class="far fa-heart fs-5"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             @endforeach

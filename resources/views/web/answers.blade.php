@@ -35,14 +35,13 @@
                     <h2 class="mb-0">{{ $item->translation?->title ?: $item->slug }}</h2>
 
                     <div class="d-flex gap-2">
-                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $item->id }}"
-                            data-type="topic" title="Like">
-                            <i class="far fa-heart"></i>
-                        </a>
-
                         <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
                             data-id="{{ $item->id }}" data-type="topic" title="Bookmark">
-                            <i class="far fa-bookmark"></i>
+                            <i class="far fa-bookmark fs-5"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $item->id }}"
+                            data-type="topic" title="Like">
+                            <i class="far fa-heart fs-5"></i>
                         </a>
                     </div>
                 </div>
@@ -60,17 +59,35 @@
                             : json_decode($quranVerse->translation_json, true);
                     @endphp
 
-                    <blockquote class="m-0 mt-1 notranslate"
-                        onclick="openAddOnModal('quran', {{ $quranVerse->quran_verse_id }})" style="cursor: pointer;">
-                        <p dir="rtl" class="quran-text">{{ $quranVerse->simplified }}</p>
-
-                        {{ $json['ml'] }}
-
-                        <br>
-                        <span class="text-muted small fst-italic">
-                            🔖 {{ $chapter->id }}.{{ $chapter->translation?->name ?: $chapter->name }}:
-                            {{ $quranVerse->quran->number_in_chapter }}
+                    <blockquote class="m-0 mt-1 notranslate">
+                        <span onclick="openAddOnModal('quran', {{ $quranVerse->quran_verse_id }})"
+                            style="cursor: pointer;">
+                            <p dir="rtl" class="quran-text">{{ $quranVerse->simplified }}</p>
+                            {{ $json['ml'] }}
                         </span>
+
+                        <div class="d-flex align-items-center justify-content-between mt-0 item-card" data-type="quran"
+                            data-id="{{ $quranVerse->quran_verse_id }}">
+                            <p class="text-muted small fst-italic mt-2 notranslate">
+                                🔖 {{ $chapter->id }}.{{ $chapter->translation?->name ?: $chapter->name }}:
+                                {{ $quranVerse->quran->number_in_chapter }}
+                            </p>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="javascript:void(0);" title="View"
+                                    onclick="openAddOnModal('quran', {{ $quranVerse->quran_verse_id }})">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" data-type="quran"
+                                    data-id="{{ $quranVerse->quran_verse_id }}">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="like-btn" title="Like" data-type="quran"
+                                    data-id="{{ $quranVerse->quran_verse_id }}">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                        </div>
                     </blockquote>
                 @endforeach
 
@@ -82,15 +99,35 @@
                             : json_decode($hadithVerse->translation_json, true);
                     @endphp
 
-                    <blockquote class="m-0 mt-1 notranslate"
-                        onclick="openAddOnModal('hadith', {{ $hadithVerse->hadith_verse_id }})" style="cursor: pointer;">
-                        <p dir="rtl" class="quran-text">{{ $hadithVerse->simplified }}</p>
-
-                        {{ $json['ml'] }}
-
-                        <br><span class="text-muted small fst-italic">
-                            🔖 {{ $book->translation?->name ?: $book->name }}: {{ $hadithVerse->hadith->hadith_number }}
+                    <blockquote class="m-0 mt-1 notranslate">
+                        <span onclick="openAddOnModal('hadith', {{ $hadithVerse->hadith_verse_id }})"
+                            style="cursor: pointer;">
+                            <p dir="rtl" class="quran-text">{{ $hadithVerse->simplified }}</p>
+                            {{ $json['ml'] }}
                         </span>
+
+                        <div class="d-flex align-items-center justify-content-between mt-0 item-card" data-type="hadith"
+                            data-id="{{ $hadithVerse->hadith_verse_id }}">
+                            <p class="text-muted small fst-italic mt-2 notranslate">
+                                🔖 {{ $book->translation?->name ?: $book->name }}:
+                                {{ $hadithVerse->hadith->hadith_number }}
+                            </p>
+
+                            <div class="d-flex align-items-center gap-2">
+                                <a href="javascript:void(0);" title="View"
+                                    onclick="openAddOnModal('hadith', {{ $hadithVerse->hadith_verse_id }})">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" data-type="hadith"
+                                    data-id="{{ $hadithVerse->hadith_verse_id }}">
+                                    <i class="far fa-bookmark"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="like-btn" title="Like" data-type="hadith"
+                                    data-id="{{ $hadithVerse->hadith_verse_id }}">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                        </div>
                     </blockquote>
                 @endforeach
 
@@ -165,6 +202,12 @@
 
     <script>
         $(function() {
+            updateAllLikeIcon('quran');
+            updateAllBookmarkIcon('quran');
+
+            updateAllLikeIcon('hadith');
+            updateAllBookmarkIcon('hadith');
+
             updateAllLikeIcon('topic');
             updateAllBookmarkIcon('topic');
         });
@@ -228,7 +271,7 @@
                         let textjustify = type === 'hadith' ? `hadith-tr-text` : '';
 
                         let innerHtml =
-                            `<blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''} item-card" data-type="${type}" data-id="${result.id}">`;
+                            `<blockquote class="border-start m-0 ${type === 'quran' ? 'notranslate' : ''}">`;
                         if (arHeading) {
                             innerHtml += `${row}<p class="notranslate fw-bold m-0 fs-5 ${col1} ${textjustify}" dir="rtl">${arHeading}</p>
                                     <p class="fw-bold mb-2 ${col2} ${textjustify}">${trHeading}</p>${endRow}`;
@@ -248,25 +291,19 @@
                             ${endRow}
                         `;
 
-                        innerHtml += `<div class="d-flex align-items-center justify-content-between mt-2">
-                                <div class="d-flex align-items-center gap-2">
-                                    <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" style="color:#4E2D45;" data-type="${type}" data-id="${result.id}">
-                                        <i class="far fa-bookmark"></i>
-                                    </a>
-                                    <a href="javascript:void(0);" class="like-btn" title="Like" style="color:#4E2D45;" data-type="${type}" data-id="${result.id}">
-                                        <i class="far fa-heart"></i>
-                                    </a>`;
-
                         if (type === 'quran') {
-                            innerHtml += `<a href="javascript:void(0);" class="play-btn" data-surah="${result.chapter?.id}" data-ayah="${result.number_in_chapter}" title="Play" style="color:#4E2D45;">
-                                        <i class="fas fa-play"></i>
-                                    </a>
-                                    </div>
+                            innerHtml += `
+                                <div class="d-flex align-items-center justify-content-between mt-0">
                                     <p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>
+
+                                    <div class="d-flex align-items-center gap-2">
+                                        <a href="javascript:void(0);" class="play-btn" data-surah="${result.chapter?.id}" data-ayah="${result.number_in_chapter}" title="Play" style="color:#4E2D45;">
+                                            <i class="fas fa-play fs-5"></i>
+                                        </a>
+                                    </div>
                                 </div>`;
                         } else {
-                            innerHtml +=
-                                `</div></div><p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>`;
+                            innerHtml += `<p class="text-muted small fst-italic mt-2 notranslate">🔖 ${reference}</p>`;
                         }
 
                         innerHtml += `</blockquote>`;

@@ -206,21 +206,21 @@
                     <div class="ayah-trans">${item.translations?.[0]?.text || ''}</div>
 
                     <div class="d-flex align-items-center justify-content-between mt-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" data-type="quran" data-id="${item.id}">
-                                <i class="fas fa-bookmark"></i>
-                            </a>
-                            <a href="javascript:void(0);" class="like-btn" title="Like" data-type="quran" data-id="${item.id}">
-                                <i class="far fa-heart"></i>
-                            </a>
-                            <a href="javascript:void(0);" class="play-btn" data-surah="${item.chapter?.id}" data-ayah="${item.number_in_chapter}" title="Play">
-                                <i class="fas fa-play"></i>
-                            </a>
-                        </div>
-
                         <p class="text-muted small notranslate fst-italic mb-0">
                             🔖 ${item.chapter?.id}.${item.chapter?.translations?.[0]?.name || item.chapter?.name}: ${item.number_in_chapter}
                         </p>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="javascript:void(0);" class="play-btn" data-surah="${item.chapter?.id}" data-ayah="${item.number_in_chapter}" title="Play">
+                                <i class="fas fa-play fs-5"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" data-type="quran" data-id="${item.id}">
+                                <i class="fas fa-bookmark fs-5"></i>
+                            </a>
+                            <a href="javascript:void(0);" class="like-btn" title="Like" data-type="quran" data-id="${item.id}">
+                                <i class="far fa-heart fs-5"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -244,18 +244,18 @@
             const html = items.map(item => `
                 <div class="ayah-card pb-0 item-card" data-id="${item.id}" data-type="hadith">
                     ${item.heading ? `
-                                        <div class="row flex-column flex-md-row">
-                                            <div class="col-12 col-md-6 order-1 order-md-2">
-                                                <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
-                                                    ${item.heading}
-                                                </h6>
-                                            </div>
+                                                <div class="row flex-column flex-md-row">
+                                                    <div class="col-12 col-md-6 order-1 order-md-2">
+                                                        <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
+                                                            ${item.heading}
+                                                        </h6>
+                                                    </div>
 
-                                            <div class="col-12 col-md-6 order-2 order-md-1">
-                                                <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
-                                            </div>
-                                        </div>
-                                        <hr>` : ''}
+                                                    <div class="col-12 col-md-6 order-2 order-md-1">
+                                                        <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
+                                                    </div>
+                                                </div>
+                                                <hr>` : ''}
 
                     <div class="row flex-column flex-md-row">
                         <div class="col-12 col-md-6 order-1 order-md-2">
@@ -271,29 +271,26 @@
                     </div>
                     <hr>
 
-                    <p class="text-muted small notranslate fst-italic">
-                        🔖 ${item.book.translations?.[0]?.name ?? $item.book.name},
+                    <div class="d-flex align-items-center justify-content-between mt-0">
+                        <p class="text-muted small notranslate fst-italic">
+                            🔖 ${item.book.translations?.[0]?.name ?? $item.book.name},
+                            {{ __('app.volume') }}: ${item.volume},
+                            {{ __('app.chapter') }}: #${item.chapter.chapter_number} - ${item.chapter.translations?.[0]?.name ?? item.chapter.name},
+                            {{ __('app.hadith') }}: #${item.hadith_number},
+                            {{ __('app.status') }}: ${item.status || 'Unknown'}
+                        </p>
 
-                        {{ __('app.volume') }}: ${item.volume},
+                        <div class="d-flex align-items-center mt-1 gap-2">
+                            <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
+                                data-id="${item.id}" data-type="hadith" title="Bookmark">
+                                <i class="far fa-bookmark fs-5"></i>
+                            </a>
 
-                        {{ __('app.chapter') }}: #${item.chapter.chapter_number} - ${item.chapter.translations?.[0]?.name ?? item.chapter.name},
-
-                        {{ __('app.hadith') }}: #${item.hadith_number},
-
-                        {{ __('app.status') }}: ${item.status || 'Unknown'}
-                    </p>
-
-                    <!-- Action Icons -->
-                    <div class="d-flex align-items-center mt-1 gap-2">
-                        <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
-                            data-id="${item.id}" data-type="hadith" title="Bookmark">
-                            <i class="fas fa-bookmark"></i>
-                        </a>
-
-                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
-                            data-type="hadith" title="Like">
-                            <i class="far fa-heart"></i>
-                        </a>
+                            <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
+                                data-type="hadith" title="Like">
+                                <i class="fas fa-heart fs-5"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -326,27 +323,27 @@
                     </p>`;
 
                 content = `
-                    <div class="mt-1 section-card pb-0 notranslate">
+                    <div class="mt-1 section-card pb-1 notranslate">
+                        <h2 class="mb-0">${item.translations?.[0]?.title ?? item.slug}</h2>
+                        ${item.translations?.[0]?.content ? `<p class="mb-0">${item.translations?.[0]?.content}</p>` : ''}
+                        <hr>
+
                         <div class="d-flex justify-content-between align-items-center item-card" data-id="${item.id}"
                             data-type="topic">
-                            <h2 class="mb-0">${item.translations?.[0]?.title ?? item.slug}</h2>
+                            ${ref}
 
                             <div class="d-flex gap-2">
-                                <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
-                                    data-type="topic" title="Like">
-                                    <i class="far fa-heart"></i>
-                                </a>
-
                                 <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
                                     data-id="${item.id}" data-type="topic" title="Bookmark">
-                                    <i class="fas fa-bookmark"></i>
+                                    <i class="fas fa-bookmark fs-5"></i>
+                                </a>
+
+                                <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
+                                    data-type="topic" title="Like">
+                                    <i class="far fa-heart fs-5"></i>
                                 </a>
                             </div>
                         </div>
-
-                        ${item.translations?.[0]?.content ? `<p class="mb-0">${item.translations?.[0]?.content}</p>` : ''}
-                        <hr>
-                        ${ref}
                     </div>
                 `;
 

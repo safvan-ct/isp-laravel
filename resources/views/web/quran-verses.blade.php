@@ -28,20 +28,18 @@
                     @endif
 
                     <!-- Action Icons -->
-                    <div class="d-flex align-items-center mt-1 gap-2">
-                        <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
-                            data-id="{{ $item->id }}" data-type="quran" title="Bookmark">
-                            <i class="far fa-bookmark"></i>
-                        </a>
-
-                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $item->id }}"
-                            data-type="quran" title="Like">
-                            <i class="far fa-heart"></i>
-                        </a>
-
+                    <div class="d-flex align-items-center mt-1 gap-2 justify-content-end">
                         <a href="javascript:void(0);" class="play-btn text-decoration-none"
                             data-surah="{{ $chapter->id }}" data-ayah="{{ $item->number_in_chapter }}" title="Play">
-                            <i class="fas fa-play"></i>
+                            <i class="fas fa-play fs-6"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
+                            data-id="{{ $item->id }}" data-type="quran" title="Bookmark">
+                            <i class="far fa-bookmark fs-6"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="{{ $item->id }}"
+                            data-type="quran" title="Like">
+                            <i class="far fa-heart fs-6"></i>
                         </a>
                     </div>
                 </div>
