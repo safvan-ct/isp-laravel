@@ -24,11 +24,11 @@ return new class extends Migration
         Schema::create('bookmark_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('collection_id')->constrained('bookmark_collections')->onDelete('cascade')->nulllable();
+            $table->foreignId('bookmark_collection_id')->constrained('bookmark_collections')->onDelete('cascade')->nulllable();
             $table->morphs('bookmarkable'); // type + id for polymorphic relation
             $table->timestamps();
 
-            $table->unique(['user_id', 'collection_id', 'bookmarkable_id', 'bookmarkable_type'], 'bookmark_unique');
+            $table->unique(['user_id', 'bookmark_collection_id', 'bookmarkable_id', 'bookmarkable_type'], 'bookmark_unique');
         });
     }
 

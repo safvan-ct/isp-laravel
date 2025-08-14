@@ -166,6 +166,7 @@
     <script>
         $(function() {
             updateAllLikeIcon('topic');
+            updateAllBookmarkIcon('topic');
         });
 
         function openAddOnModal(type, id, title = '') {
@@ -272,6 +273,7 @@
                         modalBody.innerHTML = innerHtml;
 
                         updateAllLikeIcon(type);
+                        updateAllBookmarkIcon(type);
 
                         if (type === 'quran') {
                             $(modalElement).one("hidden.bs.modal", function() {

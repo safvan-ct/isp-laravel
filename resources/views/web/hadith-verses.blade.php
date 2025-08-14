@@ -123,31 +123,26 @@
     </script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        $(function() {
             updateAllLikeIcon('hadith');
+            updateAllBookmarkIcon('hadith');
 
-            document.querySelectorAll('.ar-number').forEach(span => {
-                const number = span.textContent.trim();
-                span.textContent = toArabicNumber(number);
+            $('.ar-number').each(function() {
+                const number = $(this).text().trim();
+                $(this).text(toArabicNumber(number));
             });
-        })
+        });
 
         function searchHadithByNumber() {
-            const input = document.getElementById("hadith-number");
-            const number = parseInt(input.value);
+            const number = parseInt($('#hadith-number').val(), 10);
 
             if (isNaN(number) || number < 1) {
                 alert("Please enter a valid Hadith number.");
                 return;
             }
 
-            window.location.href = "{{ route('hadith.book.verse', [$chapter->book->id, ':verse']) }}".replace(':verse',
-                number);
-        }
-
-        function toArabicNumber(number) {
-            const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return String(number).split('').map(d => arabicDigits[d] || d).join('');
+            window.location.href = "{{ route('hadith.book.verse', [$chapter->book->id, ':verse']) }}"
+                .replace(':verse', number);
         }
     </script>
 @endpush

@@ -30,6 +30,7 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
     Route::post('hadith-like', [HadithFetchController::class, 'likes'])->name('hadith.like');
 
     Route::post('topic-like', [HomeController::class, 'likes'])->name('topic.like');
+    Route::get('collections', [HomeController::class, 'collections'])->name('collections');
 });
 // End Fetch
 
@@ -38,6 +39,8 @@ Route::get('likes', [QuranController::class, 'likes'])->name('likes');
 
 Route::post('sync-data', [SyncController::class, 'store'])->name('sync.data')->middleware('auth');
 Route::post('like-item', [LikeController::class, 'store'])->name('like.toggle')->middleware('auth');
+Route::post('bookmark-item', [LikeController::class, 'bookmark'])->name('bookmark.toggle')->middleware('auth');
+Route::post('collection', [LikeController::class, 'collection'])->name('collection.store')->middleware('auth');
 
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');

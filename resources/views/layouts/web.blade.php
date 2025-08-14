@@ -202,24 +202,55 @@
     <script src="{{ asset('web/js/like-bookmark.js') }}"></script>
 
     @php
-        $quranLikedIds = auth()->check()
-            ? auth()->user()->likes()->where('likeable_type', 'App\Models\QuranVerse')->pluck('likeable_id')->toArray()
-            : [];
+        $quranLikedIds = $hadithLikedIds = $topicsLikedIds = [];
+        $quranBookmarkedIds = $hadithBookmarkedIds = $topicsBookmarkedIds = [];
 
-        $hadithLikedIds = auth()->check()
-            ? auth()->user()->likes()->where('likeable_type', 'App\Models\HadithVerse')->pluck('likeable_id')->toArray()
-            : [];
+        if (auth()->check() && auth()->user()->role == 'Customer') {
+            $likes = auth()
+                ->user()
+                ->likes()
+                ->whereIn('likeable_type', ['App\Models\QuranVerse', 'App\Models\HadithVerse', 'App\Models\Topic'])
+                ->get(['likeable_type', 'likeable_id'])
+                ->groupBy('likeable_type');
 
-        $topicsLikedIds = auth()->check()
-            ? auth()->user()->likes()->where('likeable_type', 'App\Models\Topic')->pluck('likeable_id')->toArray()
-            : [];
+            $quranLikedIds = $likes->get('App\Models\QuranVerse', collect())->pluck('likeable_id')->toArray();
+            $hadithLikedIds = $likes->get('App\Models\HadithVerse', collect())->pluck('likeable_id')->toArray();
+            $topicsLikedIds = $likes->get('App\Models\Topic', collect())->pluck('likeable_id')->toArray();
+
+            $bookmarks = auth()
+                ->user()
+                ->bookmarks()
+                ->whereIn('bookmarkable_type', ['App\Models\QuranVerse', 'App\Models\HadithVerse', 'App\Models\Topic'])
+                ->get(['bookmarkable_type', 'bookmarkable_id'])
+                ->groupBy('bookmarkable_type');
+
+            $quranBookmarkedIds = $bookmarks
+                ->get('App\Models\QuranVerse', collect())
+                ->pluck('bookmarkable_id')
+                ->unique()
+                ->values()
+                ->toArray();
+            $hadithBookmarkedIds = $bookmarks
+                ->get('App\Models\HadithVerse', collect())
+                ->pluck('bookmarkable_id')
+                ->unique()
+                ->values()
+                ->toArray();
+            $topicsBookmarkedIds = $bookmarks
+                ->get('App\Models\Topic', collect())
+                ->pluck('bookmarkable_id')
+                ->unique()
+                ->values()
+                ->toArray();
+        }
     @endphp
 
     <script>
+        window.AUTH_USER = "{{ auth()->check() && auth()->user()->role == 'Customer' }}";
+
         //------------------------
         // Like functionality
         //------------------------
-        window.AUTH_USER = "{{ auth()->check() && auth()->user()->role == 'Customer' }}";
         window.LIKE_URL = AUTH_USER ? "{{ route('like.toggle') }}" : null;
 
         function updateAllLikeIcon(type) {
@@ -242,7 +273,35 @@
             })
         }
 
+        //------------------------
+        // Bookmark functionality
+        //------------------------
+        window.COLLECTION_FETCH_URL = AUTH_USER ? "{{ route('fetch.collections') }}" : null;
+        window.BOOKMARK_URL = AUTH_USER ? "{{ route('bookmark.toggle') }}" : null;
+        window.COLLECTION_URL = AUTH_USER ? "{{ route('collection.store') }}" : null;
+
+        function updateAllBookmarkIcon(type) {
+            let bookmarkedIds = [];
+            if (AUTH_USER) {
+                if (type === 'quran') {
+                    bookmarkedIds = @json($quranBookmarkedIds);
+                } else if (type === 'hadith') {
+                    bookmarkedIds = @json($hadithBookmarkedIds);
+                } else if (type === 'topic') {
+                    bookmarkedIds = @json($topicsBookmarkedIds);
+                }
+            } else {
+                const bookmarks = JSON.parse(localStorage.getItem("ISPBOOKMARKS") || "{}");
+                bookmarkedIds = bookmarks[type] || [];
+            }
+
+            bookmarkedIds.forEach(function(id) {
+                updateBookmarkIconState(type, id, true);
+            })
+        }
+
         $(function() {
+            CollectionList = [];
             $('#pageLoader').addClass('d-none');
 
             // Toggle on click
@@ -255,6 +314,11 @@
             // Play audio
             $(document).on('click', '.play-btn', function() {
                 playAudio.call(this);
+            });
+
+            $("#collectionModal").one("hidden.bs.modal", function() {
+                CollectionList = [];
+                $("#newCollectionName").val('');
             });
 
             @if (auth()->check() && session('sync_data'))

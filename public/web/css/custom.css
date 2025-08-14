@@ -57,8 +57,14 @@ h1 {
 *:active {
     outline: none !important;
     box-shadow: none !important;
-    /* border-color: #2c182a !important; */
 }
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #2c182a !important;
+}
+
 
 ul.step-list li {
     margin-bottom: 0.5rem;

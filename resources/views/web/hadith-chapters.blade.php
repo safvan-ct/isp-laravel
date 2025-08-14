@@ -40,16 +40,15 @@
 @push('scripts')
     <script>
         function searchHadithByNumber() {
-            const input = document.getElementById("hadith-number");
-            const number = parseInt(input.value);
+            const number = parseInt($('#hadith-number').val(), 10);
 
             if (isNaN(number) || number < 1) {
                 alert("Please enter a valid Hadith number.");
                 return;
             }
 
-            window.location.href = "{{ route('hadith.book.verse', [$book->id, ':verse']) }}".replace(
-                ':verse', number);
+            window.location.href = "{{ route('hadith.book.verse', [$book->id, ':verse']) }}"
+                .replace(':verse', number);
         }
     </script>
 @endpush

@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookmarkItem extends Model
 {
-    protected $fillable = ['user_id', 'collection_id', 'bookmarkable_id', 'bookmarkable_type'];
+    protected $fillable = ['user_id', 'bookmark_collection_id', 'bookmarkable_id', 'bookmarkable_type'];
 
     public function bookmarkable()
     {

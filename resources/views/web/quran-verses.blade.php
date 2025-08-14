@@ -51,16 +51,10 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('web/js/bookmark.js') }}"></script>
-
     <script>
         $(function() {
             updateAllLikeIcon('quran');
-
-            $('.item-card').each(function() {
-                const id = parseInt($(this).data('id'), 10);
-                updateIconState(id, 'quran');
-            });
+            updateAllBookmarkIcon('quran');
         });
     </script>
 @endpush

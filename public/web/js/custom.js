@@ -27,4 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const number = span.textContent.trim();
         span.textContent = toArabicNumber(number);
     });
+
+    toastr.options = {
+        closeButton: true, // Show the close (X) icon
+        positionClass: "toast-bottom-right",
+        timeOut: 5000, // Auto close in 5s
+        extendedTimeOut: 2000, // Extra time if hovered
+        escapeHtml: true,
+        progressBar: true,
+    };
 });
