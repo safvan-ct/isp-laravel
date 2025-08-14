@@ -1,23 +1,39 @@
 @extends('layouts.web')
 
-@section('title', __('app.likes'))
+@section('title', __('app.bookmarks'))
 
 @section('content')
     <main class="container my-3 flex-grow-1">
         <div class="index-card" style="padding: 5px">
             <div class="chapter-header mb-2 notranslate">
-                <div class="chapter-name mb-2">
-                    <i class="fas fa-heart"></i> {{ __('app.likes') }}
+                <div class="chapter-name mb-0">
+                    <i class="fas fa-bookmark"></i> {{ __('app.bookmarks') }}
                 </div>
 
+                <nav aria-label="breadcrumb" class="custom-breadcrumb rounded mb-2 p-2 bg-white">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}" class="text-decoration-none text-primary">{{ __('app.home') }}</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('bookmarks') }}" class="text-decoration-none text-primary">
+                                {{ __('app.bookmarks') }}
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active text-muted text-capitalize" aria-current="page">
+                            {{ $collection->name }}
+                        </li>
+                    </ol>
+                </nav>
+
                 <ul class="nav nav-tabs justify-content-center">
-                    <li class="nav-item" onclick="fetchLikes('quran')">
+                    <li class="nav-item" onclick="fetchBookmarks('quran')">
                         <a class="nav-link tabs" href="javascript:void(0)" id="quran-tab">{{ __('app.quran') }}</a>
                     </li>
-                    <li class="nav-item" onclick="fetchLikes('hadith')">
+                    <li class="nav-item" onclick="fetchBookmarks('hadith')">
                         <a class="nav-link tabs" href="javascript:void(0)" id="hadith-tab">{{ __('app.hadiths') }}</a>
                     </li>
-                    <li class="nav-item" onclick="fetchLikes('topic')">
+                    <li class="nav-item" onclick="fetchBookmarks('topic')">
                         <a class="nav-link tabs" href="javascript:void(0)" id="topic-tab">{{ __('app.topics') }}</a>
                     </li>
                 </ul>
@@ -54,10 +70,10 @@
 
     <script>
         $(async function() {
-            await fetchLikes('quran');
+            await fetchBookmarks('quran');
         });
 
-        async function fetchLikes(type, page = 1) {
+        async function fetchBookmarks(type, page = 1) {
             $('#pageLoader').removeClass('d-none');
             $('#likes-pagination').empty();
             $('#google_translate_element').addClass('d-none');
@@ -68,20 +84,11 @@
                 $('#google_translate_element').removeClass('d-none');
             }
 
-            const likes = JSON.parse(localStorage.getItem('likes') || '{}');
-            const hasNoLikes = !(likes[type] && likes[type].length > 0);
-
-            if (!AUTH_USER && hasNoLikes) {
-                $('#likes-container').html("<p class='text-center'>{{ __('app.no_likes_found') }}</p>");
-                $('#pageLoader').addClass('d-none');
-                return;
-            }
-
             try {
                 const urlMap = {
-                    quran: "{{ route('fetch.quran.like') }}",
-                    hadith: "{{ route('fetch.hadith.like') }}",
-                    topic: "{{ route('fetch.topic.like') }}"
+                    quran: "{{ route('fetch.quran.bookmark') }}",
+                    hadith: "{{ route('fetch.hadith.bookmark') }}",
+                    topic: "{{ route('fetch.topic.bookmark') }}"
                 };
 
                 const renderMap = {
@@ -102,14 +109,14 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     data: JSON.stringify({
-                        ids: Array.from(likes[type] || []) || [],
+                        collection_id: "{{ $collection->id }}",
                         page: page
                     }),
                     dataType: 'json'
                 });
 
                 renderMap[type](res);
-                updateAllBookmarkIcon(type);
+                updateAllLikeIcon(type);
 
                 setTimeout(() => {
                     $('#pageLoader').addClass('d-none');
@@ -173,7 +180,7 @@
             $pagination.find('a.page-link').click(function() {
                 const page = $(this).data('page');
                 if (page >= 1 && page <= totalPages) {
-                    fetchLikes(type, page);
+                    fetchBookmarks(type, page);
                 }
             });
         }
@@ -186,7 +193,7 @@
             $container.empty();
 
             if (!items.length) {
-                $container.html("<p class='text-center'>{{ __('app.no_likes_found') }}</p>");
+                $container.html("<p class='text-center'>{{ __('app.no_bookmarks_found') }}</p>");
                 return;
             }
 
@@ -201,10 +208,10 @@
                     <div class="d-flex align-items-center justify-content-between mt-2">
                         <div class="d-flex align-items-center gap-2">
                             <a href="javascript:void(0);" class="bookmark-btn" title="Bookmark" data-type="quran" data-id="${item.id}">
-                                <i class="far fa-bookmark"></i>
+                                <i class="fas fa-bookmark"></i>
                             </a>
                             <a href="javascript:void(0);" class="like-btn" title="Like" data-type="quran" data-id="${item.id}">
-                                <i class="fas fa-heart"></i>
+                                <i class="far fa-heart"></i>
                             </a>
                             <a href="javascript:void(0);" class="play-btn" data-surah="${item.chapter?.id}" data-ayah="${item.number_in_chapter}" title="Play">
                                 <i class="fas fa-play"></i>
@@ -230,25 +237,25 @@
             $container.empty();
 
             if (!items.length) {
-                $container.html("<p class='text-center'>{{ __('app.no_likes_found') }}</p>");
+                $container.html("<p class='text-center'>{{ __('app.no_bookmarks_found') }}</p>");
                 return;
             }
 
             const html = items.map(item => `
                 <div class="ayah-card pb-0 item-card" data-id="${item.id}" data-type="hadith">
                     ${item.heading ? `
-                        <div class="row flex-column flex-md-row">
-                            <div class="col-12 col-md-6 order-1 order-md-2">
-                                <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
-                                    ${item.heading}
-                                </h6>
-                            </div>
+                                        <div class="row flex-column flex-md-row">
+                                            <div class="col-12 col-md-6 order-1 order-md-2">
+                                                <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
+                                                    ${item.heading}
+                                                </h6>
+                                            </div>
 
-                            <div class="col-12 col-md-6 order-2 order-md-1">
-                                <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
-                            </div>
-                        </div>
-                        <hr>` : ''}
+                                            <div class="col-12 col-md-6 order-2 order-md-1">
+                                                <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
+                                            </div>
+                                        </div>
+                                        <hr>` : ''}
 
                     <div class="row flex-column flex-md-row">
                         <div class="col-12 col-md-6 order-1 order-md-2">
@@ -280,12 +287,12 @@
                     <div class="d-flex align-items-center mt-1 gap-2">
                         <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
                             data-id="${item.id}" data-type="hadith" title="Bookmark">
-                            <i class="far fa-bookmark"></i>
+                            <i class="fas fa-bookmark"></i>
                         </a>
 
                         <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
                             data-type="hadith" title="Like">
-                            <i class="fas fa-heart"></i>
+                            <i class="far fa-heart"></i>
                         </a>
                     </div>
                 </div>
@@ -303,7 +310,7 @@
             $container.empty();
 
             if (!items.length) {
-                $container.html("<p class='text-center'>{{ __('app.no_likes_found') }}</p>");
+                $container.html("<p class='text-center'>{{ __('app.no_bookmarks_found') }}</p>");
                 return;
             }
 
@@ -319,7 +326,7 @@
                     </p>`;
 
                 content = `
-                    <div class="mb-2 section-card notranslate">
+                    <div class="mt-1 section-card pb-0 notranslate">
                         <div class="d-flex justify-content-between align-items-center item-card" data-id="${item.id}"
                             data-type="topic">
                             <h2 class="mb-0">${item.translations?.[0]?.title ?? item.slug}</h2>
@@ -327,12 +334,12 @@
                             <div class="d-flex gap-2">
                                 <a href="javascript:void(0);" class="like-btn text-decoration-none" data-id="${item.id}"
                                     data-type="topic" title="Like">
-                                    <i class="fas fa-heart"></i>
+                                    <i class="far fa-heart"></i>
                                 </a>
 
                                 <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
                                     data-id="${item.id}" data-type="topic" title="Bookmark">
-                                    <i class="far fa-bookmark"></i>
+                                    <i class="fas fa-bookmark"></i>
                                 </a>
                             </div>
                         </div>

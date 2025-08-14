@@ -57,6 +57,14 @@ return [
 
     // Likes Page
     "topics"                     => "വിഷയങ്ങൾ",
+    "no_likes_found"             => "നിങ്ങളുടെ ലൈക്കുകൾ ലഭിച്ചില്ല.",
+
+    // Bookmarks Page
+    "no_bookmarks_found"         => "നിങ്ങളുടെ ബുക്ക്മാർക്കുകൾ ലഭിച്ചില്ല.",
+
+    // Collection Page
+    "my_collections"             => "എന്റെ ശേഖരങ്ങൾ",
+    "no_collections_found"       => "എന്റെ ശേഖരങ്ങൾ ലഭിച്ചില്ല.",
 
     // Share Box
     "share_box_title"            => "ഈ വിവരം മറ്റുള്ളവർക്കും എത്തിക്കൂ.",

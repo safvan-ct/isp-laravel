@@ -113,4 +113,30 @@ class HadithFetchController extends Controller
             ],
         ]);
     }
+
+    public function bookmarks(Request $request)
+    {
+        $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\HadithVerse')
+            ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
+
+        $verse = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
+                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
+            ])
+            ->whereIn('id', $ids)
+            ->active()
+            ->paginate(5);
+
+        return response()->json([
+            'data' => $verse->items(),
+            'meta' => [
+                'current_page' => $verse->currentPage(),
+                'last_page'    => $verse->lastPage(),
+                'per_page'     => $verse->perPage(),
+                'total'        => $verse->total(),
+            ],
+        ]);
+    }
 }

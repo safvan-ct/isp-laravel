@@ -57,6 +57,14 @@ return [
 
     // Likes Page
     "topics"                     => "Topics",
+    "no_likes_found"             => "No likes found.",
+
+    // Bookmarks Page
+    "no_bookmarks_found"         => "No bookmarks found.",
+
+    // Collection Page
+    "my_collections"             => "My Collections",
+    "no_collections_found"       => "No collections found.",
 
     // Share Box
     "share_box_title"            => "Please share this information on to others.",

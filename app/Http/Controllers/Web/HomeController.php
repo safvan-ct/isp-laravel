@@ -62,6 +62,33 @@ class HomeController extends Controller
         ]);
     }
 
+    public function bookmarks(Request $request)
+    {
+        $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\Topic')
+            ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
+
+        $verse = Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->with([
+                'parent.translations',
+                'parent.parent.translations',
+                'parent.parent.parent.translations',
+            ])
+            ->where('type', 'answer')
+            ->whereIn('id', $ids)
+            ->paginate(5);
+
+        return response()->json([
+            'data' => $verse->items(),
+            'meta' => [
+                'current_page' => $verse->currentPage(),
+                'last_page'    => $verse->lastPage(),
+                'per_page'     => $verse->perPage(),
+                'total'        => $verse->total(),
+            ],
+        ]);
+    }
+
     public function collections(Request $request)
     {
         $result = BookmarkCollection::select('id', 'name')

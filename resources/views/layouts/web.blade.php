@@ -103,8 +103,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-uppercase"
-                                        href="#">{{ __('app.bookmarks') }}</a>
+                                    <a class="dropdown-item text-uppercase" href="{{ route('bookmarks') }}">
+                                        {{ __('app.bookmarks') }}
+                                    </a>
                                 </li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -119,6 +120,13 @@
                             </ul>
                         </li>
                     @else
+                        <li>
+                            <a class="nav-link {{ Str::is('likes', $routeName) ? 'active' : '' }} text-uppercase"
+                                href="{{ route('likes') }}">
+                                {{ __('app.likes') }}
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ Str::is('login', $routeName) || Str::is('register', $routeName) ? 'active' : '' }} text-uppercase"
                                 href="{{ route('login') }}">

@@ -74,4 +74,29 @@ class QuranFetchController extends Controller
             ],
         ]);
     }
+
+    public function bookmarks(Request $request)
+    {
+        $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\QuranVerse')
+            ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
+
+        $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
+            ])
+            ->whereIn('id', $ids)
+            ->active()
+            ->paginate(5);
+
+        return response()->json([
+            'data' => $verse->items(),
+            'meta' => [
+                'current_page' => $verse->currentPage(),
+                'last_page'    => $verse->lastPage(),
+                'per_page'     => $verse->perPage(),
+                'total'        => $verse->total(),
+            ],
+        ]);
+    }
 }
