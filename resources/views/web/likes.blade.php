@@ -109,6 +109,7 @@
                 });
 
                 renderMap[type](res);
+                updateAllBookmarkIcon(type);
 
                 setTimeout(() => {
                     $('#pageLoader').addClass('d-none');
@@ -236,18 +237,18 @@
             const html = items.map(item => `
                 <div class="ayah-card pb-0 item-card" data-id="${item.id}" data-type="hadith">
                     ${item.heading ? `
-                                    <div class="row flex-column flex-md-row">
-                                        <div class="col-12 col-md-6 order-1 order-md-2">
-                                            <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
-                                                ${item.heading}
-                                            </h6>
-                                        </div>
+                                                <div class="row flex-column flex-md-row">
+                                                    <div class="col-12 col-md-6 order-1 order-md-2">
+                                                        <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
+                                                            ${item.heading}
+                                                        </h6>
+                                                    </div>
 
-                                        <div class="col-12 col-md-6 order-2 order-md-1">
-                                            <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
-                                        </div>
-                                    </div>
-                                    <hr>` : ''}
+                                                    <div class="col-12 col-md-6 order-2 order-md-1">
+                                                        <h6 class="fw-bold fs-6 hadith-tr-text">${item.translations?.[0]?.heading}</h6>
+                                                    </div>
+                                                </div>
+                                                <hr>` : ''}
 
                     <div class="row flex-column flex-md-row">
                         <div class="col-12 col-md-6 order-1 order-md-2">

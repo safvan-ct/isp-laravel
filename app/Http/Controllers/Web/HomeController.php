@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\BookmarkCollection;
 use App\Models\Topic;
 use App\Repository\Topic\TopicInterface;
 use Illuminate\Http\Request;
@@ -59,5 +60,16 @@ class HomeController extends Controller
                 'total'        => $verse->total(),
             ],
         ]);
+    }
+
+    public function collections(Request $request)
+    {
+        $result = BookmarkCollection::select('id', 'name')
+            ->with('items:id,bookmark_collection_id,bookmarkable_id,bookmarkable_type')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return response()->json($result);
     }
 }
