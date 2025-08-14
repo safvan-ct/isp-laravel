@@ -57,7 +57,7 @@ h1 {
 *:active {
     outline: none !important;
     box-shadow: none !important;
-    border-color: #2c182a !important;
+    /* border-color: #2c182a !important; */
 }
 
 ul.step-list li {

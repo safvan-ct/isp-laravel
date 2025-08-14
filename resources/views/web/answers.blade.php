@@ -148,8 +148,6 @@
 @endsection
 
 @push('scripts')
-    {{-- <script src="{{ asset('web/js/bookmark.js') }}"></script> --}}
-
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -169,8 +167,6 @@
         $(function() {
             updateAllLikeIcon('topic');
         });
-
-        BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
 
         function openAddOnModal(type, id, title = '') {
             const modalElement = document.getElementById("addOnModal");

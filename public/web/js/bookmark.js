@@ -1,44 +1,87 @@
 // ======== Helpers ======== //
-function saveBookmarkData() {
-    localStorage.setItem(
-        "bookmarkCollections",
-        JSON.stringify(BOOK_MARK_COLLECTIONS)
-    );
-}
-
-function itemExistsInCollection(collectionName, type, itemId) {
-    return (
-        BOOK_MARK_COLLECTIONS?.[collectionName]?.[type]?.includes(itemId) ||
-        false
-    );
-}
-
 function updateIconState(itemId, type) {
-    const $icon = $(`.learn-item[data-id="${itemId}"] .bookmark-btn i`);
-    const bookmarked = Object.values(BOOK_MARK_COLLECTIONS).some((col) =>
+    const bookmarks = JSON.parse(localStorage.getItem("ISPBOOKMARKS") || "{}");
+    const bookmarked = Object.values(bookmarks).some((col) =>
         (col[type] || []).includes(itemId)
     );
 
-    $icon.toggleClass("fas", bookmarked).toggleClass("far", !bookmarked);
+    updateBookmarkIconState(type, itemId, bookmarked);
+}
+
+function updateBookmarkIconState(type, id, bookmarked) {
+    $(`.item-card[data-id="${id}"][data-type="${type}"] .bookmark-btn i`)
+        .toggleClass("fas", bookmarked) // filled
+        .toggleClass("far", !bookmarked); // outline
 }
 
 // ======== Main ======== //
 $(document).on("click", ".bookmark-btn", function () {
     toastr.clear();
-    bookMarkItem = parseInt($(this).data("id"));
+    bookMarkItem = $(this).data("id");
     bookMarkType = $(this).data("type");
 
-    openCollectionModal();
+    renderCollectionList(bookMarkType, bookMarkItem);
+    $("#collectionModal").modal("show");
 });
 
-function openCollectionModal() {
-    renderCollectionList();
+$(document).on("click", ".collection-item", function () {
+    toastr.clear();
+    saveToCollection($(this).data("name"));
     $("#collectionModal").modal("show");
+});
+
+function saveToCollection(collectionName, createCollection = false) {
+    toastr.clear();
+    const bookmarks = JSON.parse(localStorage.getItem("ISPBOOKMARKS") || "{}");
+    const exists =
+        bookmarks?.[collectionName]?.[bookMarkType]?.includes(bookMarkItem) ||
+        false;
+
+    if (!exists) {
+        if (!AUTH_USER) {
+        } else {
+            bookmarks[collectionName] = bookmarks[collectionName] || {};
+            bookmarks[collectionName][bookMarkType] =
+                bookmarks[collectionName][bookMarkType] || [];
+            bookmarks[collectionName][bookMarkType].push(bookMarkItem);
+            localStorage.setItem("ISPBOOKMARKS", JSON.stringify(bookmarks));
+        }
+
+        toastr.success(
+            `Saved to ${
+                collectionName.charAt(0).toUpperCase() + collectionName.slice(1)
+            }`
+        );
+    } else {
+        if (createCollection) {
+            toastr.success(
+                `Saved to ${
+                    collectionName.charAt(0).toUpperCase() +
+                    collectionName.slice(1)
+                }`
+            );
+            return;
+        }
+
+        if (!AUTH_USER) {
+        } else {
+            bookmarks[collectionName][bookMarkType] = bookmarks[collectionName][
+                bookMarkType
+            ].filter((id) => id !== bookMarkItem);
+
+            localStorage.setItem("ISPBOOKMARKS", JSON.stringify(bookmarks));
+            // toastr.info(`Item removed from ${collectionName}`);
+        }
+    }
+
+    updateIconState(bookMarkItem, bookMarkType);
+    renderCollectionList(bookMarkType, bookMarkItem);
 }
 
-function renderCollectionList() {
+function renderCollectionList(type, itemId) {
     const $list = $("#collectionList").empty();
-    const names = Object.keys(BOOK_MARK_COLLECTIONS);
+    const bookmarks = JSON.parse(localStorage.getItem("ISPBOOKMARKS") || "{}");
+    const names = Object.keys(bookmarks);
 
     if (!names.length) {
         $list.html(`<p class="text-center text-muted">No collections yet.</p>`);
@@ -46,111 +89,30 @@ function renderCollectionList() {
     }
 
     names.forEach((name) => {
-        const exists = itemExistsInCollection(name, bookMarkType, bookMarkItem);
+        const exists = bookmarks?.[name]?.[type]?.includes(itemId) || false;
+        const tick = exists
+            ? `<i class="fas fa-check text-success"></i>`
+            : `<i class="fa-solid fa-xmark text-danger"></i>`;
 
         const $li = $(`
-            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" style="cursor:pointer;">
-                <span>${name}</span>
-                ${
-                    exists
-                        ? `<i class="fas fa-check text-success tick-icon"></i>`
-                        : ""
-                }
+            <li class="list-group-item collection-item d-flex justify-content-between align-items-center" style="cursor:pointer;" data-name="${name}">
+                <span class="text-capitalize">${name}</span> ${tick}
             </li>
         `);
-
-        // Toggle add/remove on list click
-        $li.on("click", function (e) {
-            if (exists) {
-                removeFromCollection(name);
-            } else {
-                saveToCollection(name);
-            }
-
-            renderCollectionList(); // Refresh list UI
-        });
 
         $list.append($li);
     });
 }
 
-function saveToCollection(collectionName) {
-    toastr.clear();
-    BOOK_MARK_COLLECTIONS[collectionName] ??= {};
-    BOOK_MARK_COLLECTIONS[collectionName][bookMarkType] ??= [];
-
-    if (!itemExistsInCollection(collectionName, bookMarkType, bookMarkItem)) {
-        BOOK_MARK_COLLECTIONS[collectionName][bookMarkType].push(bookMarkItem);
-
-        saveBookmarkData();
-        // Also save to DB
-        updateIconState(bookMarkItem, bookMarkType);
-        toastr.success(`Item saved to ${collectionName}`);
-        //$("#collectionModal").modal("hide");
-    }
-}
-
-function removeFromCollection(collectionName) {
-    toastr.clear();
-
-    if (!BOOK_MARK_COLLECTIONS?.[collectionName]?.[bookMarkType]) return;
-
-    BOOK_MARK_COLLECTIONS[collectionName][bookMarkType] = BOOK_MARK_COLLECTIONS[
-        collectionName
-    ][bookMarkType].filter((id) => id !== bookMarkItem);
-
-    saveBookmarkData();
-    // Send delete request to backen
-    updateIconState(bookMarkItem, bookMarkType);
-    toastr.info(`Item removed from ${collectionName}`);
-    //$("#collectionModal").modal("hide");
-}
-
 // Create new collection
 $("#createCollectionBtn").on("click", function () {
     toastr.clear();
-    const newName = $.trim($("#newCollectionName").val());
-
+    const newName = $.trim($("#newCollectionName").val()).toLowerCase();
     if (!newName) {
         toastr.error("Please enter a collection name");
         return;
     }
 
-    saveToCollection(newName);
+    saveToCollection(newName, true);
     $("#newCollectionName").val("");
-    renderCollectionList();
 });
-
-// ======== Like ======== //
-$(document).on("click", ".like-btn", function () {
-    likeItem.call(this);
-});
-
-function likeItem() {
-    const itemId = parseInt($(this).data("id"));
-    let type = $(this).data("type");
-
-    if (!LIKED_ITEMS[type]) {
-        LIKED_ITEMS[type] = [];
-    }
-
-    const index = LIKED_ITEMS[type].indexOf(itemId);
-    if (index !== -1) {
-        LIKED_ITEMS[type].splice(index, 1);
-
-        if (typeof fetchLikes === "function") {
-            fetchLikes();
-        }
-    } else {
-        LIKED_ITEMS[type].push(itemId);
-    }
-
-    localStorage.setItem("likes", JSON.stringify(LIKED_ITEMS));
-    updateLikeIconState(itemId, type);
-}
-function updateLikeIconState(itemId, type) {
-    const $icon = $(`.learn-item[data-id="${itemId}"] .like-btn i`);
-    const likedItemsForType = LIKED_ITEMS[type] || [];
-    const isLiked = likedItemsForType.includes(itemId);
-    $icon.toggleClass("fas", isLiked).toggleClass("far", !isLiked);
-}

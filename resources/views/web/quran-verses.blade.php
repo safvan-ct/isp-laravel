@@ -51,18 +51,16 @@
 @endsection
 
 @push('scripts')
-    {{-- <script src="{{ asset('web/js/bookmark.js') }}"></script> --}}
+    <script src="{{ asset('web/js/bookmark.js') }}"></script>
 
     <script>
         $(function() {
             updateAllLikeIcon('quran');
-        })
-        // BOOK_MARK_COLLECTIONS = JSON.parse(localStorage.getItem('bookmarkCollections') || '{}');
 
-        // $('.learn-item').each(function() {
-        //     const id = parseInt($(this).data('id'), 10);
-        //     updateLikeIconState(id, 'quran');
-        //     updateIconState(id, 'quran');
-        // });
+            $('.item-card').each(function() {
+                const id = parseInt($(this).data('id'), 10);
+                updateIconState(id, 'quran');
+            });
+        });
     </script>
 @endpush
