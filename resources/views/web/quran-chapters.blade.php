@@ -3,21 +3,15 @@
 @section('title', __('app.quran'))
 
 @section('content')
-    <main class="container my-3 flex-grow-1">
-        <div class="index-card">
-            <h3 class="text-center quran-text">القرآن الكريم</h3>
-            <p class="text-center"> {{ __('app.quran_desc') }} </p>
-
-            <ul class="index-list mt-2">
+    <x-web.container>
+        <x-web.index-card :title="'القرآن الكريم'" :description="__('app.quran_desc')" class="b-top">
+            <x-web.index-list>
                 @foreach ($chapters as $chapter)
-                    <a href="{{ route('quran.chapter', $chapter->id) }}" class="text-decoration-none">
-                        <li class="mb-2">
-                            {{ $chapter->id }}. {{ $chapter->translation?->name ?: $chapter->name }}
-                            <i class="bi bi-play-fill"></i>
-                        </li>
-                    </a>
+                    <x-web.index-list-item :href="route('quran.chapter', $chapter->id)">
+                        {{ $chapter->id }}. {{ $chapter->translation?->name ?? $chapter->name }}
+                    </x-web.index-list-item>
                 @endforeach
-            </ul>
-        </div>
-    </main>
+            </x-web.index-list>
+        </x-web.index-card>
+    </x-web.container>
 @endsection

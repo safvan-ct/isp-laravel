@@ -289,11 +289,11 @@ async function playAudio() {
     if (currentAudio && currentBtn && currentBtn.is($btn)) {
         if (currentAudio.paused) {
             currentAudio.play();
-            $icon.removeClass("fa-play").addClass("fa-pause");
+            $icon.removeClass("far fa-play-circle").addClass("fas fa-pause");
             $ayahCard.addClass("playing");
         } else {
             currentAudio.pause();
-            $icon.removeClass("fa-pause").addClass("fa-play");
+            $icon.removeClass("fas fa-pause").addClass("far fa-play-circle");
             $ayahCard.removeClass("playing");
         }
         return;
@@ -302,7 +302,7 @@ async function playAudio() {
     // Stop previous audio if different button clicked
     if (currentAudio) {
         currentAudio.pause();
-        currentBtn.find("i").removeClass("fa-pause").addClass("fa-play");
+        currentBtn.find("i").removeClass("fas fa-pause").addClass("far fa-play-circle");
         currentCard.removeClass("playing");
         currentAudio = null;
         currentBtn = null;
@@ -321,11 +321,11 @@ async function playAudio() {
             currentCard = $ayahCard;
 
             currentAudio.play();
-            $icon.removeClass("fa-play").addClass("fa-pause");
+            $icon.removeClass("far fa-play-circle").addClass("fas fa-pause");
             $ayahCard.addClass("playing");
 
             currentAudio.onended = function () {
-                $icon.removeClass("fa-pause").addClass("fa-play");
+                $icon.removeClass("fas fa-pause").addClass("far fa-play-circle");
                 $ayahCard.removeClass("playing");
                 currentAudio = null;
                 currentBtn = null;
