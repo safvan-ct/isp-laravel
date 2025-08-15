@@ -1,19 +1,13 @@
 @extends('layouts.web')
 
-@section('title', ($chapter->book->translation?->name ?: $chapter->book->name) . ' | ' . ($chapter->translation?->name
-    ?: $chapter->name))
+@section('title', ($chapter->book->translation?->name ?? $chapter->book->name) . ' | ' . ($chapter->translation?->name
+    ?? $chapter->name))
 
 @section('content')
-    <main class="container my-3 flex-grow-1">
-        <div class="index-card" style="padding: 5px">
-            <div class="chapter-header mb-2">
-                <div class="chapter-name">
-                    {{ optional($chapter->translation)->name ? $chapter->translation->name . ' | ' : '' }}
-                    <span class="notranslate">{{ $chapter->name }}</span>
-                </div>
-                <div class="notranslate">
-                    {{ $chapter->book->translation?->name ?: $chapter->book->name }}
-                </div>
+    <x-web.container>
+        <x-web.index-card>
+            <x-web.chapter-header class="notranslate" :name="(optional($chapter->translation)->name ? $chapter->translation->name . ' | ' : '') .
+                $chapter->name" :writer="$chapter->book->translation?->name ?? $chapter->book->name">
 
                 @if (!isset($verseNumber))
                     <div class="notranslate">
@@ -22,84 +16,37 @@
                     </div>
                 @endif
 
-                <div class="notranslate">
-                    <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url" style="color: #4E2D45;">
-                        {{ __('app.chapters') }}
+                <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url">
+                    {{ __('app.chapters') }}
+                </a>
+
+                @if (isset($verseNumber))
+                    | <a
+                        href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}">
+                        {{ $chapter->translation?->name ?? $chapter->name }}
                     </a>
+                @endif
 
-                    @if (isset($verseNumber))
-                        | <a href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}"
-                            style="color: #4E2D45;">{{ $chapter->translation?->name ?: $chapter->name }}</a>
-                    @endif
-                </div>
-
-                <div class="input-group mt-2 notranslate">
-                    <input type="number" class="form-control" min="1" placeholder="Search hadith..."
-                        id="hadith-number" value="{{ $verseNumber ?? '' }}" />
-                    <button type="button" class="btn btn-primary" onclick="searchHadithByNumber()">
-                        Go To
-                    </button>
-                </div>
+                <x-web.input-search />
 
                 <div id="google_translate_element" class="mt-2 mb-0"></div>
-            </div>
+            </x-web.chapter-header>
 
             @foreach ($chapter->verses as $hadith)
-                <div class="ayah-card pb-0 item-card" data-id="{{ $hadith->id }}" data-type="hadith">
-                    @if ($hadith->heading)
-                        <div class="row flex-column flex-md-row">
-                            <div class="col-12 col-md-6 order-1 order-md-2">
-                                <h6 class="ayah-arabic notranslate fw-bold hadith-text fs-5 m-0" style="line-height: 1.6;">
-                                    {{ $hadith->heading }}
-                                </h6>
-                            </div>
-
-                            <div class="col-12 col-md-6 order-2 order-md-1">
-                                <h6 class="fw-bold fs-6 hadith-tr-text">{{ $hadith->translation?->heading }}</h6>
-                            </div>
-                        </div>
-                        <hr>
-                    @endif
-
-                    <div class="row flex-column flex-md-row">
-                        <div class="col-12 col-md-6 order-1 order-md-2">
-                            <div class="ayah-arabic notranslate hadith-text" style="font-size: 20px; line-height: 1.6;">
-                                {{ $hadith->text }}
-                                (<span class="fst-italic fs-6 ar-number">{{ $loop->iteration }}</span>)
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 order-2 order-md-1">
-                            <div class="text-en hadith-tr-text">{{ $hadith->translation?->text }}</div>
-                        </div>
-                    </div>
+                <x-web.ayah-card class="pb-0">
+                    <x-web.hadith-text :hadith="$hadith->text" :translation="$hadith->translation?->text" :number="$loop->iteration" :heading="$hadith->heading"
+                        :headingTranslation="$hadith->translation?->heading" />
                     <hr>
 
                     <div class="d-flex align-items-center justify-content-between mt-0">
-                        <p class="text-muted small notranslate fst-italic">
-                            {{ $chapter->book->translation?->name ?: $chapter->book->name }},
-                            {{ __('app.volume') }}: {{ $hadith->volume }},
-                            {{ __('app.chapter') }}: #{{ $chapter->chapter_number }} -
-                            {{ $chapter->translation?->name ?: $chapter->name }},
-                            {{ __('app.hadith') }}: #{{ $hadith->hadith_number }},
-                            {{ __('app.status') }}: {{ __('app.' . strtolower($hadith->status)) }}
-                        </p>
-
-                        <div class="d-flex align-items-center mt-1 gap-2">
-                            <a href="javascript:void(0);" class="bookmark-btn text-decoration-none"
-                                data-id="{{ $hadith->id }}" data-type="hadith" title="Bookmark">
-                                <i class="far fa-bookmark fs-5"></i>
-                            </a>
-                            <a href="javascript:void(0);" class="like-btn text-decoration-none"
-                                data-id="{{ $hadith->id }}" data-type="hadith" title="Like">
-                                <i class="far fa-heart fs-5"></i>
-                            </a>
-                        </div>
+                        <x-web.hadith-reference :book="$chapter->book->translation?->name ?? $chapter->book->name" :volume="$hadith->volume" :chapter="$chapter->chapter_number . ' - ' . $chapter->translation?->name ?? $chapter->name" :hadith="$hadith->hadith_number"
+                            :status="$hadith->status" />
+                        <x-web.actions :type="'hadith'" :item="$hadith->id" />
                     </div>
-                </div>
+                </x-web.ayah-card>
             @endforeach
-        </div>
-    </main>
+        </x-web.index-card>
+    </x-web.container>
 @endsection
 
 @push('scripts')

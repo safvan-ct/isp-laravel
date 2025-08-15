@@ -1,40 +1,23 @@
 @extends('layouts.web')
 
-@section('title', __('app.hadith') . ' | ' . ($book->translation?->name ?: $book->name))
+@section('title', __('app.hadith') . ' | ' . ($book->translation?->name ?? $book->name))
 
 @section('content')
-    <main class="container my-3 flex-grow-1">
-        <div class="index-card">
-            <div class="chapter-header mb-3">
-                <div class="chapter-name">
-                    {{ optional($book->translation)->name ? $book->translation->name . ' | ' : '' }}{{ $book->name }}
-                </div>
-                <div class="notranslate">
-                    {{ $book->translation?->writer ?: $book->writer }}
-                </div>
+    <x-web.container>
+        <x-web.index-card class="b-top">
+            <x-web.chapter-header :name="(optional($book->translation)->name ? $book->translation->name . ' | ' : '') . $book->name" :writer="$book->translation?->writer ?? $book->writer">
+                <x-web.input-search />
+            </x-web.chapter-header>
 
-                <div class="input-group">
-                    <input type="number" class="form-control" min="1" placeholder="Search hadith..."
-                        id="hadith-number" />
-                    <button type="button" class="btn btn-primary" onclick="searchHadithByNumber()">
-                        Go To
-                    </button>
-                </div>
-            </div>
-
-            <ul class="index-list col-two">
+            <x-web.index-list class="col-two">
                 @foreach ($book->chapters as $item)
-                    <a href="{{ route('hadith.chapter.verses', ['book' => $book->slug, 'chapter' => $item->id]) }}"
-                        class="text-decoration-none">
-                        <li class="mb-2">
-                            {{ $loop->iteration }}. {{ $item->translation?->name ?: $item->name }}
-                            <i class="bi bi-play-fill"></i>
-                        </li>
-                    </a>
+                    <x-web.index-list-item :href="route('hadith.chapter.verses', ['book' => $book->slug, 'chapter' => $item->id])">
+                        {{ $loop->iteration }}. {{ $item->translation?->name ?? $item->name }}
+                    </x-web.index-list-item>
                 @endforeach
-            </ul>
-        </div>
-    </main>
+            </x-web.index-list>
+        </x-web.index-card>
+    </x-web.container>
 @endsection
 
 @push('scripts')

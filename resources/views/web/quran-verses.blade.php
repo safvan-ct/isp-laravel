@@ -1,6 +1,6 @@
 @extends('layouts.web')
 
-@section('title', __('app.quran') . ' | ' . ($chapter->translation?->name ?: $chapter->name))
+@section('title', __('app.quran') . ' | ' . ($chapter->translation?->name ?? $chapter->name))
 
 @section('content')
     <x-web.container>
