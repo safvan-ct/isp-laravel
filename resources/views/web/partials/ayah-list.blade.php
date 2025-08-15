@@ -7,6 +7,6 @@
         @endif
 
         <x-web.actions :type="'quran'" :item="$item->id" :chapter="$item->chapter->id" :ayah="$item->number_in_chapter" :bookmarked="isset($bookmarked) ? $bookmarked : false"
-            :liked="isset($liked) ? $liked : false" />
+            :liked="isset($liked) ? $liked : false" :playOnly="true" />
     </x-web.ayah-card>
 @endforeach

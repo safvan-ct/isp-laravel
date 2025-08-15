@@ -74,7 +74,7 @@ class HadithFetchController extends Controller
 
     public function verse($id)
     {
-        $verse = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+        $result = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
@@ -82,9 +82,9 @@ class HadithFetchController extends Controller
             ])
             ->where('id', $id)
             ->active()
-            ->first();
+            ->get();
 
-        return response()->json($verse);
+        return response()->json(['html' => view('web.partials.hadith-list', ['result' => $result, 'action' => false])->render()]);
     }
 
     public function likes(Request $request)

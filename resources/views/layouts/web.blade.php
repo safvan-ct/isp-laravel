@@ -193,12 +193,12 @@
 
         <a href="https://www.instagram.com/islamicstudyportal" target="_blank"
             class="text-white text-decoration-none">
-            <i class="bi bi-instagram"></i>
+            <i class="bi bi-instagram text-white"></i>
         </a>
         &nbsp;|&nbsp;
         <a href="https://www.youtube.com/@islamic_study_portal" target="_blank"
             class="text-white text-decoration-none">
-            <i class="bi bi-youtube"></i>
+            <i class="bi bi-youtube text-white"></i>
         </a>
     </footer>
 

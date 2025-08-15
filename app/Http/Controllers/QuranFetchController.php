@@ -38,16 +38,16 @@ class QuranFetchController extends Controller
 
     public function verse($id)
     {
-        $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+        $result = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
             ])
             ->where('id', $id)
             ->active()
-            ->first();
+            ->get();
 
-        return response()->json($verse);
+        return response()->json(['html' => view('web.partials.ayah-list', ['result' => $result])->render()]);
     }
 
     public function likes(Request $request)
