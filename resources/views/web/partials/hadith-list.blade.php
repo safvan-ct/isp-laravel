@@ -15,10 +15,3 @@
         </div>
     </x-web.ayah-card>
 @endforeach
-
-<script>
-    $('.ar-number').each(function() {
-        const number = $(this).text().trim();
-        $(this).text(toArabicNumber(number));
-    });
-</script>

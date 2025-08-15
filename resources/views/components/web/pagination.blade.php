@@ -1,8 +1,8 @@
 @props(['id' => 'pagination-nav'])
 
 @if ($paginator->lastPage() > 1)
-    <nav id="{{ $id }}" aria-label="Pagination">
-        <ul class="pagination" id="{{ $id }}-list">
+    <nav id="{{ $id }}" aria-label="Pagination" class="mt-2">
+        <ul class="pagination justify-content-center mb-1" id="{{ $id }}-list">
             {{-- Previous --}}
             <li class="page-item {{ $paginator->onFirstPage() ? 'disabled' : '' }}">
                 <a class="page-link" href="javascript:void(0);"

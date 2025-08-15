@@ -62,7 +62,7 @@ class HomeController extends Controller
         $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\Topic')
             ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
 
-        $verse = Topic::select('id', 'slug', 'parent_id')
+        $result = Topic::select('id', 'slug', 'parent_id')
             ->withWhereHas('translations')
             ->with([
                 'parent.translations',
@@ -74,13 +74,8 @@ class HomeController extends Controller
             ->paginate(5);
 
         return response()->json([
-            'data' => $verse->items(),
-            'meta' => [
-                'current_page' => $verse->currentPage(),
-                'last_page'    => $verse->lastPage(),
-                'per_page'     => $verse->perPage(),
-                'total'        => $verse->total(),
-            ],
+            'html'       => view('web.partials.topic-list', ['result' => $result, 'bookmarked' => true])->render(),
+            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
         ]);
     }
 
