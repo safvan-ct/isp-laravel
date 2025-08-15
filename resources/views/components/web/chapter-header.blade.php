@@ -3,7 +3,7 @@
 <div {{ $attributes->merge(['class' => 'chapter-header mb-2']) }}>
     @if ($name)
         <div class="chapter-name">
-            {{ $name }}
+            {!! $name !!}
         </div>
     @endif
 

@@ -1,7 +1,7 @@
 @props(['book', 'volume', 'chapter', 'hadith', 'status'])
 
 <p class="text-muted small notranslate fst-italic">
-    {{ $book }},
+    🔖 {{ $book }},
     {{ __('app.volume') }}: {{ $volume }},
     {{ __('app.chapter') }}: #{{ $chapter }},
     {{ __('app.hadith') }}: #{{ $hadith }},

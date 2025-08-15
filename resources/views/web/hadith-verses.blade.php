@@ -32,19 +32,11 @@
                 <div id="google_translate_element" class="mt-2 mb-0"></div>
             </x-web.chapter-header>
 
-            @foreach ($chapter->verses as $hadith)
-                <x-web.ayah-card class="pb-0">
-                    <x-web.hadith-text :hadith="$hadith->text" :translation="$hadith->translation?->text" :number="$loop->iteration" :heading="$hadith->heading"
-                        :headingTranslation="$hadith->translation?->heading" />
-                    <hr>
-
-                    <div class="d-flex align-items-center justify-content-between mt-0">
-                        <x-web.hadith-reference :book="$chapter->book->translation?->name ?? $chapter->book->name" :volume="$hadith->volume" :chapter="$chapter->chapter_number . ' - ' . $chapter->translation?->name ?? $chapter->name" :hadith="$hadith->hadith_number"
-                            :status="$hadith->status" />
-                        <x-web.actions :type="'hadith'" :item="$hadith->id" />
-                    </div>
-                </x-web.ayah-card>
-            @endforeach
+            @include('web.partials.hadith-list', [
+                'result' => $chapter->verses,
+                'book' => $chapter->book,
+                'chapter' => $chapter,
+            ])
         </x-web.index-card>
     </x-web.container>
 @endsection

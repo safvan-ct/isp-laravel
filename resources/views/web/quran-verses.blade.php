@@ -14,17 +14,7 @@
                 </div>
             </x-web.chapter-header>
 
-            @foreach ($chapter->verses as $item)
-                <x-web.ayah-card class="pb-0">
-                    <x-web.ayah-text :text="$item->text" :number="$item->number_in_chapter" />
-
-                    @if ($item->translation)
-                        <x-web.text-translation :text="$item->translation->text" />
-                    @endif
-
-                    <x-web.actions :type="'quran'" :item="$item->id" :chapter="$chapter->id" :ayah="$item->number_in_chapter" />
-                </x-web.ayah-card>
-            @endforeach
+            @include('web.partials.ayah-list', ['result' => $chapter->verses])
         </x-web.index-card>
     </x-web.container>
 @endsection

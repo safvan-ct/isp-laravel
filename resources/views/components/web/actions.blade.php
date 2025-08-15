@@ -1,4 +1,4 @@
-@props(['type', 'item', 'chapter' => null, 'ayah' => null])
+@props(['type', 'item', 'chapter' => null, 'ayah' => null, 'liked' => false, 'bookmarked' => false])
 
 <div class="d-flex align-items-center mt-1 gap-2 justify-content-end item-card" data-id="{{ $item }}"
     data-type="{{ $type }}">
@@ -11,11 +11,11 @@
 
     <a href="javascript:void(0);" class="bookmark-btn" data-id="{{ $item }}" data-type="{{ $type }}"
         title="Bookmark">
-        <i class="far fa-bookmark fs-5"></i>
+        <i class="{{ $bookmarked ? 'fas' : 'far' }} fa-bookmark fs-5"></i>
     </a>
 
     <a href="javascript:void(0);" class="like-btn" data-id="{{ $item }}" data-type="{{ $type }}"
         title="Like">
-        <i class="far fa-heart fs-4"></i>
+        <i class="{{ $liked ? 'fas' : 'far' }} fa-heart fs-4"></i>
     </a>
 </div>

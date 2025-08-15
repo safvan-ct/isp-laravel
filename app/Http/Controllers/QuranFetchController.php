@@ -55,7 +55,7 @@ class QuranFetchController extends Controller
         ? Auth::user()->likes()->where('likeable_type', 'App\Models\QuranVerse')->pluck('likeable_id')->toArray()
         : array_values(array_filter($request->ids));
 
-        $verse = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+        $result = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
@@ -65,13 +65,8 @@ class QuranFetchController extends Controller
             ->paginate(5);
 
         return response()->json([
-            'data' => $verse->items(),
-            'meta' => [
-                'current_page' => $verse->currentPage(),
-                'last_page'    => $verse->lastPage(),
-                'per_page'     => $verse->perPage(),
-                'total'        => $verse->total(),
-            ],
+            'html'       => view('web.partials.ayah-list', ['result' => $result, 'liked' => true])->render(),
+            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
         ]);
     }
 

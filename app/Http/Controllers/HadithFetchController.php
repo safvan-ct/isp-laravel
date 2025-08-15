@@ -93,7 +93,7 @@ class HadithFetchController extends Controller
         ? Auth::user()->likes()->where('likeable_type', 'App\Models\HadithVerse')->pluck('likeable_id')->toArray()
         : array_values(array_filter($request->ids));
 
-        $verse = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+        $result = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
@@ -104,13 +104,8 @@ class HadithFetchController extends Controller
             ->paginate(5);
 
         return response()->json([
-            'data' => $verse->items(),
-            'meta' => [
-                'current_page' => $verse->currentPage(),
-                'last_page'    => $verse->lastPage(),
-                'per_page'     => $verse->perPage(),
-                'total'        => $verse->total(),
-            ],
+            'html'       => view('web.partials.hadith-list', ['result' => $result, 'liked' => true])->render(),
+            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
         ]);
     }
 

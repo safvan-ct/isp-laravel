@@ -37,3 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         progressBar: true,
     };
 });
+
+function toggleLoader(show) {
+    $('#pageLoader').toggleClass("d-none", !show);
+}

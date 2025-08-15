@@ -40,7 +40,7 @@ class HomeController extends Controller
         ? Auth::user()->likes()->where('likeable_type', 'App\Models\Topic')->pluck('likeable_id')->toArray()
         : array_values(array_filter($request->ids));
 
-        $verse = Topic::select('id', 'slug', 'parent_id')
+        $result = Topic::select('id', 'slug', 'parent_id')
             ->withWhereHas('translations')
             ->with([
                 'parent.translations',
@@ -52,13 +52,8 @@ class HomeController extends Controller
             ->paginate(5);
 
         return response()->json([
-            'data' => $verse->items(),
-            'meta' => [
-                'current_page' => $verse->currentPage(),
-                'last_page'    => $verse->lastPage(),
-                'per_page'     => $verse->perPage(),
-                'total'        => $verse->total(),
-            ],
+            'html'       => view('web.partials.topic-list', ['result' => $result, 'liked' => true])->render(),
+            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
         ]);
     }
 
