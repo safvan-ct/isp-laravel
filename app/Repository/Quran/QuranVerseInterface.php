@@ -19,5 +19,5 @@ interface QuranVerseInterface
 
     public function getLikedVerses($userId, $paginate = true);
 
-    public function getBookmarkedVerses($userId, $paginate = true);
+    public function getBookmarkedVerses($userId, $collectionId, $paginate = true);
 }

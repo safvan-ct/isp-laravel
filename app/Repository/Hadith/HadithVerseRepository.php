@@ -81,9 +81,10 @@ class HadithVerseRepository implements HadithVerseInterface
         return $this->getVerseById($ids, $paginate);
     }
 
-    public function getBookmarkedVerses($userId, $paginate = true)
+    public function getBookmarkedVerses($userId, $collectionId, $paginate = true)
     {
         $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\HadithVerse')
+            ->where('bookmark_collection_id', $collectionId)
             ->where('user_id', $userId)
             ->pluck('bookmarkable_id')
             ->toArray();

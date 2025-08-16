@@ -46,7 +46,7 @@ class QuranFetchController extends Controller
 
     public function fetchBookmarkedVerses(Request $request)
     {
-        $result = $this->quranVerseRepository->getBookmarkedVerses(Auth::id());
+        $result = $this->quranVerseRepository->getBookmarkedVerses(Auth::id(), $request->get('collection_id'));
 
         return response()->json([
             'html'       => view('web.partials.ayah-list', ['result' => $result, 'bookmarked' => true])->render(),

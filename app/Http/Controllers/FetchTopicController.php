@@ -28,7 +28,7 @@ class FetchTopicController extends Controller
 
     public function fetchBookmarkedTopics(Request $request)
     {
-        $result = $this->topicRepository->getBookmarkedTopics(Auth::id());
+        $result = $this->topicRepository->getBookmarkedTopics(Auth::id(), $request->get('collection_id'));
 
         return response()->json([
             'html'       => view('web.partials.topic-list', ['result' => $result, 'bookmarked' => true])->render(),

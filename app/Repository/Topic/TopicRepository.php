@@ -131,9 +131,10 @@ class TopicRepository implements TopicInterface
         return $this->getTopicById($ids, $paginate);
     }
 
-    public function getBookmarkedTopics($userId, $paginate = true)
+    public function getBookmarkedTopics($userId, $collectionId, $paginate = true)
     {
         $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\Topic')
+            ->where('bookmark_collection_id', $collectionId)
             ->where('user_id', $userId)
             ->pluck('bookmarkable_id')
             ->toArray();

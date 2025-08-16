@@ -56,7 +56,7 @@ class HadithFetchController extends Controller
 
     public function fetchBookmarkedVerses(Request $request)
     {
-        $result = $this->hadithVerseRepository->getBookmarkedVerses(Auth::id());
+        $result = $this->hadithVerseRepository->getBookmarkedVerses(Auth::id(), $request->get('collection_id'));
 
         return response()->json([
             'html'       => view('web.partials.hadith-list', ['result' => $result, 'bookmarked' => true])->render(),

@@ -27,5 +27,5 @@ interface TopicInterface
 
     public function getLikedTopics($userId, $paginate = true);
 
-    public function getBookmarkedTopics($userId, $paginate = true);
+    public function getBookmarkedTopics($userId, $collectionId, $paginate = true);
 }
