@@ -1,46 +1,31 @@
 @extends('layouts.web')
 
-@section('title', $module->translation?->title ?: $module->slug)
+@section('title', $module->translation?->title ?? $module->slug)
 
 @section('content')
-    <header class="text-white text-center py-3">
-        <div class="container">
-            <h3>{{ $module->translation?->title ?: $module->slug }}</h3>
-            <p>{!! $module->translation?->sub_title !!}</p>
+    <x-web.page-header :title="$module->translation?->title ?? $module->slug" :subtitle="$module->translation?->sub_title" :breadcrumbs="[
+        ['label' => __('app.home'), 'url' => route('home')],
+        [
+            'label' => $module->parent->translation?->title ?? $module->parent->slug,
+            'url' => route('modules.show', $module->parent->slug),
+        ],
+        ['label' => $module->translation?->title ?? $module->slug],
+    ]" />
 
-            <nav aria-label="breadcrumb" class="custom-breadcrumb rounded p-2 mt-1">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('home') }}" class="text-decoration-none">{{ __('app.home') }}</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('modules.show', $module->parent->slug) }}" class="text-decoration-none">
-                            {{ $module->parent->translation?->title ?: $module->parent->slug }}
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active text-muted" aria-current="page">
-                        {{ $module->translation?->title ?: $module->slug }}
-                    </li>
-                </ol>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container my-3 col-two flex-grow-1">
+    <x-web.container class="col-two">
         @foreach ($module->children as $item)
-            <div class="guide-card mb-2">
-                <a href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}"
-                    class="guide-title text-decoration-none">
-                    <span class="guide-number m-0">{{ $loop->iteration }}</span> -
-                    {{ $item->translation?->title ?: $item->slug }}
-                </a>
-                <a href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}"
-                    class="view-btn">
-                    <i class="bi bi-arrow-right-circle-fill"></i>
-                </a>
-            </div>
+            <a class="section-card mb-2 d-flex justify-content-between  align-items-center"
+                href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}">
+                <span>
+                    <span class="badge bg-primary">{{ $loop->iteration }}</span> -
+                    {{ $item->translation?->title ?? $item->slug }}
+                </span>
+                <span>
+                    <i class="bi bi-arrow-right-circle-fill fs-4"></i>
+                </span>
+            </a>
         @endforeach
-    </main>
+    </x-web.container>
 @endsection
 
 @push('scripts')

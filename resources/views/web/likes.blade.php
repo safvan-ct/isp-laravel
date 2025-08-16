@@ -10,7 +10,7 @@
                 <div id="google_translate_element" class="mt-2 mb-0 d-none"></div>
             </x-web.chapter-header>
 
-            <div id="likes-container">
+            <div id="result-container">
                 <p class="text-center notranslate">{{ __('app.loading') }}...</p>
             </div>
 
@@ -40,7 +40,7 @@
             fetchLikeOrBookmark('quran');
         });
 
-        const $container = $('#likes-container');
+        const $container = $('#result-container');
         const $pagination = $('#pagination-container');
         const $googleTranslate = $('#google_translate_element');
 

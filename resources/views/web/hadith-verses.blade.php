@@ -16,13 +16,13 @@
                     </div>
                 @endif
 
-                <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url">
+                <a href="{{ route('hadith.chapters', $chapter->book->id) }}" id="book-url" style="text-decoration: underline">
                     {{ __('app.chapters') }}
                 </a>
 
                 @if (isset($verseNumber))
-                    | <a
-                        href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}">
+                    | <a href="{{ route('hadith.chapter.verses', ['book' => $chapter->book->slug, 'chapter' => $chapter->id]) }}"
+                        style="text-decoration: underline">
                         {{ $chapter->translation?->name ?? $chapter->name }}
                     </a>
                 @endif

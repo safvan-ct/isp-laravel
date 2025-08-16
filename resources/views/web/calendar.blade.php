@@ -58,7 +58,10 @@
 
         .muted-day {
             background: #4E2D452e !important;
-            color: #8c949b;
+        }
+
+        .text-muted {
+            color: #8c949b !important;
         }
 
         @media (max-width: 420px) {
@@ -85,9 +88,7 @@
                 font-size: 9px;
             }
         }
-    </style>
 
-    <style>
         .card {
             margin: auto;
             background: #eaddc43a;
@@ -147,7 +148,7 @@
 @endpush
 
 @section('content')
-    <main class="container my-3 flex-grow-1 notranslate">
+    <x-web.container class="notranslate">
         <div class="mb-2 index-card row">
             <div class="d-flex justify-content-between align-items-center mb-3 col-12 col-md-12">
                 <div>
@@ -170,7 +171,7 @@
 
             <div class="col-12 col-md-4">
                 <div class="card">
-                    <h2 class="text-center mb-2">{{ __('app.prayer_times') }}</h2>
+                    <h2 class="text-center mb-2 text-primary">{{ __('app.prayer_times') }}</h2>
                     <div class="date" id="date"></div>
                     <div class="location" id="locationName">{{ __('app.location') }}</div>
                     <div class="countdown" id="countdown">{{ __('app.loading') }}</div>
@@ -179,7 +180,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </x-web.container>
 @endsection
 
 @push('scripts')
@@ -270,8 +271,8 @@
                     html += `
                         <div class="day-cell muted-day">
                             <div class="d-flex justify-content-between align-items-start">
-                                <div class="day-number">${cellDate.getDate()}</div>
-                                <div class="weekday-small">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
+                                <div class="day-number text-muted">${cellDate.getDate()}</div>
+                                <div class="weekday-small text-muted">${cellDate.toLocaleString(locale, { weekday: 'narrow' })}</div>
                             </div>
                             <div class="hijri">${hijri}</div>
                         </div>`;

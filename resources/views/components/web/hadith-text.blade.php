@@ -9,7 +9,7 @@
         </div>
 
         <div class="col-12 col-md-6 order-2 order-md-1">
-            <h6 class="fw-bold fs-6 hadith-tr-text">{{ $headingTranslation }}</h6>
+            <h6 class="fw-bold fs-6 text-hadith-tr">{{ $headingTranslation }}</h6>
         </div>
     </div>
     <hr>
@@ -24,6 +24,6 @@
     </div>
 
     <div class="col-12 col-md-6 order-2 order-md-1">
-        <div class="text-en hadith-tr-text">{{ $translation }}</div>
+        <div class="text-en text-hadith-tr">{{ $translation }}</div>
     </div>
 </div>

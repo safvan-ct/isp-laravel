@@ -47,7 +47,7 @@ class QuranFetchController extends Controller
             ->active()
             ->get();
 
-        return response()->json(['html' => view('web.partials.ayah-list', ['result' => $result])->render()]);
+        return response()->json(['html' => view('web.partials.ayah-list', ['result' => $result, 'playOnly' => true])->render()]);
     }
 
     public function likes(Request $request)

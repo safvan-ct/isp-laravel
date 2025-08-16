@@ -3,11 +3,9 @@
 @section('title', __('app.bookmarks'))
 
 @section('content')
-    <main class="container my-3 flex-grow-1">
-        <h3 class="fw-bold mb-4 text-center">
-            <i class="bi bi-bookmark-heart-fill text-primary me-2"></i>{{ __('app.my_collections') }}
-        </h3>
+    <x-web.page-header :title="'<i class=\'bi bi-bookmark-heart-fill text-white me-2\'></i>' . e(__('app.my_collections'))" />
 
+    <x-web.container class="notranslate">
         <div class="row g-4">
             @forelse ($collections as $collection)
                 <div class="col-lg-4 col-md-6 col-sm-12">
@@ -59,7 +57,7 @@
         <div class="mt-4">
             {{ $collections->links('pagination::bootstrap-5') }}
         </div>
-    </main>
+    </x-web.container>
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editCollectionModal" tabindex="-1" aria-hidden="true">

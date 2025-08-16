@@ -3,27 +3,13 @@
 @section('title', __('app.bookmarks'))
 
 @section('content')
+    <x-web.page-header :title="'<i class=\'fas fa-bookmark text-white me-2\'></i> ' . e(__('app.bookmarks'))"
+        :breadcrumbs="[['label' => __('app.home'), 'url' => route('home')], ['label' => __('app.bookmarks'), 'url' => route('bookmarks')], ['label' => $collection->name]]" />
+
     <x-web.container>
         <x-web.index-card class="b-top">
-            <x-web.chapter-header :name="'<i class=\'fas fa-bookmark\'></i> ' . e(__('app.bookmarks'))">
-                <nav aria-label="breadcrumb" class="custom-breadcrumb rounded mb-2 p-2 bg-white">
-                    <ol class="breadcrumb justify-content-center mb-0">
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}" class="text-decoration-none text-primary">{{ __('app.home') }}</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('bookmarks') }}" class="text-decoration-none text-primary">
-                                {{ __('app.bookmarks') }}
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active text-muted text-capitalize" aria-current="page">
-                            {{ $collection->name }}
-                        </li>
-                    </ol>
-                </nav>
-
+            <x-web.chapter-header>
                 <x-web.nav-tab />
-
                 <div id="google_translate_element" class="mt-2 mb-0 d-none"></div>
             </x-web.chapter-header>
 
