@@ -40,7 +40,8 @@
                                     </form>
                                 </div>
 
-                                <a href="{{ route('collection', $collection->id) }}" class="btn btn-outline-primary btn-sm">
+                                <a href="{{ route('collections.show', $collection->id) }}"
+                                    class="btn btn-outline-primary btn-sm">
                                     View
                                 </a>
                             </div>

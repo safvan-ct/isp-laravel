@@ -12,4 +12,6 @@ interface HadithBookTranslationInterface
     public function updateOrCreate(array $data, ?HadithBookTranslation $hadithBookTranslation = null);
 
     public function status($id);
+
+    public function getBooks(?string $name, string $lang = 'en');
 }

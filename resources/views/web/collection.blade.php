@@ -4,7 +4,7 @@
 
 @section('content')
     <x-web.page-header :title="'<i class=\'fas fa-bookmark text-white me-2\'></i> ' . e(__('app.bookmarks'))"
-        :breadcrumbs="[['label' => __('app.home'), 'url' => route('home')], ['label' => __('app.bookmarks'), 'url' => route('bookmarks')], ['label' => $collection->name]]" />
+        :breadcrumbs="[['label' => __('app.home'), 'url' => route('home')], ['label' => __('app.bookmarks'), 'url' => route('collections.index')], ['label' => $collection->name]]" />
 
     <x-web.container>
         <x-web.index-card class="b-top">

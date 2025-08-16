@@ -88,7 +88,7 @@
 
                     @if (Auth::check() && Auth::user()->role == 'Customer')
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-uppercase {{ Str::is('bookmarks', $routeName) || Str::is('likes', $routeName) || Str::is('collection', $routeName) ? 'active' : '' }}"
+                            <a class="nav-link dropdown-toggle text-uppercase {{ Str::is('collections.*', $routeName) || Str::is('likes', $routeName) ? 'active' : '' }}"
                                 href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 {{ __('app.profile') }}
@@ -104,7 +104,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item text-uppercase" href="{{ route('bookmarks') }}">
+                                    <a class="dropdown-item text-uppercase" href="{{ route('collections.index') }}">
                                         {{ __('app.bookmarks') }}
                                     </a>
                                 </li>

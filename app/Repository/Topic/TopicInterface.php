@@ -22,4 +22,10 @@ interface TopicInterface
     public function getModulesHasMenu();
 
     public function getQuestionWithAll($slug);
+
+    public function getTopicById(array $id, $paginate = false);
+
+    public function getLikedTopics($userId, $paginate = true);
+
+    public function getBookmarkedTopics($userId, $paginate = true);
 }

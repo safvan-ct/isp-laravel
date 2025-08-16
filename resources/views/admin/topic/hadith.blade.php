@@ -277,7 +277,7 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term
+                        name: params.term
                     };
                 },
                 processResults: function(data) {
@@ -300,7 +300,7 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term,
+                        name: params.term,
                         hadith_book_id: $('#hadith_book_id').val()
                     };
                 },
@@ -327,7 +327,7 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term,
+                        search: params.term,
                         hadith_chapter_id: $('#hadith_chapter_id').val()
                     };
                 },

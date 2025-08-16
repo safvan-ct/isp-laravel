@@ -1,7 +1,9 @@
 <?php
 namespace App\Repository\Hadith;
 
+use App\Models\BookmarkItem;
 use App\Models\HadithVerse;
+use App\Models\Like;
 
 class HadithVerseRepository implements HadithVerseInterface
 {
@@ -38,5 +40,54 @@ class HadithVerseRepository implements HadithVerseInterface
     public function getByWhere($where = [])
     {
         return HadithVerse::where($where)->first();
+    }
+
+    public function getVersesByChapter($chapterId, $search = null)
+    {
+        return HadithVerse::select(['id', 'hadith_number', 'text'])
+            ->when(! empty($search), function ($q) use ($search) {
+                $q->where(function ($query) use ($search) {
+                    if (is_numeric($search)) {
+                        $query->orWhere('hadith_number', $search);
+                    }
+                });
+            })
+            ->where('hadith_chapter_id', $chapterId)
+            ->active()
+            ->get();
+    }
+
+    public function getVerseById(array $id, $paginate = false)
+    {
+        $obj = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
+                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
+            ])
+            ->whereIn('id', $id)
+            ->active();
+
+        return $paginate ? $obj->paginate(5) : $obj->get();
+    }
+
+    public function getLikedVerses($userId, $paginate = true)
+    {
+        $ids = Like::where('likeable_type', 'App\Models\HadithVerse')
+            ->where('user_id', $userId)
+            ->pluck('likeable_id')
+            ->toArray();
+
+        return $this->getVerseById($ids, $paginate);
+    }
+
+    public function getBookmarkedVerses($userId, $paginate = true)
+    {
+        $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\HadithVerse')
+            ->where('user_id', $userId)
+            ->pluck('bookmarkable_id')
+            ->toArray();
+
+        return $this->getVerseById($ids, $paginate);
     }
 }

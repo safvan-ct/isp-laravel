@@ -1,107 +1,52 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\HadithBookTranslation;
-use App\Models\HadithChapter;
-use App\Models\HadithVerse;
+use App\Repository\Hadith\HadithBookTranslationInterface;
+use App\Repository\Hadith\HadithChapterInterface;
+use App\Repository\Hadith\HadithVerseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HadithFetchController extends Controller
 {
-    public function books(Request $request)
-    {
-        $books = HadithBookTranslation::select(['hadith_book_id', 'name'])
-            ->where('name', 'like', '%' . $request->q . '%')
-            ->lang('en')
-            ->active()
-            ->get();
+    public function __construct(
+        protected HadithBookTranslationInterface $hadithBookTranslationRepository,
+        protected HadithChapterInterface $hadithChapterRepository,
+        protected HadithVerseInterface $hadithVerseRepository
+    ) {}
 
+    public function fetchBooks(Request $request)
+    {
+        $books = $this->hadithBookTranslationRepository->getBooks($request->get('name'));
         return response()->json($books);
     }
 
-    public function chapters(Request $request)
+    public function fetchChapters(Request $request)
     {
-        $chapters = HadithChapter::select(['id', 'chapter_number', 'name'])
-            ->with([
-                'translations' => fn($q) => $q
-                    ->select(['id', 'hadith_chapter_id', 'name'])
-                    ->when(! empty($request->q) && ! is_numeric($request->q), fn($q) => $q->where('name', 'like', '%' . $request->q . '%'))
-                    ->active()
-                    ->lang('en'),
-            ])
-            ->when(! empty($request->q), function ($q) use ($request) {
-                $q->where(function ($query) use ($request) {
-                    $query->whereHas('translations', fn($q) => $q->where('name', 'like', '%' . $request->q . '%'));
-
-                    if (is_numeric($request->q)) {
-                        $query->orWhere('chapter_number', $request->q);
-                    }
-                });
-            })
-            ->where('hadith_book_id', $request->hadith_book_id)
-            ->active()
-            ->get();
-
+        $chapters = $this->hadithChapterRepository->getChpaters($request->get('hadith_book_id'), $request->get('name'));
         return response()->json($chapters);
     }
 
-    public function verses(Request $request)
+    public function fetchVerses(Request $request)
     {
-        $verses = HadithVerse::select(['id', 'hadith_number', 'text'])
-        // ->with([
-        //     'translations' => fn($q) => $q
-        //         ->select(['id', 'hadith_verse_id', 'text'])
-        //         ->when(! empty($request->q) && ! is_numeric($request->q), fn($q) => $q->where('text', 'like', '%' . $request->q . '%'))
-        //         ->active()
-        //         ->lang('en'),
-        // ])
-            ->when(! empty($request->q), function ($q) use ($request) {
-                $q->where(function ($query) use ($request) {
-                    //$query->whereHas('translations', fn($q) => $q->where('text', 'like', '%' . $request->q . '%'));
-
-                    if (is_numeric($request->q)) {
-                        $query->orWhere('hadith_number', $request->q);
-                    }
-                });
-            })
-            ->where('hadith_chapter_id', $request->hadith_chapter_id)
-            ->active()
-            ->get();
-
+        $verses = $this->hadithVerseRepository->getVersesByChapter($request->get('hadith_chapter_id'), $request->get('search'));
         return response()->json($verses);
     }
 
-    public function verse($id)
+    public function fetchVerse($id)
     {
-        $result = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
-                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
-            ])
-            ->where('id', $id)
-            ->active()
-            ->get();
-
+        $result = $this->hadithVerseRepository->getVerseById([$id]);
         return response()->json(['html' => view('web.partials.hadith-list', ['result' => $result, 'action' => false])->render()]);
     }
 
-    public function likes(Request $request)
+    public function fetchLikedVerses(Request $request)
     {
-        $ids = Auth::check() && Auth::user()->role == 'Customer'
-        ? Auth::user()->likes()->where('likeable_type', 'App\Models\HadithVerse')->pluck('likeable_id')->toArray()
-        : array_values(array_filter($request->ids));
-
-        $result = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
-                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
-            ])
-            ->whereIn('id', $ids)
-            ->active()
-            ->paginate(5);
+        if (Auth::check() && Auth::user()->role == 'Customer') {
+            $result = $this->hadithVerseRepository->getLikedVerses(Auth::id());
+        } else {
+            $ids    = array_values(array_filter($request->ids));
+            $result = $this->hadithVerseRepository->getVerseById($ids, true);
+        }
 
         return response()->json([
             'html'       => view('web.partials.hadith-list', ['result' => $result, 'liked' => true])->render(),
@@ -109,20 +54,9 @@ class HadithFetchController extends Controller
         ]);
     }
 
-    public function bookmarks(Request $request)
+    public function fetchBookmarkedVerses(Request $request)
     {
-        $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\HadithVerse')
-            ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
-
-        $result = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
-                'book'    => fn($q)    => $q->select('id', 'name', 'slug', 'writer', 'writer_death_year', 'hadith_count', 'chapter_count')->with('translations'),
-            ])
-            ->whereIn('id', $ids)
-            ->active()
-            ->paginate(5);
+        $result = $this->hadithVerseRepository->getBookmarkedVerses(Auth::id());
 
         return response()->json([
             'html'       => view('web.partials.hadith-list', ['result' => $result, 'bookmarked' => true])->render(),

@@ -14,4 +14,12 @@ interface HadithVerseInterface
     public function update(array $data, HadithVerse $hadithVerse);
 
     public function getByWhere($where = []);
+
+    public function getVersesByChapter($chapterId, $search = null);
+
+    public function getVerseById(array $id, $paginate = false);
+
+    public function getLikedVerses($userId, $paginate = true);
+
+    public function getBookmarkedVerses($userId, $paginate = true);
 }

@@ -53,4 +53,28 @@ class HadithChapterRepository implements HadithChapterInterface
 
         return $id ? $obj->find($id) : $obj->get();
     }
+
+    public function getChpaters($bookId, $name = null)
+    {
+        return HadithChapter::select(['id', 'chapter_number', 'name'])
+            ->with([
+                'translations' => fn($q) => $q
+                    ->select(['id', 'hadith_chapter_id', 'name'])
+                    ->when(! empty($name) && ! is_numeric($name), fn($q) => $q->where('name', 'like', '%' . $name . '%'))
+                    ->active()
+                    ->lang('en'),
+            ])
+            ->when(! empty($name), function ($q) use ($name) {
+                $q->where(function ($query) use ($name) {
+                    $query->whereHas('translations', fn($q) => $q->where('name', 'like', '%' . $name . '%'));
+
+                    if (is_numeric($name)) {
+                        $query->orWhere('chapter_number', $name);
+                    }
+                });
+            })
+            ->where('hadith_book_id', $bookId)
+            ->active()
+            ->get();
+    }
 }

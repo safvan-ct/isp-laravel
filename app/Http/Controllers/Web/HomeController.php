@@ -2,11 +2,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\BookmarkCollection;
-use App\Models\Topic;
 use App\Repository\Topic\TopicInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -34,59 +30,8 @@ class HomeController extends Controller
         return view('web.calendar');
     }
 
-    public function likes(Request $request)
+    public function likes()
     {
-        $ids = Auth::check() && Auth::user()->role == 'Customer'
-        ? Auth::user()->likes()->where('likeable_type', 'App\Models\Topic')->pluck('likeable_id')->toArray()
-        : array_values(array_filter($request->ids));
-
-        $result = Topic::select('id', 'slug', 'parent_id')
-            ->withWhereHas('translations')
-            ->with([
-                'parent.translations',
-                'parent.parent.translations',
-                'parent.parent.parent.translations',
-            ])
-            ->where('type', 'answer')
-            ->whereIn('id', $ids)
-            ->paginate(5);
-
-        return response()->json([
-            'html'       => view('web.partials.topic-list', ['result' => $result, 'liked' => true])->render(),
-            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
-        ]);
-    }
-
-    public function bookmarks(Request $request)
-    {
-        $ids = Auth::user()->bookmarks()->where('bookmarkable_type', 'App\Models\Topic')
-            ->where('bookmark_collection_id', $request->collection_id)->pluck('bookmarkable_id')->toArray();
-
-        $result = Topic::select('id', 'slug', 'parent_id')
-            ->withWhereHas('translations')
-            ->with([
-                'parent.translations',
-                'parent.parent.translations',
-                'parent.parent.parent.translations',
-            ])
-            ->where('type', 'answer')
-            ->whereIn('id', $ids)
-            ->paginate(5);
-
-        return response()->json([
-            'html'       => view('web.partials.topic-list', ['result' => $result, 'bookmarked' => true])->render(),
-            'pagination' => view('components.web.pagination', ['paginator' => $result])->render(),
-        ]);
-    }
-
-    public function collections(Request $request)
-    {
-        $result = BookmarkCollection::select('id', 'name')
-            ->with('items:id,bookmark_collection_id,bookmarkable_id,bookmarkable_type')
-            ->where('user_id', Auth::user()->id)
-            ->orderBy('name', 'asc')
-            ->get();
-
-        return response()->json($result);
+        return view('web.likes');
     }
 }

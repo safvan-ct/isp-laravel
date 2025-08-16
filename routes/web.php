@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FetchTopicController;
 use App\Http\Controllers\HadithFetchController;
 use App\Http\Controllers\QuranFetchController;
 use App\Http\Controllers\Web\BookmarkCollectionController;
@@ -14,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . '/admin.php';
 require __DIR__ . '/auth.php';
 
+Route::get('change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
+Route::get('calendar', [HomeController::class, 'calendar'])->name('calendar');
+Route::get('likes', [HomeController::class, 'likes'])->name('likes');
 
 // Fetch
 Route::prefix('fetch')->name('fetch.')->group(function () {
@@ -25,28 +28,22 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
     Route::post('quran-like', [QuranFetchController::class, 'fetchLikedVerses'])->name('quran.like');
     Route::post('quran-bookmark', [QuranFetchController::class, 'fetchBookmarkedVerses'])->name('quran.bookmark');
 
-    Route::get('hadith-books', [HadithFetchController::class, 'books'])->name('hadith.books');
-    Route::get('hadith-chapters', [HadithFetchController::class, 'chapters'])->name('hadith.chapters');
-    Route::get('hadith-verses', [HadithFetchController::class, 'verses'])->name('hadith.verses');
-    Route::get('hadith-verse/{id}', [HadithFetchController::class, 'verse'])->name('hadith.verse');
-    Route::post('hadith-like', [HadithFetchController::class, 'likes'])->name('hadith.like');
-    Route::post('hadith-bookmark', [HadithFetchController::class, 'bookmarks'])->name('hadith.bookmark');
+    Route::get('hadith-books', [HadithFetchController::class, 'fetchBooks'])->name('hadith.books');
+    Route::get('hadith-chapters', [HadithFetchController::class, 'fetchChapters'])->name('hadith.chapters');
+    Route::get('hadith-verses', [HadithFetchController::class, 'fetchVerses'])->name('hadith.verses');
+    Route::get('hadith-verse/{id}', [HadithFetchController::class, 'fetchVerse'])->name('hadith.verse');
+    Route::post('hadith-like', [HadithFetchController::class, 'fetchLikedVerses'])->name('hadith.like');
+    Route::post('hadith-bookmark', [HadithFetchController::class, 'fetchBookmarkedVerses'])->name('hadith.bookmark');
 
-    Route::post('topic-like', [HomeController::class, 'likes'])->name('topic.like');
-    Route::post('topic-bookmark', [HomeController::class, 'bookmarks'])->name('topic.bookmark');
-    Route::get('collections', [HomeController::class, 'collections'])->name('collections')->middleware('auth');
+    Route::post('topic-like', [FetchTopicController::class, 'fetchLikedTopics'])->name('topic.like');
+    Route::post('topic-bookmark', [FetchTopicController::class, 'fetchBookmarkedTopics'])->name('topic.bookmark');
 });
 // End Fetch
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('collections', BookmarkCollectionController::class)
-        ->only(['update', 'destroy']); // We won't use separate create/edit pages
+    Route::get('fetch/collections', [BookmarkCollectionController::class, 'fetchCollections'])->name('fetch.collections');
+    Route::resource('collections', BookmarkCollectionController::class)->only(['index', 'show', 'update', 'destroy']);
 });
-
-Route::get('calendar', [HomeController::class, 'calendar'])->name('calendar');
-Route::get('likes', [QuranController::class, 'likes'])->name('likes');
-Route::get('collections', [QuranController::class, 'collections'])->name('bookmarks')->middleware('auth');
-Route::get('collection/{id}', [QuranController::class, 'collection'])->name('collection')->middleware('auth');
 
 Route::post('sync-data', [SyncController::class, 'store'])->name('sync.data')->middleware('auth');
 Route::post('like-item', [LikeController::class, 'store'])->name('like.toggle')->middleware('auth');

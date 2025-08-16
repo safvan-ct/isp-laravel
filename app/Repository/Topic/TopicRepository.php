@@ -1,6 +1,8 @@
 <?php
 namespace App\Repository\Topic;
 
+use App\Models\BookmarkItem;
+use App\Models\Like;
 use App\Models\Topic;
 use App\Models\TopicTranslation;
 use Illuminate\Support\Str;
@@ -102,5 +104,40 @@ class TopicRepository implements TopicInterface
             ->where('slug', $slug)
             ->active()
             ->first();
+    }
+
+    public function getTopicById(array $id, $paginate = false)
+    {
+        $obj = Topic::select('id', 'slug', 'parent_id')
+            ->withWhereHas('translations')
+            ->with([
+                'parent.translations',
+                'parent.parent.translations',
+                'parent.parent.parent.translations',
+            ])
+            ->where('type', 'answer')
+            ->whereIn('id', $id);
+
+        return $paginate ? $obj->paginate(5) : $obj->get();
+    }
+
+    public function getLikedTopics($userId, $paginate = true)
+    {
+        $ids = Like::where('likeable_type', 'App\Models\Topic')
+            ->where('user_id', $userId)
+            ->pluck('likeable_id')
+            ->toArray();
+
+        return $this->getTopicById($ids, $paginate);
+    }
+
+    public function getBookmarkedTopics($userId, $paginate = true)
+    {
+        $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\Topic')
+            ->where('user_id', $userId)
+            ->pluck('bookmarkable_id')
+            ->toArray();
+
+        return $this->getTopicById($ids, $paginate);
     }
 }

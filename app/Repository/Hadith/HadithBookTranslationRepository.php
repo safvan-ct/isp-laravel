@@ -30,4 +30,13 @@ class HadithBookTranslationRepository implements HadithBookTranslationInterface
         $obj->update(['is_active' => ! $obj->is_active]);
         return $obj;
     }
+
+    public function getBooks(?string $name, string $lang = 'en')
+    {
+        return HadithBookTranslation::select(['hadith_book_id', 'name'])
+            ->when($name, fn($q) => $q->where('name', 'like', '%' . $name . '%'))
+            ->lang($lang)
+            ->active()
+            ->get();
+    }
 }

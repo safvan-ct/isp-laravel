@@ -14,4 +14,6 @@ interface HadithChapterInterface
     public function update(array $data, HadithChapter $hadithChapter);
 
     public function getwithAll($id = null, $hadithNumber = null);
+
+    public function getChpaters($bookId, $name = null);
 }
