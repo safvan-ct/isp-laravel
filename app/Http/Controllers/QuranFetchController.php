@@ -1,69 +1,42 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\BookmarkItem;
-use App\Models\QuranChapterTranslation;
-use App\Models\QuranVerse;
+use App\Repository\Quran\QuranChapterTranslationInterface;
+use App\Repository\Quran\QuranVerseInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class QuranFetchController extends Controller
 {
-    public function chapters(Request $request)
+    public function __construct(
+        protected QuranChapterTranslationInterface $quranChapterTranslationRepository,
+        protected QuranVerseInterface $quranVerseRepository
+    ) {}
+
+    public function fetchChapters(Request $request)
     {
-        $chapterId = $request->q;
-
-        $chapters = QuranChapterTranslation::select(['quran_chapter_id', 'name'])
-            ->lang('en')
-            ->where('quran_chapter_id', $chapterId)
-            ->active()
-            ->get();
-
-        return response()->json($chapters);
+        return $this->quranChapterTranslationRepository->getChapters($request->get('chapter_id'));
     }
 
-    public function verses(Request $request)
+    public function fetchVerses(Request $request)
     {
-        $chapterId  = $request->get('chapter_id');
-        $ayahNumber = $request->get('q', '');
-
-        $chapters = QuranVerse::select(['id', 'number_in_chapter', 'text'])
-            ->where('quran_chapter_id', $chapterId)
-            ->when($ayahNumber, fn($q) => $q->where('number_in_chapter', $ayahNumber))
-            ->active()
-            ->get();
-
-        return response()->json($chapters);
+        return $this->quranVerseRepository->getVerses($request->get('chapter_id'), $request->get('ayah_number'));
     }
 
-    public function verse($id)
+    public function fetchVerseById($id)
     {
-        $result = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
-            ])
-            ->where('id', $id)
-            ->active()
-            ->get();
-
+        $result = $this->quranVerseRepository->getVerseById([$id]);
         return response()->json(['html' => view('web.partials.ayah-list', ['result' => $result, 'playOnly' => true])->render()]);
     }
 
-    public function likes(Request $request)
+    public function fetchLikedVerses(Request $request)
     {
-        $ids = Auth::check() && Auth::user()->role == 'Customer'
-        ? Auth::user()->likes()->where('likeable_type', 'App\Models\QuranVerse')->pluck('likeable_id')->toArray()
-        : array_values(array_filter($request->ids));
-
-        $result = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
-            ])
-            ->whereIn('id', $ids)
-            ->active()
-            ->paginate(5);
+        if (Auth::check() && Auth::user()->role == 'Customer') {
+            $result = $this->quranVerseRepository->getLikedVerses(Auth::id());
+        } else {
+            $ids    = array_values(array_filter($request->ids));
+            $result = $this->quranVerseRepository->getVerseById($ids, true);
+        }
 
         return response()->json([
             'html'       => view('web.partials.ayah-list', ['result' => $result, 'liked' => true])->render(),
@@ -71,22 +44,9 @@ class QuranFetchController extends Controller
         ]);
     }
 
-    public function bookmarks(Request $request)
+    public function fetchBookmarkedVerses(Request $request)
     {
-        $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\QuranVerse')
-            ->where('bookmark_collection_id', $request->collection_id)
-            ->where('user_id', Auth::id())
-            ->pluck('bookmarkable_id')
-            ->toArray();
-
-        $result = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
-            ->with([
-                'translations',
-                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
-            ])
-            ->whereIn('id', $ids)
-            ->active()
-            ->paginate(5);
+        $result = $this->quranVerseRepository->getBookmarkedVerses(Auth::id());
 
         return response()->json([
             'html'       => view('web.partials.ayah-list', ['result' => $result, 'bookmarked' => true])->render(),

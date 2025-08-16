@@ -19,11 +19,11 @@ Route::get('/change-language/{lang}', [HomeController::class, 'changeLanguage'])
 
 // Fetch
 Route::prefix('fetch')->name('fetch.')->group(function () {
-    Route::get('quran-chapters', [QuranFetchController::class, 'chapters'])->name('quran.chapters');
-    Route::get('quran-ayahs', [QuranFetchController::class, 'verses'])->name('quran.ayahs');
-    Route::get('quran-verse/{id}', [QuranFetchController::class, 'verse'])->name('quran.verse');
-    Route::post('quran-like', [QuranFetchController::class, 'likes'])->name('quran.like');
-    Route::post('quran-bookmark', [QuranFetchController::class, 'bookmarks'])->name('quran.bookmark');
+    Route::get('quran-chapters', [QuranFetchController::class, 'fetchChapters'])->name('quran.chapters');
+    Route::get('quran-ayahs', [QuranFetchController::class, 'fetchVerses'])->name('quran.ayahs');
+    Route::get('quran-verse/{id}', [QuranFetchController::class, 'fetchVerseById'])->name('quran.verse');
+    Route::post('quran-like', [QuranFetchController::class, 'fetchLikedVerses'])->name('quran.like');
+    Route::post('quran-bookmark', [QuranFetchController::class, 'fetchBookmarkedVerses'])->name('quran.bookmark');
 
     Route::get('hadith-books', [HadithFetchController::class, 'books'])->name('hadith.books');
     Route::get('hadith-chapters', [HadithFetchController::class, 'chapters'])->name('hadith.chapters');

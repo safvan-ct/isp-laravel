@@ -30,4 +30,13 @@ class QuranChapterTranslationRepository implements QuranChapterTranslationInterf
         $obj->update(['is_active' => ! $obj->is_active]);
         return $obj;
     }
+
+    public function getChapters(?int $chapterId, string $lang = 'en')
+    {
+        return QuranChapterTranslation::select(['quran_chapter_id', 'name'])
+            ->lang($lang)
+            ->when($chapterId, fn($q) => $q->where('quran_chapter_id', $chapterId))
+            ->active()
+            ->get();
+    }
 }

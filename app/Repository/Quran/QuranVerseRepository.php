@@ -1,6 +1,8 @@
 <?php
 namespace App\Repository\Quran;
 
+use App\Models\BookmarkItem;
+use App\Models\Like;
 use App\Models\QuranVerse;
 use App\Services\ApiService;
 
@@ -38,5 +40,47 @@ class QuranVerseRepository implements QuranVerseInterface
     {
         $quranVerse->update($data);
         return $quranVerse;
+    }
+
+    public function getVerseById(array $id, $paginate = false)
+    {
+        $obj = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+            ->with([
+                'translations',
+                'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
+            ])
+            ->whereIn('id', $id)
+            ->active();
+
+        return $paginate ? $obj->paginate(5) : $obj->get();
+    }
+
+    public function getVerses(int $chapterId, ?int $ayahNumber = null)
+    {
+        return QuranVerse::select(['id', 'number_in_chapter', 'text'])
+            ->where('quran_chapter_id', $chapterId)
+            ->when($ayahNumber, fn($q) => $q->where('number_in_chapter', $ayahNumber))
+            ->active()
+            ->get();
+    }
+
+    public function getLikedVerses($userId, $paginate = true)
+    {
+        $ids = Like::where('likeable_type', 'App\Models\QuranVerse')
+            ->where('user_id', $userId)
+            ->pluck('likeable_id')
+            ->toArray();
+
+        return $this->getVerseById($ids, $paginate);
+    }
+
+    public function getBookmarkedVerses($userId, $paginate = true)
+    {
+        $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\QuranVerse')
+            ->where('user_id', $userId)
+            ->pluck('bookmarkable_id')
+            ->toArray();
+
+        return $this->getVerseById($ids, $paginate);
     }
 }

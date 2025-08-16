@@ -12,4 +12,6 @@ interface QuranChapterTranslationInterface
     public function updateOrCreate(array $data, ?QuranChapterTranslation $quranChapterTranslation = null);
 
     public function status($id);
+
+    public function getChapters(?int $chapterId, string $lang = 'en');
 }

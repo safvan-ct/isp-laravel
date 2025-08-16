@@ -260,8 +260,8 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term
-                    }; // search term
+                        chapter_id: params.term
+                    };
                 },
                 processResults: function(data) {
                     return {
@@ -283,7 +283,7 @@
                 delay: 250,
                 data: function(params) {
                     return {
-                        q: params.term,
+                        ayah_number: params.term,
                         chapter_id: $('#chapter_id').val()
                     };
                 },
