@@ -43,6 +43,11 @@ return [
     // Answer page
     "quran_revelation"           => "ഖുർആൻ നിർദ്ദേശം",
     "hadith_details"             => "ഹദീസ് വിവരണം",
+    "related_questions"          => "ബന്ധപ്പെട്ട ചോദ്യങ്ങൾ",
+    "videos"                     => "വിഡിയോകൾ",
+    "no_quran_found"             => "ഖുർആൻ വാക്യങ്ങളൊന്നും കണ്ടെത്തിയില്ല.",
+    "no_hadith_found"            => "ഹദീസ് വാക്യങ്ങളൊന്നും കണ്ടെത്തിയില്ല.",
+    "no_videos_found"            => "വിഡിയോകൾ കണ്ടെത്തിയില്ല.",
 
     // Calendar Page
     "prayer_times"               => "നമസ്കാര സമയങ്ങൾ",

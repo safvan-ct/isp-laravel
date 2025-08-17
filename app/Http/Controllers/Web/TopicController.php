@@ -32,10 +32,11 @@ class TopicController extends Controller
     public function answers($menuSlug, $moduleSlug, $questionSlug)
     {
         $question = $this->topicRepository->getQuestionWithAll($questionSlug);
+        $module   = $this->topicRepository->getModuleWithAll($moduleSlug);
         if (! $question) {
             abort(404);
         }
 
-        return view('web.answers', compact('question', 'menuSlug', 'moduleSlug'));
+        return view('web.answers', compact('question', 'module', 'menuSlug', 'moduleSlug'));
     }
 }

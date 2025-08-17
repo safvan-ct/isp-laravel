@@ -13,59 +13,133 @@
     ]" />
 
     <x-web.container class="notranslate">
-        @foreach ($question->children as $item)
-            <x-web.answer-card :title="$item->translation?->title ?? $item->slug" :itemId="$item->id" :content="$item->translation?->content">
+        <div class="row g-2">
+            <div class="col-md-9">
+                @foreach ($question->children as $item)
+                    <x-web.answer-card :title="$item->translation?->title ?? $item->slug" :itemId="$item->id" :content="$item->translation?->content">
 
-                @foreach ($item->quranVerses as $quranVerse)
-                    @php
-                        $verse = $quranVerse->quran;
-                        $chapter = $quranVerse->quran->chapter;
-                        $json = is_array($quranVerse->translation_json)
-                            ? $quranVerse->translation_json
-                            : json_decode($quranVerse->translation_json, true);
-                        $ref =
-                            $chapter->id . '.' . $chapter->translation?->name ??
-                            $chapter->name . ': ' . $quranVerse->quran->number_in_chapter;
-                    @endphp
+                        @if ($item->quranVerses->isNotEmpty() || $item->hadithVerses->isNotEmpty() || $item->videos->isNotEmpty())
+                            <ul class="nav nav-tabs" id="addOn-{{ $item->id }}" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{ $loop->first ? 'active' : '' }}"
+                                        id="quran-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                        data-bs-target="#quran{{ $item->id }}" type="button" role="tab"
+                                        aria-controls="quran{{ $item->id }}" aria-selected="true">
+                                        {{ __('app.quran') }}
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="hadith-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                        data-bs-target="#hadith{{ $item->id }}" type="button" role="tab"
+                                        aria-controls="hadith{{ $item->id }}" aria-selected="false">
+                                        {{ __('app.hadiths') }}
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="video-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                        data-bs-target="#video{{ $item->id }}" type="button" role="tab"
+                                        aria-controls="video{{ $item->id }}" aria-selected="false">
+                                        {{ __('app.videos') }}
+                                    </button>
+                                </li>
+                            </ul>
 
-                    <x-web.blockquote type="quran" :id="$quranVerse->quran_verse_id" :text="$quranVerse->simplified" :translation="$json['ml']"
-                        :reference="$ref" />
+                            <div class="tab-content" id="addOnContent-{{ $item->id }}">
+                                {{-- Quran --}}
+                                @if ($item->quranVerses->isNotEmpty())
+                                    <div class="tab-pane {{ $loop->first ? 'fade show active' : 'fade' }}"
+                                        id="quran{{ $item->id }}" role="tabpanel"
+                                        aria-labelledby="quran-tab-{{ $item->id }}">
+                                        @foreach ($item->quranVerses as $quranVerse)
+                                            @php
+                                                $verse = $quranVerse->quran;
+                                                $chapter = $quranVerse->quran->chapter;
+                                                $json = is_array($quranVerse->translation_json)
+                                                    ? $quranVerse->translation_json
+                                                    : json_decode($quranVerse->translation_json, true);
+                                                $ref =
+                                                    $chapter->id .
+                                                    '.' .
+                                                    ($chapter->translation?->name ?? $chapter->name) .
+                                                    ': ' .
+                                                    $quranVerse->quran->number_in_chapter;
+                                            @endphp
+
+                                            <x-web.blockquote type="quran" :id="$quranVerse->quran_verse_id" :text="$quranVerse->simplified"
+                                                :translation="$json['ml']" :reference="$ref" />
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                {{-- Hadith --}}
+                                @if ($item->hadithVerses->isNotEmpty())
+                                    <div class="tab-pane fade" id="hadith{{ $item->id }}" role="tabpanel"
+                                        aria-labelledby="hadith-tab-{{ $item->id }}">
+                                        @foreach ($item->hadithVerses as $hadithVerse)
+                                            @php
+                                                $book = $hadithVerse->hadith->chapter->book;
+                                                $json = is_array($hadithVerse->translation_json)
+                                                    ? $hadithVerse->translation_json
+                                                    : json_decode($hadithVerse->translation_json, true);
+                                                $ref =
+                                                    ($book->translation?->name ?? $book->name) .
+                                                    ': ' .
+                                                    $hadithVerse->hadith->hadith_number;
+                                            @endphp
+
+                                            <x-web.blockquote type="hadith" :id="$hadithVerse->hadith_verse_id" :text="$hadithVerse->simplified"
+                                                :translation="$json['ml']" :reference="$ref" />
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                {{-- Video --}}
+                                @if ($item->videos->isNotEmpty())
+                                    <div class="tab-pane fade" id="video{{ $item->id }}" role="tabpanel"
+                                        aria-labelledby="video-tab-{{ $item->id }}">
+                                        <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+                                            @foreach ($item->videos as $video)
+                                                @php
+                                                    $json = json_decode($video->title, true);
+                                                    $title = empty($json['ml'])
+                                                        ? $question->translation?->title ?? $question->slug
+                                                        : $json['ml'];
+                                                @endphp
+
+                                                <button class="btn btn-outline-primary"
+                                                    onclick="openAddOnModal('video', '{{ $video->video_id }}', '{{ $title }}')">
+                                                    🎥 {{ $title }}
+                                                </button>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                    </x-web.answer-card>
                 @endforeach
 
-                @foreach ($item->hadithVerses as $hadithVerse)
-                    @php
-                        $book = $hadithVerse->hadith->chapter->book;
-                        $json = is_array($hadithVerse->translation_json)
-                            ? $hadithVerse->translation_json
-                            : json_decode($hadithVerse->translation_json, true);
-                        $ref = ($book->translation?->name ?? $book->name) . ': ' . $hadithVerse->hadith->hadith_number;
-                    @endphp
+                <x-web.share-box />
+            </div>
 
-                    <x-web.blockquote type="hadith" :id="$hadithVerse->hadith_verse_id" :text="$hadithVerse->simplified" :translation="$json['ml']"
-                        :reference="$ref" />
+            <div class="col-md-3">
+                <h4 class="text-center fw-bold">{{ __('app.related_questions') }}</h4>
+                @foreach ($module->children as $item)
+                    @continue($item->id == $question->id)
+                    <a class="section-card mb-2 d-flex justify-content-between align-items-center"
+                        style="font-size: 14px; padding: 8px;"
+                        href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}">
+                        <span>
+                            <span class="badge bg-primary">{{ $loop->iteration }}</span> -
+                            {{ $item->translation?->title ?? $item->slug }}
+                        </span>
+                        <span>
+                            <i class="bi bi-arrow-right-circle-fill fs-5"></i>
+                        </span>
+                    </a>
                 @endforeach
-
-                @if ($item->videos->isNotEmpty())
-                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
-                        @foreach ($item->videos as $video)
-                            @php
-                                $json = json_decode($video->title, true);
-                                $title = empty($json['ml'])
-                                    ? $question->translation?->title ?? $question->slug
-                                    : $json['ml'];
-                            @endphp
-
-                            <button class="btn btn-outline-primary"
-                                onclick="openAddOnModal('video', '{{ $video->video_id }}', '{{ $title }}')">
-                                🎥 {{ $title }}
-                            </button>
-                        @endforeach
-                    </div>
-                @endif
-            </x-web.answer-card>
-        @endforeach
-
-        <x-web.share-box />
+            </div>
+        </div>
     </x-web.container>
 
     <!-- Add-on Modal -->

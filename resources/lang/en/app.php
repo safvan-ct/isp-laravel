@@ -43,6 +43,11 @@ return [
     // Answer page
     "quran_revelation"           => "Quran Revelation",
     "hadith_details"             => "Hadith Details",
+    "related_questions"          => "Related Questions",
+    "videos"                     => "Videos",
+    "no_quran_found"             => "No Quranic verses were found.",
+    "no_hadith_found"            => "No Hadiths were found.",
+    "no_videos_found"            => "No videos were found.",
 
     // Calendar Page
     "prayer_times"               => "Prayer Times",
