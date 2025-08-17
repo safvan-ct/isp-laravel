@@ -4,6 +4,7 @@ use App\Http\Controllers\FetchTopicController;
 use App\Http\Controllers\HadithFetchController;
 use App\Http\Controllers\QuranFetchController;
 use App\Http\Controllers\Web\BookmarkCollectionController;
+use App\Http\Controllers\Web\BookmarkController;
 use App\Http\Controllers\Web\HadithController;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\LikeController;
@@ -41,14 +42,14 @@ Route::prefix('fetch')->name('fetch.')->group(function () {
 // End Fetch
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('like-item', [LikeController::class, 'store'])->name('like.toggle');
+    Route::post('bookmark-item', [BookmarkController::class, 'store'])->name('bookmark.toggle');
+
     Route::get('fetch/collections', [BookmarkCollectionController::class, 'fetchCollections'])->name('fetch.collections');
-    Route::resource('collections', BookmarkCollectionController::class)->only(['index', 'show', 'update', 'destroy']);
+    Route::resource('collections', BookmarkCollectionController::class)->except(['create', 'edit']);
 });
 
 Route::post('sync-data', [SyncController::class, 'store'])->name('sync.data')->middleware('auth');
-Route::post('like-item', [LikeController::class, 'store'])->name('like.toggle')->middleware('auth');
-Route::post('bookmark-item', [LikeController::class, 'bookmark'])->name('bookmark.toggle')->middleware('auth');
-Route::post('collection', [LikeController::class, 'collection'])->name('collection.store')->middleware('auth');
 
 Route::get('quran', [QuranController::class, 'quran'])->name('quran.index');
 Route::get('quran/{id}', [QuranController::class, 'quranChapter'])->name('quran.chapter');

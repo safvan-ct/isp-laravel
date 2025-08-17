@@ -287,7 +287,7 @@
         //------------------------
         window.COLLECTION_FETCH_URL = AUTH_USER ? "{{ route('fetch.collections') }}" : null;
         window.BOOKMARK_URL = AUTH_USER ? "{{ route('bookmark.toggle') }}" : null;
-        window.COLLECTION_URL = AUTH_USER ? "{{ route('collection.store') }}" : null;
+        window.COLLECTION_URL = AUTH_USER ? "{{ route('collections.store') }}" : null;
 
         function updateAllBookmarkIcon(type) {
             let bookmarkedIds = [];

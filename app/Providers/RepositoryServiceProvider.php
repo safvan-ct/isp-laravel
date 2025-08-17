@@ -1,6 +1,10 @@
 <?php
 namespace App\Providers;
 
+use App\Repository\Bookmark\BookmarkInterface;
+use App\Repository\Bookmark\BookmarkRepository;
+use App\Repository\Bookmark\CollectionInterface;
+use App\Repository\Bookmark\CollectionRepository;
 use App\Repository\Hadith\HadithBookInterface;
 use App\Repository\Hadith\HadithBookRepository;
 use App\Repository\Hadith\HadithBookTranslationInterface;
@@ -13,6 +17,8 @@ use App\Repository\Hadith\HadithVerseInterface;
 use App\Repository\Hadith\HadithVerseRepository;
 use App\Repository\Hadith\HadithVerseTranslationInterface;
 use App\Repository\Hadith\HadithVerseTranslationRepository;
+use App\Repository\Like\LikeInterface;
+use App\Repository\Like\LikeRepository;
 use App\Repository\Quran\QuranChapterInterface;
 use App\Repository\Quran\QuranChapterRepository;
 use App\Repository\Quran\QuranChapterTranslationInterface;
@@ -67,6 +73,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TopicQuranInterface::class, TopicQuranRepository::class);
         $this->app->bind(TopicHadithInterface::class, TopicHadithRepository::class);
         $this->app->bind(TopicVideoInterface::class, TopicVideoRepository::class);
+
+        $this->app->bind(LikeInterface::class, LikeRepository::class);
+        $this->app->bind(CollectionInterface::class, CollectionRepository::class);
+        $this->app->bind(BookmarkInterface::class, BookmarkRepository::class);
     }
 
     /**

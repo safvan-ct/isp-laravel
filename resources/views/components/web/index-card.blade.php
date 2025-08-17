@@ -2,7 +2,7 @@
 
 <div {{ $attributes->merge(['class' => 'index-card']) }}>
     @if ($title)
-        <h3 class="text-center quran-text">{{ $title }}</h3>
+        <h3 class="text-center text-quran">{{ $title }}</h3>
     @endif
 
     @if ($description)
