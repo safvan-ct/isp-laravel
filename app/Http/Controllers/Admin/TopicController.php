@@ -7,12 +7,13 @@ use App\Http\Requests\Topic\UpdateRequest;
 use App\Models\Topic;
 use App\Repository\Topic\TopicInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class TopicController extends Controller
+class TopicController extends Controller implements HasMiddleware
 {
     public function __construct(protected TopicInterface $topicRepository)
     {}

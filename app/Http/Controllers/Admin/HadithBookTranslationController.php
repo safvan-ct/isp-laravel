@@ -7,12 +7,13 @@ use App\Models\HadithBookTranslation;
 use App\Repository\Hadith\HadithBookInterface as HadithHadithBookInterface;
 use App\Repository\Hadith\HadithBookTranslationInterface as HadithHadithBookTranslationInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class HadithBookTranslationController extends Controller
+class HadithBookTranslationController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected HadithHadithBookInterface $HadithBookRepository,

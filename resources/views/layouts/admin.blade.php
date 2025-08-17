@@ -82,7 +82,7 @@
                         </a>
                     </li>
 
-                    @hasanyrole('Developer|Owner|Admin|Quran admin|Quran staff')
+                    @hasanyrole('Developer|Owner|Admin|Quran Admin|Quran Staff')
                         <li
                             class="pc-item pc-hasmenu {{ Str::is('admin.quran-chapters.*', $route) ||
                             Str::is('admin.quran-chapter-translations.*', $route) ||
@@ -109,7 +109,7 @@
                         </li>
                     @endhasanyrole
 
-                    @hasanyrole('Developer|Owner|Admin|Hadith admin|Hadith staff')
+                    @hasanyrole('Developer|Owner|Admin|Hadith Admin|Hadith Staff')
                         <li
                             class="pc-item pc-hasmenu {{ Str::is('admin.hadith-books.*', $route) ||
                             Str::is('admin.hadith-book-translations.*', $route) ||
@@ -149,7 +149,7 @@
                         </li>
                     @endhasanyrole
 
-                    @hasanyrole('Developer|Owner|Admin|Hadith admin|Hadith staff')
+                    @hasanyrole('Developer|Owner|Admin|Topic Admin|Topic Staff')
                         <li
                             class="pc-item pc-hasmenu {{ Str::is('admin.topics.*', $route) ||
                             Str::is('admin.topic-translations.*', $route) ||

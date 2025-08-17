@@ -8,11 +8,12 @@ use App\Models\TopicQuranVerse;
 use App\Repository\Topic\TopicInterface;
 use App\Repository\Topic\TopicQuranInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class TopicQuranController extends Controller
+class TopicQuranController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected TopicInterface $topicRepository,

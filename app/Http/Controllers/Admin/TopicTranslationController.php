@@ -7,11 +7,12 @@ use App\Models\TopicTranslation;
 use App\Repository\Topic\TopicInterface;
 use App\Repository\Topic\TopicTranslationInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class TopicTranslationController extends Controller
+class TopicTranslationController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected TopicInterface $topicRepository,

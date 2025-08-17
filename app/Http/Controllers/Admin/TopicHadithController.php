@@ -8,11 +8,12 @@ use App\Models\TopicHadithVerse;
 use App\Repository\Topic\TopicHadithInterface;
 use App\Repository\Topic\TopicInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class TopicHadithController extends Controller
+class TopicHadithController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected TopicInterface $topicRepository,

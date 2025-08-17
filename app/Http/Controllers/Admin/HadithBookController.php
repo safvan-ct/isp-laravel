@@ -5,11 +5,12 @@ use App\Http\Controllers\Controller;
 use App\Models\HadithBook;
 use App\Repository\Hadith\HadithBookInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class HadithBookController extends Controller
+class HadithBookController extends Controller implements HasMiddleware
 {
     public function __construct(protected HadithBookInterface $HadithBookRepository)
     {}

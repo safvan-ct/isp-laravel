@@ -32,18 +32,25 @@ function storeData(data, url, method, table = "dataTable") {
             }
         },
         error: function (xhr, status, error) {
-            let allMessages = [
-                xhr.responseJSON?.message || "Server error. Please try again.",
-            ];
+            toastr.error(
+                xhr.responseJSON?.error || // custom `error`
+                    xhr.responseJSON?.message || // general `message`
+                    (xhr.responseJSON?.errors
+                        ? Object.values(xhr.responseJSON.errors)
+                              .flat()
+                              .join("<br>")
+                        : null) || // validation errors
+                    "Server error. Please try again." // fallback
+            );
 
-            if (xhr.responseJSON?.errors) {
-                Object.values(xhr.responseJSON.errors).forEach((messages) => {
-                    messages.forEach((msg) => allMessages.push(msg));
-                });
-            }
-            errorMessage = allMessages.join("<br>");
+            // if (xhr.responseJSON?.errors) {
+            //     Object.values(xhr.responseJSON.errors).forEach((messages) => {
+            //         messages.forEach((msg) => allMessages.push(msg));
+            //     });
+            // }
+            // errorMessage = allMessages.join("<br>");
 
-            toastr.error(errorMessage);
+            // toastr.error(errorMessage);
         },
         complete: function () {
             hideLoader();
@@ -103,7 +110,14 @@ function updateStatus(url, token, table = "dataTable") {
         },
         error: function (xhr) {
             toastr.error(
-                xhr.responseJSON?.message || "Server error. Please try again."
+                xhr.responseJSON?.error || // custom `error`
+                    xhr.responseJSON?.message || // general `message`
+                    (xhr.responseJSON?.errors
+                        ? Object.values(xhr.responseJSON.errors)
+                              .flat()
+                              .join("<br>")
+                        : null) || // validation errors
+                    "Server error. Please try again." // fallback
             );
         },
         complete: function () {

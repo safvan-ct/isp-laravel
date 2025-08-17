@@ -5,10 +5,11 @@ use App\Http\Controllers\Controller;
 use App\Models\QuranVerseTranslation;
 use App\Repository\Quran\QuranVerseTranslationInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class QuranVerseTranslationController extends Controller
+class QuranVerseTranslationController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected QuranVerseTranslationInterface $QuranVerseTranslationRepository

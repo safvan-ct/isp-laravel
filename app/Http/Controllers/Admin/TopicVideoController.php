@@ -7,11 +7,12 @@ use App\Models\TopicVideo;
 use App\Repository\Topic\TopicInterface;
 use App\Repository\Topic\TopicVideoInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class TopicVideoController extends Controller
+class TopicVideoController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected TopicInterface $topicRepository,

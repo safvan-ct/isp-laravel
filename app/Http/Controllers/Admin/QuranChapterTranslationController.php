@@ -7,12 +7,13 @@ use App\Models\QuranChapterTranslation;
 use App\Repository\Quran\QuranChapterInterface;
 use App\Repository\Quran\QuranChapterTranslationInterface;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Yajra\DataTables\Facades\DataTables;
 
-class QuranChapterTranslationController extends Controller
+class QuranChapterTranslationController extends Controller implements HasMiddleware
 {
     public function __construct(
         protected QuranChapterInterface $QuranChapterRepository,
