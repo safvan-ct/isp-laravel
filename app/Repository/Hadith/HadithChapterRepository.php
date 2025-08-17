@@ -17,13 +17,13 @@ class HadithChapterRepository implements HadithChapterInterface
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 
     public function update(array $data, HadithChapter $hadithChapter)
@@ -34,7 +34,7 @@ class HadithChapterRepository implements HadithChapterInterface
 
     public function getWithAll($id = null, $hadithNumber = null)
     {
-        $obj = HadithChapter::select('id', 'hadith_book_id', 'name', 'chapter_number')
+        $query = HadithChapter::select('id', 'hadith_book_id', 'name', 'chapter_number')
             ->with([
                 'translations',
                 'verses' => fn($q) => $q
@@ -51,7 +51,7 @@ class HadithChapterRepository implements HadithChapterInterface
             ->whereHas('verses', fn($q) => $q->active()->when($hadithNumber, fn($q) => $q->where('hadith_number', $hadithNumber)))
             ->active();
 
-        return $id ? $obj->find($id) : $obj->get();
+        return $id ? $query->find($id) : $query->get();
     }
 
     public function getChpaters($bookId, $name = null)

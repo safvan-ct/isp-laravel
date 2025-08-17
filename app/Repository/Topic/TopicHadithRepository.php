@@ -13,13 +13,13 @@ class TopicHadithRepository implements TopicHadithInterface
 
     public function dataTable(Request $request)
     {
-        $obj = TopicHadithVerse::with('hadith.chapter.book')->where('topic_id', $request->topic_id);
+        $query = TopicHadithVerse::with('hadith.chapter.book')->where('topic_id', $request->topic_id);
 
         if (! $request->order) {
-            return $obj->orderBy('position');
+            return $query->orderBy('position');
         }
 
-        return $obj;
+        return $query;
     }
 
     public function create(array $data): TopicHadithVerse

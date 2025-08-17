@@ -13,13 +13,13 @@ class TopicQuranRepository implements TopicQuranInterface
 
     public function dataTable(Request $request)
     {
-        $obj = TopicQuranVerse::with('quran')->where('topic_id', $request->topic_id);
+        $query = TopicQuranVerse::with('quran')->where('topic_id', $request->topic_id);
 
         if (! $request->order) {
-            return $obj->orderBy('position');
+            return $query->orderBy('position');
         }
 
-        return $obj;
+        return $query;
     }
 
     public function create(array $data): TopicQuranVerse

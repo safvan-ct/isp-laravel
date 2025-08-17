@@ -17,13 +17,13 @@ class QuranChapterRepository implements QuranChapterInterface
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 
     public function update(array $data, QuranChapter $quranChapter): QuranChapter
@@ -48,7 +48,7 @@ class QuranChapterRepository implements QuranChapterInterface
 
     public function getWithVerses($id = null)
     {
-        $obj = QuranChapter::select('id', 'name', 'no_of_verses')
+        $query = QuranChapter::select('id', 'name', 'no_of_verses')
             ->with([
                 'translations',
                 'verses' => fn($q) => $q
@@ -59,6 +59,6 @@ class QuranChapterRepository implements QuranChapterInterface
             ->whereHas('verses', fn($q) => $q->active())
             ->active();
 
-        return $id ? $obj->find($id) : $obj->get();
+        return $id ? $query->find($id) : $query->get();
     }
 }

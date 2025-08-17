@@ -21,13 +21,13 @@ class UserRepository implements UserInterface
             unset($data['password']);
         }
 
-        $obj = User::updateOrCreate(['id' => $user?->id], $data);
+        $query = User::updateOrCreate(['id' => $user?->id], $data);
 
         if (! empty($data['role']) || $data['role'] != 'Customer') {
-            $obj->syncRoles([$data['role']]);
+            $query->syncRoles([$data['role']]);
         }
 
-        return $obj;
+        return $query;
     }
 
     public function toggleActive(User $user): void

@@ -17,13 +17,13 @@ class HadithBookRepository implements HadithBookInterface
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 
     public function update(array $data, HadithBook $hadithBook)
@@ -48,7 +48,7 @@ class HadithBookRepository implements HadithBookInterface
 
     public function getWithChapters($id = null)
     {
-        $obj = HadithBook::select('id', 'name', 'slug', 'writer')
+        $query = HadithBook::select('id', 'name', 'slug', 'writer')
             ->with([
                 'translations',
                 'chapters' => fn($q) => $q
@@ -58,6 +58,6 @@ class HadithBookRepository implements HadithBookInterface
             ])
             ->active();
 
-        return $id ? $obj->find($id) : $obj->get();
+        return $id ? $query->find($id) : $query->get();
     }
 }

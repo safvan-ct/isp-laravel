@@ -4,19 +4,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Staff\StoreRequest;
 use App\Models\User;
+use App\Repository\Role\RoleInterface;
 use App\Repository\User\UserInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 class StaffController extends Controller implements HasMiddleware
 {
-    public function __construct(protected UserInterface $userRepository)
-    {}
+    public function __construct(
+        protected UserInterface $userRepository,
+        protected RoleInterface $roleRepository
+    ) {}
 
     public static function middleware(): array
     {
@@ -31,7 +33,7 @@ class StaffController extends Controller implements HasMiddleware
 
     public function index()
     {
-        $roles = Role::whereNotIn('name', ['Owner', 'Developer', 'Customer'])->get();
+        $roles = $this->roleRepository->getStaffRoles();
         return view('admin.staff.index', compact('roles'));
     }
 
@@ -63,7 +65,7 @@ class StaffController extends Controller implements HasMiddleware
 
     public function dataTable(Request $request)
     {
-        $roles = Role::whereNotIn('name', ['Owner', 'Developer', 'Customer', 'Vendor'])->pluck('name')->toArray();
+        $roles = $this->roleRepository->getStaffRoles(true);
         return DataTables::of($this->userRepository->dataTable($roles, ['roles']))->make(true);
     }
 

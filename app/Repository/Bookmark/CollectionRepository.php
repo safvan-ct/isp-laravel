@@ -7,11 +7,11 @@ class CollectionRepository implements CollectionInterface
 {
     public function getWithBookmarkCount(int $userId, ?bool $paginate = true)
     {
-        $obj = BookmarkCollection::withCount('items')
+        $query = BookmarkCollection::withCount('items')
             ->where('user_id', $userId)
             ->orderByDesc('items_count');
 
-        return $paginate ? $obj->paginate(9) : $obj->get();
+        return $paginate ? $query->paginate(9) : $query->get();
     }
 
     public function firstOrCreate(array $data)
@@ -34,14 +34,14 @@ class CollectionRepository implements CollectionInterface
 
     public function getCollectionWithBookmarks(int $userId, ?int $collectionId = null)
     {
-        $obj = BookmarkCollection::select('id', 'name')
+        $query = BookmarkCollection::select('id', 'name')
             ->with('items:id,bookmark_collection_id,bookmarkable_id,bookmarkable_type')
             ->where('user_id', $userId);
 
         if ($collectionId) {
-            return $obj->where('id', $collectionId)->first();
+            return $query->where('id', $collectionId)->first();
         }
 
-        return $obj->orderBy('name', 'asc')->get();
+        return $query->orderBy('name', 'asc')->get();
     }
 }

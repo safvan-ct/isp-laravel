@@ -22,13 +22,13 @@ class HadithVerseRepository implements HadithVerseInterface
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 
     public function update(array $data, HadithVerse $hadithVerse)
@@ -59,7 +59,7 @@ class HadithVerseRepository implements HadithVerseInterface
 
     public function getVerseById(array $id, $paginate = false)
     {
-        $obj = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
+        $query = HadithVerse::select('id', 'hadith_book_id', 'hadith_chapter_id', 'chapter_number', 'hadith_number', 'heading', 'text', 'volume', 'status')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'hadith_book_id', 'chapter_number', 'name')->with('translations'),
@@ -68,7 +68,7 @@ class HadithVerseRepository implements HadithVerseInterface
             ->whereIn('id', $id)
             ->active();
 
-        return $paginate ? $obj->paginate(5) : $obj->get();
+        return $paginate ? $query->paginate(5) : $query->get();
     }
 
     public function getLikedVerses($userId, $paginate = true)

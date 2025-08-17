@@ -13,13 +13,13 @@ class TopicVideoRepository implements TopicVideoInterface
 
     public function dataTable(Request $request)
     {
-        $obj = TopicVideo::where('topic_id', $request->topic_id);
+        $query = TopicVideo::where('topic_id', $request->topic_id);
 
         if (! $request->order) {
-            return $obj->orderBy('position');
+            return $query->orderBy('position');
         }
 
-        return $obj;
+        return $query;
     }
 
     public function create(array $data): TopicVideo

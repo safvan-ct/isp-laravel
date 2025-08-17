@@ -20,7 +20,7 @@ class TopicRepository implements TopicInterface
     {
         $position = Topic::where('type', $type)->count() + 1;
 
-        $obj = Topic::create([
+        $query = Topic::create([
             'slug'       => Str::slug($data['slug']),
             'type'       => $type,
             'position'   => $position,
@@ -30,13 +30,13 @@ class TopicRepository implements TopicInterface
 
         if (in_array($type, ['menu', 'module', 'question'])) {
             TopicTranslation::create([
-                'topic_id' => $obj->id,
+                'topic_id' => $query->id,
                 'lang'     => 'en',
                 'title'    => ucwords($data['slug']),
             ]);
         }
 
-        return $obj;
+        return $query;
     }
 
     public function toggleActive(Topic $topic): void
@@ -51,11 +51,12 @@ class TopicRepository implements TopicInterface
         }
     }
 
-    public function get(int $id, ?string $type = null)
+    public function get(?int $id = null, ?string $type = null)
     {
-        return Topic::with('translations')
-            ->when($type, fn($q) => $q->where('type', $type))
-            ->findOrFail($id);
+        $query = Topic::with('translations')
+            ->when($type, fn($q) => $q->where('type', $type));
+
+        return $id ? $query->find($id) : $query->get();
     }
 
     public function getMenuWithAll($slug)
@@ -108,7 +109,7 @@ class TopicRepository implements TopicInterface
 
     public function getTopicById(array $id, $paginate = false)
     {
-        $obj = Topic::select('id', 'slug', 'parent_id')
+        $query = Topic::select('id', 'slug', 'parent_id')
             ->withWhereHas('translations')
             ->with([
                 'parent.translations',
@@ -118,12 +119,12 @@ class TopicRepository implements TopicInterface
             ->where('type', 'answer')
             ->whereIn('id', $id);
 
-        return $paginate ? $obj->paginate(5) : $obj->get();
+        return $paginate ? $query->paginate(5) : $query->get();
     }
 
     public function getLikedTopics($userId, $paginate = true)
     {
-        $ids = Like::where('likeable_type', 'App\Models\Topic')
+        $ids = Like::where('likeable_type', Topic::class)
             ->where('user_id', $userId)
             ->pluck('likeable_id')
             ->toArray();
@@ -133,7 +134,7 @@ class TopicRepository implements TopicInterface
 
     public function getBookmarkedTopics($userId, $collectionId, $paginate = true)
     {
-        $ids = BookmarkItem::where('bookmarkable_type', 'App\Models\Topic')
+        $ids = BookmarkItem::where('bookmarkable_type', Topic::class)
             ->where('bookmark_collection_id', $collectionId)
             ->where('user_id', $userId)
             ->pluck('bookmarkable_id')

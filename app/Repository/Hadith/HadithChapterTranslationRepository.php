@@ -22,12 +22,12 @@ class HadithChapterTranslationRepository implements HadithChapterTranslationInte
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 }

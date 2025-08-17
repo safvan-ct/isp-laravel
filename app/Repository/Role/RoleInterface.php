@@ -10,4 +10,6 @@ interface RoleInterface
     public function updateOrCreate(array $data, ?Role $role = null);
 
     public function destroy(Role $role);
+
+    public function getStaffRoles($onlyName = false);
 }

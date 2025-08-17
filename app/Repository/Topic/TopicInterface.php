@@ -13,7 +13,7 @@ interface TopicInterface
 
     public function sort(array $data);
 
-    public function get(int $id, ?string $type = null);
+    public function get(?int $id = null, ?string $type = null);
 
     public function getMenuWithAll($slug);
 

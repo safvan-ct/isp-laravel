@@ -27,13 +27,13 @@ class QuranVerseRepository implements QuranVerseInterface
 
     public function status($id)
     {
-        $obj = $this->getById($id);
-        if (! $obj) {
+        $query = $this->getById($id);
+        if (! $query) {
             throw new \Exception('Item not found');
         }
 
-        $obj->update(['is_active' => ! $obj->is_active]);
-        return $obj;
+        $query->update(['is_active' => ! $query->is_active]);
+        return $query;
     }
 
     public function update(array $data, QuranVerse $quranVerse)
@@ -44,7 +44,7 @@ class QuranVerseRepository implements QuranVerseInterface
 
     public function getVerseById(array $id, $paginate = false)
     {
-        $obj = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
+        $query = QuranVerse::select('id', 'quran_chapter_id', 'number_in_chapter', 'text')
             ->with([
                 'translations',
                 'chapter' => fn($q) => $q->select('id', 'name')->with('translations'),
@@ -52,7 +52,7 @@ class QuranVerseRepository implements QuranVerseInterface
             ->whereIn('id', $id)
             ->active();
 
-        return $paginate ? $obj->paginate(5) : $obj->get();
+        return $paginate ? $query->paginate(5) : $query->get();
     }
 
     public function getVerses(int $chapterId, ?int $ayahNumber = null)

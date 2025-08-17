@@ -40,25 +40,12 @@ class TopicController extends Controller
 
     public function index($type)
     {
-        $parentType = null;
-        switch ($type) {
-            case 'menu':
-                $parentType = null;
-            case 'module':
-                $parentType = 'menu';
-                break;
-            case 'question':
-                $parentType = 'module';
-                break;
-            case 'answer':
-                $parentType = 'question';
-                break;
-            default:
-                abort(404);
-                break;
+        $parentType = config("constants.topic_parent_map.$type");
+        if ($parentType === null && $type !== 'menu') {
+            abort(404);
         }
-        $parents = Topic::where('type', $parentType)->get();
 
+        $parents = $this->topicRepository->get(null, $parentType);
         return view('admin.topic.index', compact('type', 'parents'));
     }
 

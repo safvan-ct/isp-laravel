@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <x-admin.modal>
+    <x-admin.modal size="modal-lg">
         <input type="hidden" id="edit_id">
 
         <x-admin.input name="name" label="Name" error="0" placeholder="Name" required />
@@ -75,16 +75,22 @@
                         orderable: false,
                         searchable: false,
                         render: function(data, type, row) {
-                            const url = "{{ route('admin.roles.destroy', ':id') }}".replace(':id',
-                                row.id);
-                            const permissions = row.permissions?.map(item => item.name).join(',');
+                            if (!['Developer', 'Owner', 'Customer'].includes(row.name)) {
+                                const url = "{{ route('admin.roles.destroy', ':id') }}".replace(
+                                    ':id',
+                                    row.id);
+                                const permissions = row.permissions?.map(item => item.name).join(
+                                    ',');
 
-                            return `<button type="button" class="btn btn-link" onclick="createUpdate(${row.id})"
+                                return `<button type="button" class="btn btn-link" onclick="createUpdate(${row.id})"
                                 data-name="${row.name}" data-permissions="${permissions}" id="editBtn${row.id}">Edit</button>
 
                                 <button type="button" class="btn btn-link text-danger" onclick="deleteItem('${url}', '{{ csrf_token() }}')">
                                     Delete
                                 </button>`;
+                            }
+
+                            return '-';
                         }
                     }
                 ],
