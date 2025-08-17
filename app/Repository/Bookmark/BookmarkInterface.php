@@ -8,4 +8,6 @@ interface BookmarkInterface
     public function create(array $data);
 
     public function destroy(array $where);
+
+    public function insertOrIgnore(array $data);
 }

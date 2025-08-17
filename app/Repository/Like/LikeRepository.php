@@ -15,7 +15,7 @@ class LikeRepository implements LikeInterface
 
     public function create(array $data): Like
     {
-        return Like::create($data);
+        return Like::firstOrCreate($data);
     }
 
     public function destroy(array $where): void

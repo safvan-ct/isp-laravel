@@ -313,7 +313,7 @@
             CollectionList = [];
             $('#pageLoader').addClass('d-none');
 
-            // Toggle on click
+            // Toggle like on click
             $(document).on('click', '.like-btn', function() {
                 let type = $(this).data('type');
                 let id = $(this).data('id');
@@ -325,17 +325,18 @@
                 playAudio.call(this);
             });
 
+            // Collection modal close
             $("#collectionModal").one("hidden.bs.modal", function() {
                 CollectionList = [];
                 $("#newCollectionName").val('');
             });
 
+            // Sync likes
             @if (auth()->check() && session('sync_data'))
                 let likes = JSON.parse(localStorage.getItem('likes') || '{}');
-                let bookmarks = JSON.parse(localStorage.getItem('ISPBOOKMARKS') || '{}');
 
                 $.ajax({
-                    url: "{{ route('sync.data') }}",
+                    url: "{{ route('likes.sync') }}",
                     type: "POST",
                     data: JSON.stringify({
                         likes: Object.entries(likes).flatMap(([type, ids]) =>
@@ -344,7 +345,6 @@
                                 type
                             }))
                         ),
-                        bookmarks: bookmarks
                     }),
                     contentType: "application/json",
                     headers: {

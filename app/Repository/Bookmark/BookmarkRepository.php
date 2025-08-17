@@ -19,4 +19,9 @@ class BookmarkRepository implements BookmarkInterface
     {
         BookmarkItem::where($where)->delete();
     }
+
+    public function insertOrIgnore(array $data)
+    {
+        return BookmarkItem::insertOrIgnore($data);
+    }
 }

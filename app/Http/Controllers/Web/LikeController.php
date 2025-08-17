@@ -33,4 +33,25 @@ class LikeController extends Controller
             return response()->json(['status' => 'added']);
         }
     }
+
+    public function sync(Request $request)
+    {
+        $user    = Auth::user();
+        $likes   = $request->likes ?? [];
+        $typeMap = config('constants.type_map');
+
+        // Sync likes
+        foreach ($likes as $like) {
+            $id   = (int) $like['id'];
+            $type = $typeMap[$like['type']] ?? null;
+
+            if (! isset($type) || ! $id) {
+                continue;
+            }
+
+            $this->likeRepository->create(['user_id' => $user->id, 'likeable_id' => $id, 'likeable_type' => $type]);
+        }
+
+        return response()->json(['status' => 'success']);
+    }
 }
