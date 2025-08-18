@@ -22,17 +22,21 @@ class ModuleSeeder extends Seeder
             return;
         }
 
+        $menus = Topic::where('type', 'menu')->get();
+
         try {
-            $path    = database_path("json/modules/life-of-muslim.json");
-            $modules = file_exists($path) ? json_decode(file_get_contents($path), true) : [];
+            foreach ($menus as $menu) {
+                if (Topic::where('type', 'module')->where('parent_id', $menu->id)->exists()) {
+                    continue;
+                }
 
-            foreach ($modules as $key => $items) {
-                $menu = Topic::where('slug', $key)->first();
+                $path    = database_path("json/modules/{$menu->slug}.json");
+                $modules = file_exists($path) ? json_decode(file_get_contents($path), true) : [];
 
-                foreach ($items as $key => $module) {
+                foreach ($modules as $key => $module) {
                     DB::transaction(function () use ($module, $key, $now, $menu) {
                         $item = Topic::create([
-                            'parent_id'  => $menu?->id,
+                            'parent_id'  => $menu->id,
                             'slug'       => Str::slug($module['title']),
                             'type'       => 'module',
                             'is_primary' => $module['is_primary'] ?? 0,

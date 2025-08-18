@@ -20,7 +20,16 @@
                     :description="__('app.islamic_calendar_sub_title')" :href="route('calendar')"
                     :btnText="__('app.view_days')" />
             </div>
+        </div>
 
+        @if ($modules->isNotEmpty())
+            <div class="text-center mt-5 mb-3">
+                <h4 class="fw-bold">{{ __('app.important_topics') }}</h4>
+                <div class="section-divider mx-auto"></div>
+            </div>
+        @endif
+
+        <div class="row g-4 justify-content-center">
             @foreach ($modules as $item)
                 <div class="col-md-4">
                     <x-web.home-card :href="route('questions.show', [

@@ -38,7 +38,7 @@ class Topic extends Model
     public function parent()
     {
         return $this->belongsTo(Topic::class, 'parent_id')
-            ->select('id', 'slug', 'parent_id')
+            ->select('id', 'slug', 'parent_id', 'position')
             ->active();
     }
 
@@ -48,7 +48,7 @@ class Topic extends Model
     public function children()
     {
         return $this->hasMany(Topic::class, 'parent_id')
-            ->select('id', 'slug', 'parent_id')
+            ->select('id', 'slug', 'parent_id', 'position')
             ->orderBy('position')
             ->active();
     }

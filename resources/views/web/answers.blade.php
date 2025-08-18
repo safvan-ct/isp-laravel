@@ -3,7 +3,7 @@
 @section('title', $question->translation?->title ?? $question->slug)
 
 @section('content')
-    <x-web.page-header :title="$question->translation?->title ?? $question->slug" :subtitle="$question->translation?->sub_title" :breadcrumbs="[
+    <x-web.page-header :title="$question->position . ' - ' . $question->translation?->title ?? $question->slug" :subtitle="$question->translation?->sub_title" :breadcrumbs="[
         ['label' => __('app.home'), 'url' => route('home')],
         [
             'label' => $question->parent->translation?->title ?? $question->parent->slug,
@@ -130,7 +130,7 @@
                         style="font-size: 14px; padding: 8px;"
                         href="{{ route('answers.show', ['menu_slug' => $module->parent->slug, 'module_slug' => $module->slug, 'question_slug' => $item->slug]) }}">
                         <span>
-                            <span class="badge bg-primary">{{ $loop->iteration }}</span> -
+                            <span class="badge bg-primary">{{ $item->position }}</span> -
                             {{ $item->translation?->title ?? $item->slug }}
                         </span>
                         <span>

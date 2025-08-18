@@ -71,7 +71,7 @@ class TopicRepository implements TopicInterface
 
     public function getModuleWithAll($slug)
     {
-        return Topic::select('id', 'slug', 'parent_id')
+        return Topic::select('id', 'slug', 'parent_id', 'position')
             ->withWhereHas('translations')
             ->withWhereHas('parent.translations')
             ->withWhereHas('children.translations')
@@ -92,7 +92,7 @@ class TopicRepository implements TopicInterface
 
     public function getQuestionWithAll($slug)
     {
-        return Topic::select('id', 'slug', 'parent_id')
+        return Topic::select('id', 'slug', 'parent_id', 'position')
             ->withWhereHas('translations')
             ->withWhereHas('parent.translations')
             ->withWhereHas('children.translations')

@@ -2,8 +2,12 @@
 namespace Database\Seeders;
 
 use App\Models\Topic;
+use App\Models\TopicHadithVerse;
+use App\Models\TopicQuranVerse;
 use App\Models\TopicTranslation;
+use App\Models\TopicVideo;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MenuSeeder extends Seeder
 {
@@ -12,6 +16,14 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        TopicVideo::truncate();
+        TopicHadithVerse::truncate();
+        TopicQuranVerse::truncate();
+        TopicTranslation::truncate();
+        Topic::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
         $now = now();
         $this->command->info("Menu seeding started at: {$now->toDateTimeString()}");
 

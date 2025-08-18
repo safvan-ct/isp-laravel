@@ -26,6 +26,7 @@ return [
     // Index page
     "quran_study"                => "Quran Study",
     "islamic_calendar"           => "Islamic Calendar",
+    "important_topics"           => "Important Topics",
 
     // Quran Page
     "quran_desc"                 => "The Qur'an is the final divine revelation sent to humanity through Prophet Muhammad ﷺ. It consists of 114 Surahs (chapters), each offering divine guidance, laws, morals, stories, and reflections for life. This sacred text has been preserved unchanged and continues to be a source of light and wisdom.",
