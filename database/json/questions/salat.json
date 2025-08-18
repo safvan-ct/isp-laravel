@@ -1,5 +1,18 @@
 [
     {
+        "title": "What is Ghusl?",
+        "translations": [
+            {
+                "lang": "en",
+                "title": "What is Ghusl (Bath)?"
+            },
+            {
+                "lang": "ml",
+                "title": "കുളി (ഗുസ്ൽ) എന്താണ്?"
+            }
+        ]
+    },
+    {
         "title": "What is Wudu?",
         "translations": [
             {
@@ -9,19 +22,6 @@
             {
                 "lang": "ml",
                 "title": "വുദൂ എന്താണ്?"
-            }
-        ]
-    },
-    {
-        "title": "What is Ghusl (Bath)?",
-        "translations": [
-            {
-                "lang": "en",
-                "title": "What is Ghusl (Bath)?"
-            },
-            {
-                "lang": "ml",
-                "title": "കുളി (ഗുസ്ൽ) എന്താണ്?"
             }
         ]
     },
@@ -39,15 +39,15 @@
         ]
     },
     {
-        "title": "What is Bank?",
+        "title": "What is Adhan?",
         "translations": [
             {
                 "lang": "en",
-                "title": "What is Bank?"
+                "title": "What is Adhan?"
             },
             {
                 "lang": "ml",
-                "title": "ബാങ്ക് എന്താണ്?"
+                "title": "അദാൻ എന്താണ്?"
             }
         ]
     },

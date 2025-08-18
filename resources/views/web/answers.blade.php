@@ -20,34 +20,41 @@
 
                         @if ($item->quranVerses->isNotEmpty() || $item->hadithVerses->isNotEmpty() || $item->videos->isNotEmpty())
                             <ul class="nav nav-tabs" id="addOn-{{ $item->id }}" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link {{ $loop->first ? 'active' : '' }}"
-                                        id="quran-tab-{{ $item->id }}" data-bs-toggle="tab"
-                                        data-bs-target="#quran{{ $item->id }}" type="button" role="tab"
-                                        aria-controls="quran{{ $item->id }}" aria-selected="true">
-                                        {{ __('app.quran') }}
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="hadith-tab-{{ $item->id }}" data-bs-toggle="tab"
-                                        data-bs-target="#hadith{{ $item->id }}" type="button" role="tab"
-                                        aria-controls="hadith{{ $item->id }}" aria-selected="false">
-                                        {{ __('app.hadiths') }}
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="video-tab-{{ $item->id }}" data-bs-toggle="tab"
-                                        data-bs-target="#video{{ $item->id }}" type="button" role="tab"
-                                        aria-controls="video{{ $item->id }}" aria-selected="false">
-                                        {{ __('app.videos') }}
-                                    </button>
-                                </li>
+                                @if ($item->quranVerses->isNotEmpty())
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link {{ $loop->first ? 'active' : '' }}" id="quran-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                            data-bs-target="#quran{{ $item->id }}" type="button" role="tab"
+                                            aria-controls="quran{{ $item->id }}" aria-selected="true">
+                                            {{ __('app.quran') }}
+                                        </button>
+                                    </li>
+                                @endif
+
+                                @if ($item->hadithVerses->isNotEmpty())
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="hadith-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                            data-bs-target="#hadith{{ $item->id }}" type="button" role="tab"
+                                            aria-controls="hadith{{ $item->id }}" aria-selected="false">
+                                            {{ __('app.hadiths') }}
+                                        </button>
+                                    </li>
+                                @endif
+
+                                @if ($item->videos->isNotEmpty())
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="video-tab-{{ $item->id }}" data-bs-toggle="tab"
+                                            data-bs-target="#video{{ $item->id }}" type="button" role="tab"
+                                            aria-controls="video{{ $item->id }}" aria-selected="false">
+                                            {{ __('app.videos') }}
+                                        </button>
+                                    </li>
+                                @endif
                             </ul>
 
                             <div class="tab-content" id="addOnContent-{{ $item->id }}">
                                 {{-- Quran --}}
                                 @if ($item->quranVerses->isNotEmpty())
-                                    <div class="tab-pane {{ $loop->first ? 'fade show active' : 'fade' }}"
+                                    <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}"
                                         id="quran{{ $item->id }}" role="tabpanel"
                                         aria-labelledby="quran-tab-{{ $item->id }}">
                                         @foreach ($item->quranVerses as $quranVerse)

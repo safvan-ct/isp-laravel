@@ -1,5 +1,5 @@
 @foreach ($result as $item)
-    <x-web.ayah-card class="pb-0">
+    <x-web.ayah-card class="pb-0 notranslate">
         <x-web.ayah-text :text="$item->text" :number="$item->number_in_chapter" />
 
         @if ($item->translation)

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('topics')->onDelete('cascade');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('type')->default('topic'); // menu, module, question, answer
             $table->unsignedSmallInteger('position')->default(0);
             $table->boolean('is_primary')->default(false);
