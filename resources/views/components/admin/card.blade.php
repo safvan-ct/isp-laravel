@@ -1,3 +1,5 @@
+@props(['title' => '', 'subTitle' => ''])
+
 <div class="card">
     @if (!empty($title) || !empty($subTitle))
         <div class="card-header">
