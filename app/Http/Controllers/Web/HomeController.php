@@ -6,8 +6,12 @@ use App\Repository\Topic\TopicInterface;
 
 class HomeController extends Controller
 {
+    protected $webVersion;
+
     public function __construct(protected TopicInterface $topicRepository)
-    {}
+    {
+        $this->webVersion = config('constants.web_version');
+    }
 
     public function changeLanguage($lang)
     {
@@ -22,16 +26,16 @@ class HomeController extends Controller
     public function index()
     {
         $modules = $this->topicRepository->getModulesHasMenu();
-        return view('web.index', compact('modules'));
+        return view("web.{$this->webVersion}.index", compact("modules"));
     }
 
     public function calendar()
     {
-        return view('web.calendar');
+        return view("web.{$this->webVersion}.calendar");
     }
 
     public function likes()
     {
-        return view('web.likes');
+        return view("web.{$this->webVersion}.likes");
     }
 }

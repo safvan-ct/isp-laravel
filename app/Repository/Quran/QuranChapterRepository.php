@@ -40,7 +40,7 @@ class QuranChapterRepository implements QuranChapterInterface
 
     public function getWithTranslations()
     {
-        return QuranChapter::select('id', 'name')
+        return QuranChapter::select('id', 'name', 'no_of_verses', 'revelation_place')
             ->with('translations')
             ->active()
             ->get();
@@ -48,7 +48,7 @@ class QuranChapterRepository implements QuranChapterInterface
 
     public function getWithVerses($id = null)
     {
-        $query = QuranChapter::select('id', 'name', 'no_of_verses')
+        $query = QuranChapter::select('id', 'name', 'no_of_verses', 'revelation_place')
             ->with([
                 'translations',
                 'verses' => fn($q) => $q
