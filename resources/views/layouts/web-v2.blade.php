@@ -67,6 +67,10 @@
                         <a class="nav-link {{ Str::is('calendar', $routeName) ? 'active' : '' }} text-uppercase"
                             href="{{ route('calendar') }}">{{ __('app.calendar') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Str::is('modules.*', $routeName) ? 'active' : '' }} text-uppercase"
+                            href="{{ route('modules.show', 'life-of-muslim') }}">Subjects</a>
+                    </li>
 
                     @if (Auth::check() && Auth::user()->role == 'Customer')
                         <li class="nav-item dropdown">

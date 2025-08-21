@@ -6,8 +6,12 @@ use App\Repository\Topic\TopicInterface;
 
 class TopicController extends Controller
 {
+    protected $webVersion;
+
     public function __construct(protected TopicInterface $topicRepository)
-    {}
+    {
+        $this->webVersion = config("constants.web_version");
+    }
 
     public function modules($menuSlug)
     {
@@ -16,7 +20,7 @@ class TopicController extends Controller
             abort(404);
         }
 
-        return view('web.modules', compact('topic', 'menuSlug'));
+        return view("web.{$this->webVersion}.modules", compact("topic", "menuSlug"));
     }
 
     public function questions($menuSlug, $moduleSlug)
@@ -26,7 +30,7 @@ class TopicController extends Controller
             abort(404);
         }
 
-        return view('web.questions', compact('module', 'menuSlug'));
+        return view("web.{$this->webVersion}.questions", compact("module", "menuSlug"));
     }
 
     public function answers($menuSlug, $moduleSlug, $questionSlug)
@@ -37,6 +41,6 @@ class TopicController extends Controller
             abort(404);
         }
 
-        return view('web.answers', compact('question', 'module', 'menuSlug', 'moduleSlug'));
+        return view("web.{$this->webVersion}.answers", compact("question", "module", "menuSlug", "moduleSlug"));
     }
 }

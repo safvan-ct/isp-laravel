@@ -9,7 +9,7 @@
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <div class="search">
-                    <input id="searchInput" class="form-control form-control" placeholder="Search Surah by number or name…"
+                    <input id="searchInput" class="form-control" placeholder="Search Surah by number or name…"
                         aria-label="Search Surahs">
                 </div>
 
