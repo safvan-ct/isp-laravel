@@ -48,7 +48,7 @@ class HadithBookRepository implements HadithBookInterface
 
     public function getWithChapters($id = null)
     {
-        $query = HadithBook::select('id', 'name', 'slug', 'writer')
+        $query = HadithBook::select('id', 'name', 'slug', 'writer', 'writer_death_year', 'chapter_count', 'hadith_count')
             ->with([
                 'translations',
                 'chapters' => fn($q) => $q

@@ -86,7 +86,7 @@ Route::controller(QuranController::class)->prefix('quran')->name('quran.')->grou
 // ------------------------------
 Route::controller(HadithController::class)->prefix('hadith')->name('hadith.')->group(function () {
     Route::get('/', 'hadith')->name('index');
-    Route::get('{book}/chapters', 'hadithChapters')->name('chapters');
+    Route::get('{book}/chapters/{chapter?}', 'hadithChapters')->name('chapters');
     Route::get('{book}/chapter/{chapter}', 'hadithChapterVerses')->name('chapter.verses');
     Route::get('{book}/verse/{verse}', 'hadithVerseByNumber')->name('book.verse');
 });

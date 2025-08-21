@@ -2,15 +2,15 @@
 
 @section('content')
     <main class="container pb-5">
-        <!-- HERO -->
-        <header class="page-hero" aria-live="polite">
+        <x-app.page-hero>
             <div class="mx-auto">
-                <div class="chapter-number ar-number">{{ $chapter->id }}</div>
-                <div class="chapter-name-ar">سُورَةُ {{ $chapter->name }}</div>
-                <div class="chapter-name-en">{{ $chapter->translation?->name }}</div>
-                <div class="small-note ar-number">{{ $chapter->no_of_verses }} ayahs • {{ $chapter->revelation_place }}</div>
+                <h3 class="text-ar text-primary">
+                    سُورَةُ {{ $chapter->name }} <span class="fw-bold">.{{ $chapter->id }}</span>
+                </h3>
+                <h6 class="m-0 mb-2">{{ $chapter->translation?->name }}</h6>
+                <p class="small-note m-0">{{ $chapter->no_of_verses }} ayahs • {{ $chapter->revelation_place }}</p>
             </div>
-        </header>
+        </x-app.page-hero>
 
         <!-- FILTER / TOOLBAR (sticky) -->
         <div class="filter-toolbar mt-3" aria-hidden="false">
@@ -45,8 +45,8 @@
                 </div>
 
                 <!-- Likes -->
-                <button class="btn btn-outline-secondary btn-sm" id="btnBookmarks" aria-haspopup="dialog">
-                    ❤️ Likes
+                <button class="btn btn-outline-secondary btn-sm" aria-haspopup="dialog">
+                    <i class="fas fa-heart text-danger"></i> Likes
                 </button>
 
                 <!-- Left: Previous Button -->
@@ -73,19 +73,22 @@
                 <article class="ayah-card" tabindex="0" id="ayah-{{ $item->number_in_chapter }}"
                     aria-label="Ayah {{ $item->number_in_chapter }}">
 
-                    <div class="ayah-ar mb-2" style="font-size: 1.45rem;">{{ $item->text }}</div>
+                    <div class="ayah-ar mb-2" style="font-size: 1.45rem;">
+                        {{ $item->text }}
+                        <span dir="rtl" class="text-ar ar-number fs-6">
+                            ﴿{{ $item->number_in_chapter }}﴾
+                        </span>
+                    </div>
 
                     @if ($item->translation)
-                        <div class="ayah-tr">{{ $item->translation->text }}</div>
+                        <div class="ayah-tr">
+                            {{ $item->translation->text }} <span class="fs-6"> ({{ $item->number_in_chapter }}) </span>
+                        </div>
                     @endif
 
-                    <div class="ayah-actions">
-                        <button class="btn btn-sm btn-success" title="Ayah Number">
-                            <span class="ar-number">{{ $item->number_in_chapter }}</span>
-                        </button>
-
-                        <button class="btn btn-sm btn-outline-secondary play-btn" title="Play Ayah"
-                            ata-surah="{{ $chapter->id }}" data-ayah="{{ $item->number_in_chapter }}">
+                    <div class="actions">
+                        <button class="btn btn-sm btn-outline-success play-btn" title="Play Ayah"
+                            data-surah="{{ $chapter->id }}" data-ayah="{{ $item->number_in_chapter }}">
                             <i class="far fa-play-circle"></i>
                         </button>
                         <button class="btn btn-sm btn-outline-warning bookmark-btn" title="Bookmark Ayah"
@@ -101,103 +104,74 @@
             @endforeach
         </div>
     </main>
-
-    <!-- Bookmarks Modal -->
-    <div class="modal fade" id="bookmarksModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:12px;">
-                <div class="modal-header">
-                    <h5 class="modal-title">Bookmarks</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="bookmarksList">
-                    <div class="text-muted small">No bookmarks yet.</div>
-                </div>
-                <div class="modal-footer">
-                    <button id="clearBookmarks" class="btn btn-sm btn-outline-secondary">Clear</button>
-                    <button class="btn btn-sm btn-primary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @push('scripts')
     <script>
-        document.getElementById('jumpTo').addEventListener('change', () => {
-            const v = Number(jumpTo.value);
-            if (!v) return;
-            const node = document.getElementById(`ayah-${v}`);
-            if (node) {
-                node.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                node.focus({
-                    preventScroll: true
-                });
-            }
-        });
+        $(function() {
+            $(document).on('click', '.play-btn', function() {
+                playAudio.call(this);
+            });
 
-        // --- Search functionality ---
-        const searchInput = document.getElementById('searchAyah');
-        const ayahList = document.getElementById('ayahList');
-        const ayahs = Array.from(ayahList.getElementsByClassName('ayah-card'));
+            $('#jumpTo').on('change', function() {
+                const v = Number($(this).val());
+                if (!v) return;
 
-        // --- View mode functionality ---
-        const modeButtons = {
-            both: document.getElementById('modeBoth'),
-            ar: document.getElementById('modeAr'),
-            tr: document.getElementById('modeTr'),
-        };
-
-        function setViewMode(mode) {
-            ayahs.forEach(ayah => {
-                const ar = ayah.querySelector('.ayah-ar');
-                const tr = ayah.querySelector('.ayah-tr');
-                if (!ar || !tr) return;
-
-                if (mode === 'both') {
-                    ar.style.display = '';
-                    tr.style.display = '';
-                } else if (mode === 'ar') {
-                    ar.style.display = '';
-                    tr.style.display = 'none';
-                } else if (mode === 'tr') {
-                    ar.style.display = 'none';
-                    tr.style.display = '';
+                const $node = $(`#ayah-${v}`);
+                if ($node.length) {
+                    $node[0].scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    $node.trigger('focus');
                 }
             });
 
-            // Update active button
-            Object.keys(modeButtons).forEach(key => {
-                modeButtons[key].classList.toggle('active', key === mode);
-            });
-        }
+            const $ayahs = $('#ayahList .ayah-card');
 
-        modeButtons.both.addEventListener('click', () => setViewMode('both'));
-        modeButtons.ar.addEventListener('click', () => setViewMode('ar'));
-        modeButtons.tr.addEventListener('click', () => setViewMode('tr'));
+            const $modeButtons = {
+                both: $('#modeBoth'),
+                ar: $('#modeAr'),
+                tr: $('#modeTr')
+            };
 
-        // Initialize default
-        setViewMode('both');
+            function setViewMode(mode) {
+                $ayahs.each(function() {
+                    const $ar = $(this).find('.ayah-ar');
+                    const $tr = $(this).find('.ayah-tr');
 
-        // --- Font size functionality ---
-        const fontSizeSelect = document.getElementById('fontSize');
-        fontSizeSelect.addEventListener('change', () => {
-            const value = fontSizeSelect.value;
-            let size;
-            if (value === 'small') size = '1.2rem';
-            else if (value === 'normal') size = '1.45rem';
-            else if (value === 'large') size = '1.8rem';
+                    if (mode === 'both') {
+                        $ar.show();
+                        $tr.show();
+                    } else if (mode === 'ar') {
+                        $ar.show();
+                        $tr.hide();
+                    } else if (mode === 'tr') {
+                        $ar.hide();
+                        $tr.show();
+                    }
+                });
 
-            ayahs.forEach(ayah => {
-                const ar = ayah.querySelector('.ayah-ar');
-                if (ar) ar.style.fontSize = size;
-            });
+                $.each($modeButtons, (key, $btn) => {
+                    $btn.toggleClass('active', key === mode);
+                });
+            }
+
+            $modeButtons.both.on('click', () => setViewMode('both'));
+            $modeButtons.ar.on('click', () => setViewMode('ar'));
+            $modeButtons.tr.on('click', () => setViewMode('tr'));
+
+            setViewMode('both');
+
+            $('#fontSize').on('change', function() {
+                const val = $(this).val();
+                let size =
+                    val === 'small' ? '1.2rem' :
+                    val === 'large' ? '1.8rem' :
+                    '1.45rem';
+
+                $ayahs.find('.ayah-ar').css('font-size', size);
+            }).trigger('change');
         });
-
-        // Initialize font size
-        fontSizeSelect.dispatchEvent(new Event('change'));
     </script>
 @endpush

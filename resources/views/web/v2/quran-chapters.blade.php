@@ -5,13 +5,12 @@
     <main class="container">
         <x-app.page-hero :title="'Al-Qur’an — All 114 Surahs'" :description="'Search, filter and jump by Juz — designed for calm, focused study.'" />
 
-        <div class="filter-toolbar mt-3" aria-hidden="false">
+        <div class="filter-toolbar mt-3">
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <div class="search">
-                    <label for="qSearch" class="visually-hidden">Search Surahs</label>
-                    <input id="qSearch" class="form-control form-control"
-                        placeholder="Search Surah by number, Arabic or English name…" aria-label="Search Surahs">
+                    <input id="searchInput" class="form-control form-control" placeholder="Search Surah by number or name…"
+                        aria-label="Search Surahs">
                 </div>
 
                 <div class="view-toggle btn-group" role="group" aria-label="Switch view">
@@ -35,7 +34,7 @@
                                 </div>
                             </div>
 
-                            <div class="small-note ar-number">
+                            <div class="small-note">
                                 {{ $chapter->no_of_verses }} ayahs • {{ $chapter->revelation_place }}
                             </div>
 
@@ -87,96 +86,83 @@
 
 @push('scripts')
     <script>
-        let debounceTimer;
+        $(function() {
+            let debounceTimer;
 
-        document.getElementById('qSearch').addEventListener('input', (e) => {
-            clearTimeout(debounceTimer);
+            // 🔎 Search filter
+            $('#searchInput').on('input', function() {
+                clearTimeout(debounceTimer);
+                const query = $(this).val().trim().toLowerCase();
 
-            const query = e.target.value.trim().toLowerCase();
+                debounceTimer = setTimeout(() => {
+                    $('#surahGrid .all-chapters').each(function() {
+                        const $chapter = $(this);
+                        const surahNameAr = $chapter.find('.surah-name-ar').text()
+                            .toLowerCase();
+                        const surahNameEn = $chapter.find('.fw-semibold').text()
+                            .toLowerCase();
+                        const surahNumber = $chapter.find('.surah-number').text()
+                            .toLowerCase();
 
-            debounceTimer = setTimeout(() => {
-                filterSurahs(query);
-            }, 180);
-        });
-
-        function filterSurahs(query) {
-            const allChapters = document.querySelectorAll('#surahGrid .all-chapters');
-
-            allChapters.forEach((chapterDiv) => {
-                const surahNameAr = chapterDiv.querySelector('.surah-name-ar')?.textContent.toLowerCase() || '';
-                const surahNameEn = chapterDiv.querySelector('.fw-semibold')?.textContent.toLowerCase() || '';
-                const surahNumber = chapterDiv.querySelector('.surah-number')?.textContent.toLowerCase() || '';
-
-                // Check if the query matches number, Arabic name, or English name
-                if (
-                    surahNumber.includes(query) ||
-                    surahNameAr.includes(query) ||
-                    surahNameEn.includes(query)
-                ) {
-                    chapterDiv.style.display = 'block';
-                } else {
-                    chapterDiv.style.display = 'none';
-                }
+                        $chapter.toggle(
+                            surahNumber.includes(query) ||
+                            surahNameAr.includes(query) ||
+                            surahNameEn.includes(query)
+                        );
+                    });
+                }, 180);
             });
-        }
 
-        document.getElementById('surahGrid').querySelectorAll('.btn-jump').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const n = Number(btn.dataset.target);
+            // 📍 Jump to Surah
+            $('#surahGrid').on('click', '.btn-jump', function() {
+                const n = $(this).data('target');
+                const $el = $(`#surahGrid [data-surah='${n}']`);
 
-                const el = document.getElementById('surahGrid').querySelector(`[data-surah='${n}']`);
-                if (el) {
-                    el.scrollIntoView({
+                if ($el.length) {
+                    $el[0].scrollIntoView({
                         behavior: 'smooth',
                         block: 'center'
                     });
-                    el.focus({
-                        preventScroll: true
-                    });
+                    $el.trigger('focus');
                 }
             });
-        });
 
-        document.getElementById('juzAccordion').querySelectorAll('.open-juz').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const startSurah = Number(btn.dataset.start);
-                // switch to grid view if needed
+            // 📖 Open Juz
+            $('#juzAccordion').on('click', '.open-juz', function() {
+                const startSurah = $(this).data('start');
                 showGrid();
-                // after small timeout to ensure grid visible, scroll
+
                 setTimeout(() => {
-                    const el = document.querySelector(`[data-surah='${startSurah}']`);
-                    if (el) {
-                        el.scrollIntoView({
+                    const $el = $(`[data-surah='${startSurah}']`);
+                    if ($el.length) {
+                        $el[0].scrollIntoView({
                             behavior: 'smooth',
                             block: 'center'
                         });
-                        el.focus({
-                            preventScroll: true
-                        });
+                        $el.trigger('focus');
                     } else {
-                        // if the surah element isn't rendered (shouldn't happen), show a notice
                         alert('Target Surah not found in grid (unexpected).');
                     }
                 }, 220);
             });
+
+            // 🔄 View toggles
+            $('#btnGrid').on('click', showGrid);
+            $('#btnJuz').on('click', showJuz);
+
+            function showGrid() {
+                $('#gridView').removeClass('d-none');
+                $('#juzView').addClass('d-none');
+                $('#btnGrid').addClass('active');
+                $('#btnJuz').removeClass('active');
+            }
+
+            function showJuz() {
+                $('#gridView').addClass('d-none');
+                $('#juzView').removeClass('d-none');
+                $('#btnJuz').addClass('active');
+                $('#btnGrid').removeClass('active');
+            }
         });
-
-        // view toggles
-        document.getElementById('btnGrid').addEventListener('click', showGrid);
-        document.getElementById('btnJuz').addEventListener('click', showJuz);
-
-        function showGrid() {
-            document.getElementById('gridView').classList.remove('d-none');
-            document.getElementById('juzView').classList.add('d-none');
-            document.getElementById('btnGrid').classList.add('active');
-            document.getElementById('btnJuz').classList.remove('active');
-        }
-
-        function showJuz() {
-            document.getElementById('gridView').classList.add('d-none');
-            document.getElementById('juzView').classList.remove('d-none');
-            document.getElementById('btnJuz').classList.add('active');
-            document.getElementById('btnGrid').classList.remove('active');
-        }
     </script>
 @endpush
