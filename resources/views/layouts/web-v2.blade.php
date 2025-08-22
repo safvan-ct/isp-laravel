@@ -36,7 +36,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg fixed-top" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 Islamic<span style="color:var(--clr-accent)"> Study Portal</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain"
