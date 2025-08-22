@@ -171,6 +171,22 @@
 
     <script src="{{ asset('web/v2/js/custom.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            const $fabBtn = $('#filterFab');
+            const $fabIcon = $fabBtn.find('i');
+            const $filterContent = $('#filterContent');
+
+            $filterContent.on('show.bs.collapse', function() {
+                $fabIcon.removeClass('fa-filter').addClass('fa-times'); // or fa-xmark in FA6+
+            });
+
+            $filterContent.on('hide.bs.collapse', function() {
+                $fabIcon.removeClass('fa-times').addClass('fa-filter');
+            });
+        });
+    </script>
+
     @stack('scripts')
 </body>
 

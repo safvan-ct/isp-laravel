@@ -87,7 +87,7 @@
 
                 <!-- paginator -->
                 <div class="d-flex justify-content-center">
-                    {{ $verses->links() }}
+                    {{ $verses->onEachSide(1)->links() }}
                 </div>
             </section>
         </div>

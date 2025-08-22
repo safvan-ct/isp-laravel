@@ -13,7 +13,7 @@
         </x-app.page-hero>
 
         <!-- FILTER / TOOLBAR (sticky) -->
-        <div class="filter-toolbar mt-3" aria-hidden="false">
+        <x-app.filter>
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <!-- Jump to Ayah -->
@@ -65,7 +65,7 @@
                     </a>
                 @endif
             </div>
-        </div>
+        </x-app.filter>
 
         <!-- LAYOUT: verses and side tools -->
         <div class="mt-3" id="ayahList" aria-live="polite">

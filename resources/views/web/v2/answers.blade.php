@@ -41,8 +41,8 @@
                                 Asked by <strong>student1</strong> • 8/1/2025
                             </div>
                             <div class="small-note mt-2">
-                                Tags: <span class="chip">purity</span> <span class="chip">wudu</span> <span
-                                    class="chip">practical</span>
+                                Tags: <span class="ref-pill">purity</span> <span class="ref-pill">wudu</span> <span
+                                    class="ref-pill">practical</span>
                             </div>
                         </div>
 

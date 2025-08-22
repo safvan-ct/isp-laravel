@@ -8,7 +8,7 @@
             </p>
         </header>
 
-        <div class="filter-toolbar mt-3">
+        <x-app.filter>
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <div class="control w-50 w-sm-100">
@@ -33,7 +33,7 @@
                     </select>
                 </div>
             </div>
-        </div>
+        </x-app.filter>
 
         <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
             <div class="small-note">Showing <span>{{ $topic->children->count() }}</span> subjects</div>
@@ -44,7 +44,7 @@
         </div>
 
         <section id="subjectsSection">
-            <div id="grid" class=" row g-1" role="list" aria-label="Subjects list">
+            <div id="grid" class=" row g-2" role="list" aria-label="Subjects list">
                 @foreach ($topic->children as $item)
                     <div class="col-12 col-md-4">
                         <article class="subject-card d-flex flex-column h-100" role="article" tabindex="0">

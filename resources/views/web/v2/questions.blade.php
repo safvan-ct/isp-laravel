@@ -9,7 +9,7 @@
             </p>
         </header>
 
-        <div class="filter-toolbar mt-3">
+        <x-app.filter>
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <div class="control w-sm-100" style="width: 40%">
@@ -46,7 +46,7 @@
                     <button class="btn btn-outline-secondary btn-sm">Bookmarks</button>
                 </div>
             </div>
-        </div>
+        </x-app.filter>
 
         <section class="mt-3">
             <div class="q-list row g-1" aria-live="polite">
@@ -64,9 +64,9 @@
                             </div>
 
                             <div class="mt-2 mb-2">
-                                <button class="tag">purity</button>
-                                <button class="tag">wudu</button>
-                                <button class="tag">practical</button>
+                                <button class="ref-pill small-note">purity</button>
+                                <button class="ref-pill small-note">wudu</button>
+                                <button class="ref-pill small-note">practical</button>
                             </div>
 
                             <div class="actions mt-auto d-flex gap-2">

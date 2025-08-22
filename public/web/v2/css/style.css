@@ -41,6 +41,7 @@ body {
 .book-card,
 .q-card,
 .answer-card,
+.subject-card,
 .q-header,
 .panel,
 .chapter-hero,
@@ -244,6 +245,8 @@ footer {
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, var(--clr-accent), #f7d85a);
     border: 1px solid rgba(0, 0, 0, .06);
+    flex-shrink: 0;
+    /* prevent shrinking */
 }
 
 .topic-chip {
@@ -329,6 +332,7 @@ footer {
     place-items: center;
     font-weight: 700;
     margin-right: .6rem;
+    flex-shrink: 0;
 }
 
 .surah-name-ar {
@@ -643,6 +647,32 @@ footer {
     border-radius: 999px;
 }
 
+.filter-fab {
+    margin-top: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth collapse animation */
+.filter-collapse.collapse {
+    transition: height 0.35s ease, opacity 0.35s ease;
+}
+
+.filter-collapse.collapsing {
+    height: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.filter-collapse.collapse.show {
+    opacity: 1;
+}
+
 /* ensures pill if used without .btn-cta */
 
 /* small screens: make sidebar normal block */
@@ -674,16 +704,26 @@ footer {
     .w-sm-100 {
         width: 100% !important;
     }
+
+    .surah {
+        display: none;
+    }
 }
 
 /* =====================================
     Pagination
 ===================================== */
+.pagination .page-item {
+    flex: 0 0 auto;
+}
+
 .page-link {
     color: var(--clr-primary);
     background-color: var(--clr-surface);
     border: 1px solid var(--clr-primary);
     transition: all 0.2s ease;
+    padding: .35rem .65rem;
+    font-size: 0.875rem;
 }
 
 .page-link:hover {

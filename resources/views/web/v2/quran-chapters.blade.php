@@ -5,7 +5,7 @@
     <main class="container">
         <x-app.page-hero :title="'Al-Qur’an — All 114 Surahs'" :description="'Search, filter and jump by Juz — designed for calm, focused study.'" />
 
-        <div class="filter-toolbar mt-3">
+        <x-app.filter>
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
                 <div class="search">
@@ -18,7 +18,23 @@
                     <button id="btnJuz" type="button" class="btn btn-sm btn-outline-secondary">Juz view</button>
                 </div>
             </div>
-        </div>
+        </x-app.filter>
+
+
+        {{-- <div class="filter-toolbar mt-3 d-none">
+            <div
+                class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
+                <div class="search">
+                    <input id="searchInput" class="form-control" placeholder="Search Surah by number or name…"
+                        aria-label="Search Surahs">
+                </div>
+
+                <div class="view-toggle btn-group" role="group" aria-label="Switch view">
+                    <button id="btnGrid" type="button" class="btn btn-sm btn-outline-success active">Grid view</button>
+                    <button id="btnJuz" type="button" class="btn btn-sm btn-outline-secondary">Juz view</button>
+                </div>
+            </div>
+        </div> --}}
 
         <!-- Grid (default) -->
         <section id="gridView" class="my-3">
@@ -29,8 +45,9 @@
                             <div class="d-flex align-items-center mb-2">
                                 <div class="surah-number">{{ $chapter->id }}</div>
                                 <div>
-                                    <div class="surah-name-ar">سُورَةُ {{ $chapter->name }}</div>
-                                    <div class="fw-semibold">{{ $chapter->translation?->name }}</div>
+                                    <div class="surah-name-ar"><span class="surah">سُورَةُ </span>{{ $chapter->name }}
+                                    </div>
+                                    <div class="fw-semibold mt-2">{{ $chapter->translation?->name }}</div>
                                 </div>
                             </div>
 
