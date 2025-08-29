@@ -1,5 +1,77 @@
 @extends('layouts.web-v2')
 
+@push('styles')
+    <style>
+        .surah-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 16px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s ease-in-out;
+        }
+
+        .surah-card:hover {
+            background: #fafafa;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+
+        .surah-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .number-box {
+            width: 48px;
+            height: 48px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #333;
+            transform: rotate(45deg);
+        }
+
+        .number-box span {
+            transform: rotate(-45deg);
+            display: inline-block;
+        }
+
+        .surah-name {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #222;
+        }
+
+        .surah-translation {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .surah-right {
+            text-align: right;
+        }
+
+        .arabic-name {
+            font-family: "Scheherazade New", serif;
+            font-size: 1.2rem;
+            color: #111;
+        }
+
+        .ayah-count {
+            font-size: 0.85rem;
+            color: #555;
+        }
+    </style>
+@endpush
+
 @section('content')
     <!-- HERO -->
     <main class="container">
@@ -40,7 +112,23 @@
         <section id="gridView" class="my-3">
             <div id="surahGrid" class="row g-2">
                 @foreach ($chapters as $chapter)
-                    <div class='col-6 col-md-4 col-lg-3 all-chapters'>
+                    <div class="col-md-6 col-lg-4 all-chapters" onclick="window.location.href = '{{ route('quran.chapter', $chapter->id) }}'">
+                        <div class="surah-card" tabindex="0" data-surah="{{ $chapter->id }}">
+                            <div class="surah-left">
+                                <div class="number-box"><span>{{ $chapter->id }}</span></div>
+                                <div>
+                                    <div class="surah-name">{{ $chapter->translation?->name }}</div>
+                                    <div class="surah-translation">{{ $chapter->translation?->translation }}</div>
+                                </div>
+                            </div>
+                            <div class="surah-right">
+                                <div class="arabic-name">{{ $chapter->name }}</div>
+                                <div class="ayah-count">{{ $chapter->no_of_verses }} Ayahs</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='col-6 col-md-4 col-lg-3 all-chapters d-none'>
                         <article class="surah-card" tabindex="0" data-surah="{{ $chapter->id }}">
                             <div class="d-flex align-items-center mb-2">
                                 <div class="surah-number">{{ $chapter->id }}</div>
