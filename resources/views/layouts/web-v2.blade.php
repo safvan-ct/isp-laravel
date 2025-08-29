@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link href="{{ asset('web/v2/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('web/v2/css/custom.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 
@@ -69,7 +70,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ Str::is('modules.*', $routeName) ? 'active' : '' }} text-uppercase"
-                            href="{{ route('modules.show', 'life-of-muslim') }}">Subjects</a>
+                            href="{{ route('modules.show', 'life-of-muslim') }}">Topics</a>
                     </li>
 
                     @if (Auth::check() && Auth::user()->role == 'Customer')

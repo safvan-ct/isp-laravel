@@ -2,24 +2,43 @@
 
 @section('content')
     <main class="container">
-        <header class="page-hero">
-            <h3 class="text-title fw-semibold">Subjects</h3>
-            <p class="small-note m-0">Browse subjects, preview top questions, and follow what matters for your study plan.
-            </p>
+        <header class="page-hero-1 d-flex align-items-center justify-content-between gap-2 flex-column flex-md-row">
+            <div>
+                <h5 class="text-title">Topics</h5>
+                <p class="text-muted m-0">
+                    Browse topics (wudu, namaz, zakat...) — filter by category, evidence, difficulty and tags.
+                </p>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-success btn-sm">My follows</button>
+                <button class="btn btn-accent btn-sm rounded-5">Suggest topic</button>
+            </div>
         </header>
 
         <x-app.filter>
             <div
                 class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
-                <div class="control w-50 w-sm-100">
-                    <input id="searchInput" class="form-control"
-                        placeholder="Search subjects, tags, or keywords (e.g. 'wudu', 'seerah')">
+                <div class=" w-50 w-sm-100">
+                    <input class="form-control" placeholder="Search subjects, tags, or keywords (e.g. 'wudu', 'seerah')">
+                </div>
+
+                <div class="control-sm">
+                    <select class="form-select form-select-sm">
+                        <option value="featured">Choose Subject</option>
+                        <option value="most_questions">Islam</option>
+                        <option value="recent">Belief</option>
+                        <option value="answered_pct">Life Of Muslim</option>
+                    </select>
                 </div>
 
                 <div class="control-sm">
                     <label class="visually-hidden" for="tagFilter">Tag</label>
                     <select id="tagFilter" class="form-select form-select-sm">
                         <option value="all">All tags</option>
+                        <option value="tag1">Tag 1</option>
+                        <option value="tag2">Tag 2</option>
+                        <option value="tag3">Tag 3</option>
                     </select>
                 </div>
 
@@ -29,57 +48,54 @@
                         <option value="featured">Featured</option>
                         <option value="most_questions">Most questions</option>
                         <option value="recent">Recently updated</option>
-                        <option value="answered_pct">Highest answered %</option>
+                        <option value="answered_pct">Highest followed %</option>
                     </select>
                 </div>
             </div>
         </x-app.filter>
 
         <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
-            <div class="small-note">Showing <span>{{ $topic->children->count() }}</span> subjects</div>
-            <div class="small-note muted">
-                Followed
-                <strong>{{ $topic->children->where('is_primary', true)->count() }}</strong>
-            </div>
+            <p class="text-muted m-0">
+                Showing <strong>{{ $topic->children->count() }}</strong> subjects
+            </p>
+            <p class="text-muted m-0">
+                Followed <strong>{{ $topic->children->where('is_primary', true)->count() }}</strong>
+            </p>
         </div>
 
-        <section id="subjectsSection">
-            <div id="grid" class=" row g-2" role="list" aria-label="Subjects list">
-                @foreach ($topic->children as $item)
-                    <div class="col-12 col-md-4">
-                        <article class="subject-card d-flex flex-column h-100" role="article" tabindex="0">
-                            <div class="d-flex align-items-center gap-4">
-                                <div class="subject-icon" aria-hidden="true">ال</div>
-                                <div class="flex-grow-1">
-                                    <div class="text-primary fw-bold">{{ $item->translation?->title ?: $item->slug }}</div>
-                                    <div class="small-note">{!! $item->translation?->sub_title !!}</div>
-                                </div>
-                            </div>
+        <section class="row g-2">
+            <div class="col-12 col-md-4 d-flex">
+                <article class="card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="icon-bg">🎉</div>
 
-                            <div class="featured-qa my-3">
-                                <div class="feat-q">
-                                    {!! $item->translation?->content !!}
-                                </div>
-                            </div>
-
-                            <div class="subject-stats d-flex align-items-center flex-wrap gap-2 mt-auto">
-                                <div class="stat-pill">312 Q</div>
-                                <div class="stat-pill">93% answered</div>
-                                <div class="stat-pill">Updated 7/18/2025</div>
-                                <div class="ms-auto d-flex">
-                                    <button class="btn btn-sm follow-btn">Follow</button>
-
-                                    <a class="btn btn-sm btn-outline-success ms-2"
-                                        href="{{ route('questions.show', ['menu_slug' => $topic->slug, 'module_slug' => $item->slug]) }}"
-                                        role="button">
-                                        Open
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
+                        <div style="flex:1">
+                            <h5 class="card-title">നബി ദിനം (റ. അവ്വൽ 12)</h5>
+                            <div class="card-desc">നബി ദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</div>
+                        </div>
                     </div>
-                @endforeach
+
+                    <div class="card-body mb-2 d-none">
+                        ഇസ്ലാമിലെ പ്രധാനമായ രണ്ടു ആഘോഷങ്ങൾ: റമളാനിന് ശേഷം വരുന്ന ഈദ് അൽ-ഫിത്വർ, ഹജ്ജിനോടനുബന്ധിച്ചുള്ള ഈദ്
+                        അൽ-അദ്ഹാ. ഇവ ആരാധന, സന്തോഷം, കുടുംബസംഗമം, ദാനം, അല്ലാഹുവിനെ സ്മരിക്കൽ എന്നിവ നിറഞ്ഞ ദിനങ്ങളാണ്.
+                    </div>
+
+                    <div class="card-ft mt-auto">
+                        <div class="tag text-muted">48 Q</div>
+                        <div class="tag text-muted">94% followed</div>
+                        <div class="tag text-muted">Updated 8/1/2025</div>
+
+                        <div class="d-flex ms-auto gap-2">
+                            <button class="btn btn-sm btn-outline-warning">Follow</button>
+                            <a class="btn btn-sm btn-outline-secondary" role="button"
+                                href="{{ route('questions.show', ['menu_slug' => 'wudu', 'module_slug' => 'namaz']) }}">
+                                Preview
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </div>
+
         </section>
     </main>
 @endsection
