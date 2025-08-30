@@ -8,19 +8,19 @@
         <header class="page-hero-1">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-1">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Topics</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">നബി ദിനം (റ. അവ്വൽ 12)</li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('modules.show', 'life-of-muslim') }}">Topics</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">നബിദിനം</li>
                 </ol>
             </nav>
+            <hr class="mt-2 mb-3">
 
             <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <div>
-                    <h5 class="title m-0">നബി ദിനം — Sub-topics</h5>
-                    <p class="text-muted m-0">Deepen study via concise lessons, sketches, and focused Q&A. Filter by
-                        subcategory, format, difficulty, or time.</p>
+                    <h5 class="text-title mb-2">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
+                    <p class="text-muted m-0">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</p>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 d-none">
                     <span class="tag text-primary fw-bold">Topic: നബി ദിനം</span>
 
                     <button class="btn btn-outline-success btn-sm filters-mobile-btn d-lg-none" data-bs-toggle="offcanvas"
@@ -73,19 +73,20 @@
                     <div class="col-12 col-md-4">
                         <article class="q-card d-flex flex-column h-100">
                             <div class="text-primary fw-bold">
-                                {{ $item }}
+                                {{ $key + 1 }} • {{ $item }}
                             </div>
 
                             <div class="small-note d-flex flex-wrap gap-2 mt-1">
-                                <div>Asked • 8/1/2025</div>
-                                <div>•</div>
-                                <div>2 answers</div>
+                                <div>Added • {{ date('d-m-Y') }}</div>
+                                {{-- <div>•</div>
+                                <div>2 answers</div> --}}
                             </div>
 
                             <div class="mt-2 mb-2">
                                 <button class="ref-pill small-note">festival</button>
                                 <button class="ref-pill small-note">birthday</button>
                                 <button class="ref-pill small-note">prophet</button>
+                                <button class="ref-pill small-note">meelad</button>
                             </div>
 
                             <div class="actions mt-auto d-flex gap-2">
@@ -94,7 +95,7 @@
                                     Open
                                 </a>
                                 <button class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button class="btn btn-sm btn-outline-warning">★</button>
+                                <button class="btn btn-sm btn-outline-warning d-none">★</button>
                             </div>
                         </article>
                     </div>

@@ -35,7 +35,7 @@ cp .env.example .env
 
 ---
 
-cp -r public/\* /home/u316993456/domains/islamicstudyportal.org/public_html/v2/
+cp -r public/* /home/u316993456/domains/islamicstudyportal.org/public_html/v2/
 
 # Update index.php in public_html/v2/ to:
 

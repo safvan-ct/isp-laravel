@@ -56,7 +56,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
             <p class="text-muted m-0">
-                Showing <strong>{{ $topic->children->count() }}</strong> subjects
+                Showing <strong>1</strong> subjects
             </p>
             <p class="text-muted m-0">
                 Followed <strong>{{ $topic->children->where('is_primary', true)->count() }}</strong>
@@ -70,8 +70,8 @@
                         <div class="icon-bg">🎉</div>
 
                         <div style="flex:1">
-                            <h5 class="card-title">നബി ദിനം (റ. അവ്വൽ 12)</h5>
-                            <div class="card-desc">നബി ദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</div>
+                            <h5 class="card-title">നബിദിനം (റ. അവ്വൽ 12)</h5>
+                            <div class="card-desc">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</div>
                         </div>
                     </div>
 
@@ -81,9 +81,9 @@
                     </div>
 
                     <div class="card-ft mt-auto">
-                        <div class="tag text-muted">48 Q</div>
+                        <div class="tag text-muted">7 Q</div>
                         <div class="tag text-muted">94% followed</div>
-                        <div class="tag text-muted">Updated 8/1/2025</div>
+                        <div class="tag text-muted">Updated {{ date('d-m-Y') }}</div>
 
                         <div class="d-flex ms-auto gap-2">
                             <button class="btn btn-sm btn-outline-warning">Follow</button>
