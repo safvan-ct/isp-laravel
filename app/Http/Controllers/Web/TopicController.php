@@ -49,7 +49,7 @@ class TopicController extends Controller
                 "പ്രവാചകന്റെ ജന്മദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമാണോ?" => [],
             ],
             5 => [
-                "തിങ്കളാഴ്ച നോമ്പ് നോക്കണോ?" => [
+                "തിങ്കളാഴ്ച നോമ്പ് എടുക്കേണ്ടതിന്റെ അടിസ്ഥാനം" => [
                     "ഖുർആൻ പരാമർശം",
                     "ഹദീസ് പരാമർശം",
                     "ഖലീഫമാരും  സ്വഹാബികളും മുഖേന ഉള്ള (അടിസ്ഥാനം, റഫറൻസ്)",
@@ -107,7 +107,7 @@ class TopicController extends Controller
         if (! $question) {
             //abort(404);
         }
-        $qst = $this->questions[$questionSlug];
+        $qst       = $this->questions[$questionSlug];
         $questions = [];
         foreach ($this->questions as $q) {
             $questions[] = array_keys($q)[0];

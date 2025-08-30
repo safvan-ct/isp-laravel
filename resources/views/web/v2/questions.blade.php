@@ -5,45 +5,38 @@
 
 @section('content')
     <main class="container">
-        <header class="page-hero-1">
+        <header class="page-hero">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-1">
+                <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('modules.show', 'life-of-muslim') }}">Topics</a></li>
                     <li class="breadcrumb-item active" aria-current="page">നബിദിനം</li>
                 </ol>
             </nav>
-            <hr class="mt-2 mb-3">
 
-            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                <div>
-                    <h5 class="text-title mb-2">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
-                    <p class="text-muted m-0">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</p>
-                </div>
-                <div class="d-flex align-items-center gap-2 d-none">
-                    <span class="tag text-primary fw-bold">Topic: നബി ദിനം</span>
+            <hr class="mt-1 mb-3">
 
-                    <button class="btn btn-outline-success btn-sm filters-mobile-btn d-lg-none" data-bs-toggle="offcanvas"
-                        data-bs-target="#filtersCanvas">Filters</button>
-                </div>
+            <div class="text-center">
+                <h5 class="fw-bold text-primary">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
+                <p class="text-muted m-0">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</p>
             </div>
         </header>
 
         <x-app.filter>
-            <div
-                class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
-                <div class="control w-sm-100" style="width: 40%">
-                    <input class="form-control form-control-sm" placeholder="Search topics, tags, or content">
+            <div class="row g-2 p-2 bg-white shadow-sm rounded border align-items-center">
+                <!-- Search -->
+                <div class="col-12 col-md">
+                    <input class="form-control form-control-sm" placeholder="Search topics, tags, or content"
+                        id="search">
                 </div>
 
-                <div class="control-sm">
+                <div class="col-6 col-md-auto">
                     <select id="tagFilter" class="form-select form-select-sm">
                         <option value="all">All Subjects</option>
                     </select>
                 </div>
 
-                <div class="control-sm">
-                    <label class="visually-hidden" for="answeredFilter">Answered</label>
+                <div class="col-6 col-md-auto">
                     <select id="answeredFilter" class="form-select form-select-sm">
                         <option value="all">All</option>
                         <option value="answered">Answered</option>
@@ -51,8 +44,7 @@
                     </select>
                 </div>
 
-                <div class="control-sm">
-                    <label class="visually-hidden" for="sortSelect">Sort</label>
+                <div class="col-6 col-md-auto">
                     <select id="sortSelect" class="form-select form-select-sm">
                         <option value="best">Best (verified + helpful)</option>
                         <option value="newest">Newest</option>
@@ -60,42 +52,57 @@
                     </select>
                 </div>
 
-                <div class="ms-auto d-flex gap-2">
-                    <button class="btn btn-sm btn-warning rounded-5">Ask question</button>
+                <div class="col-12 col-md-auto ms-md-auto d-flex gap-2 justify-content-end">
+                    <button class="btn btn-warning btn-sm rounded-pill">Ask Query</button>
                     <button class="btn btn-outline-secondary btn-sm">Bookmarks</button>
                 </div>
             </div>
         </x-app.filter>
 
         <section class="mt-3">
-            <div class="q-list row g-1" aria-live="polite">
+            <div class="row g-2">
                 @foreach ($questions as $key => $item)
+                    @php
+                        // safe extraction whether $item is object or plain string
+                        $title = is_object($item) ? $item->title ?? ($item->question ?? 'Untitled') : $item;
+                        $addedAt = is_object($item) && isset($item->created_at) ? $item->created_at : now();
+                        $tags =
+                            is_object($item) && isset($item->tags)
+                                ? $item->tags
+                                : ['festival', 'birthday', 'prophet', 'meelad'];
+                        $answersCount = is_object($item) && isset($item->answers_count) ? $item->answers_count : 2;
+                    @endphp
+
                     <div class="col-12 col-md-4">
-                        <article class="q-card d-flex flex-column h-100">
-                            <div class="text-primary fw-bold">
-                                {{ $key + 1 }} • {{ $item }}
+                        <article class="card h-100 d-flex flex-column p-3">
+                            <h6 class="text-primary fw-bold mb-2">{{ $loop->iteration }} : {{ $title }}</h6>
+
+                            <p class="small text-muted mb-2">
+                                <span>Added • </span>
+                                <time datetime="{{ \Carbon\Carbon::parse($addedAt)->toDateString() }}">
+                                    {{ \Carbon\Carbon::parse($addedAt)->format('d-m-Y') }}
+                                </time>
+                                <span>•</span>
+                                <span>{{ $answersCount }} answers</span>
+                            </p>
+
+                            <div class="mb-2">
+                                @foreach ($tags as $tag)
+                                    <span class="badge rounded-pill bg-light text-dark border">{{ $tag }}</span>
+                                @endforeach
                             </div>
 
-                            <div class="small-note d-flex flex-wrap gap-2 mt-1">
-                                <div>Added • {{ date('d-m-Y') }}</div>
-                                {{-- <div>•</div>
-                                <div>2 answers</div> --}}
-                            </div>
-
-                            <div class="mt-2 mb-2">
-                                <button class="ref-pill small-note">festival</button>
-                                <button class="ref-pill small-note">birthday</button>
-                                <button class="ref-pill small-note">prophet</button>
-                                <button class="ref-pill small-note">meelad</button>
-                            </div>
-
-                            <div class="actions mt-auto d-flex gap-2">
+                            <div class="mt-auto d-flex gap-2 justify-content-end">
                                 <a href="{{ route('answers.show', ['menu_slug' => 'festival', 'module_slug' => 'meelad', 'question_slug' => $key]) }}"
-                                    class="btn btn-sm btn-outline-success" role="button">
+                                    class="btn btn-sm btn-outline-success"
+                                    aria-label="Open question {{ $loop->iteration }}">
                                     Open
                                 </a>
-                                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                                <button class="btn btn-sm btn-outline-warning d-none">★</button>
+
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    aria-label="Share question {{ $loop->iteration }}">
+                                    Share
+                                </button>
                             </div>
                         </article>
                     </div>
