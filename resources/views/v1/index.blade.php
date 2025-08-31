@@ -6,10 +6,13 @@
             <section class="hero bg-geometry">
                 <div class="text-center mx-auto">
                     <h1 class="mb-3 text-Playfair ls-1 text-tr">{{ __('app.seek_knowledge') }}</h1>
-                    <h4 class="ayah-card text-arabic mb-4" style="direction: ltr">
-                        <span class="ms-2" style="opacity:.85;" dir="rtl">(طه ١١٤)</span>
-                        <span dir="rtl">﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾</span>
-                    </h4>
+
+                    <div class="ayah-card  mb-4">
+                        <h4 class="text-arabic d-flex flex-column flex-md-row justify-content-center align-items-center">
+                            <span dir="rtl" class="mt-2">﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾</span>
+                            <span class="ms-md-2 mt-3 mt-md-2" style="opacity:.85;" dir="rtl">(طه ١١٤)</span>
+                        </h4>
+                    </div>
 
                     <p class="text-muted mb-4">
                         Quran, Hadith, calendar and subjects — organized for focused, distraction-free learning.

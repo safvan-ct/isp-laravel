@@ -20,7 +20,7 @@
             <hr class="mt-1 mb-3">
 
             <div class="text-center">
-                <h5 class="fw-bold text-primary text-Playfair text-tr">{{ array_keys($qst)[0] }}</h5>
+                <h5 class="fw-bold text-primary text-Playfair text-tr m-0">{{ array_keys($qst)[0] }}</h5>
                 <p class="text-muted m-0">
                     ഖുർആൻ, ഹദീസ്, പ്രാമാണിക തെളിവുകൾ ഉൾക്കൊള്ളുന്ന പ്രായോഗിക ഘട്ടം ഘട്ടമായുള്ള മാർഗനിർദേശം.
                 </p>
@@ -39,17 +39,17 @@
             </div>
 
             <div class="text-center mx-auto mt-3">
-                <h6 class="ayah-card text-arabic m-0" style="direction: ltr">
-                    <span class="ms-2" style="opacity:.85;" dir="rtl">(العَنكَبُوتِ ٤٣)</span>
-                    <span dir="rtl" class="fw-bold lh-lg">
-                        ﴿ وَتِلْكَ ٱلْأَمْثَٰلُ نَضْرِبُهَا لِلنَّاسِ ۖ وَمَا يَعْقِلُهَآ إِلَّا ٱلْعَٰلِمُونَ ﴾
-                    </span>
+                <div class="ayah-card">
+                    <h6 class="text-arabic text-primary fw-bold mt-2 lh-lg mb-0">
+                        ﴿ وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِۦ عِلْمٌ ۚ ﴾
+                    </h6>
 
-                    <p class="fst-italic small m-0 mt-2">
-                        ആ ഉപമകള്‍ നാം മനുഷ്യര്‍ക്ക് വേണ്ടി വിവരിക്കുകയാണ്‌. അറിവുള്ളവരല്ലാതെ അവയെപ്പറ്റി ചിന്തിച്ച്
-                        മനസ്സിലാക്കുകയില്ല.
+                    <p class="fst-italic small m-0">
+                        നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌.
                     </p>
-                </h6>
+
+                    <p class="m-0 mt-1 text-muted small">(الإِسۡرَاءِ ٣٦)</p>
+                </div>
             </div>
         </header>
 
@@ -191,6 +191,33 @@
 
             <!-- SIDEBAR -->
             <aside class="col-lg-4 position-sticky d-flex flex-column align-self-start gap-2" style="top:84px;">
+                <div class="card-surface">
+                    <h6 class="fw-bold text-primary">Quran reminder</h6>
+
+                    <article class="mt-3">
+                        <p class="text-arabic fw-bold mb-1 text-primary lh-lg">
+                            وَتِلْكَ ٱلْأَمْثَٰلُ نَضْرِبُهَا لِلنَّاسِ ۖ وَمَا يَعْقِلُهَآ إِلَّا ٱلْعَٰلِمُونَ
+                        </p>
+
+                        <p class="fst-italic mb-2">
+                            “ആ ഉപമകള്‍ നാം മനുഷ്യര്‍ക്ക് വേണ്ടി വിവരിക്കുകയാണ്‌. അറിവുള്ളവരല്ലാതെ അവയെപ്പറ്റി ചിന്തിച്ച്
+                            മനസ്സിലാക്കുകയില്ല.” — <em>S. 29:43</em>
+                        </p>
+                    </article>
+                    <hr>
+
+                    <article class="mt-3">
+                        <p class="text-arabic fw-bold mb-1 text-primary lh-lg">
+                            إِنَّمَا يَخْشَى ٱللَّهَ مِنْ عِبَادِهِ ٱلْعُلَمَٰٓؤُا۟
+                        </p>
+
+                        <p class="fst-italic mb-2">
+                            “അല്ലാഹുവെ ഭയപ്പെടുന്നത് അവന്‍റെ ദാസന്‍മാരില്‍ നിന്ന് അറിവുള്ളവര്‍ മാത്രമാകുന്നു.” — <em>S.
+                                35:28</em>
+                        </p>
+                    </article>
+                </div>
+
                 <div class="card d-none d-md-block">
                     <h6 class="fw-bold text-primary">Quick summary</h6>
                     <p class="mb-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis exercitationem

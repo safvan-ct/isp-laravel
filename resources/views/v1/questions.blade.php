@@ -9,7 +9,9 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('app.home') }}</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('modules.show', 'life-of-muslim') }}">{{ __('app.topics') }}</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ route('modules.show', 'life-of-muslim') }}">{{ __('app.topics') }}</a>
+                    </li>
                     <li class="breadcrumb-item active" aria-current="page">നബിദിനം</li>
                 </ol>
             </nav>
@@ -17,8 +19,24 @@
             <hr class="mt-1 mb-3">
 
             <div class="text-center">
-                <h5 class="fw-bold text-primary text-Playfair text-tr">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
+                <h5 class="fw-bold text-primary text-Playfair text-tr m-0">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
                 <p class="text-muted m-0">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</p>
+            </div>
+
+            <div class="text-center mx-auto mt-3">
+                <div class="ayah-card">
+                    <h6 class="text-arabic text-primary fw-bold mt-2 lh-lg mb-0">
+                        ﴿ لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ، فَإِنَّمَا أَنَا عَبْدُهُ، فَقُولُوا
+                        عَبْدُ اللَّهِ وَرَسُولُهُ ﴾
+                    </h6>
+
+                    <p class="fst-italic small m-0">
+                        ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി കാണിക്കരുത്,
+                        കാരണം ഞാൻ ഒരു അടിമ മാത്രമാണ്. അതിനാൽ എന്നെ അല്ലാഹുവിന്റെ അടിമയെന്നും അവന്റെ ദൂതനെന്നും വിളിക്കൂ
+                    </p>
+
+                    <p class="m-0 mt-1 text-muted small">(സഹീഹ് ബുഖാരി: 3445)</p>
+                </div>
             </div>
         </header>
 
