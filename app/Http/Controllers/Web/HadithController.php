@@ -22,7 +22,7 @@ class HadithController extends Controller
     public function hadith()
     {
         $books = $this->hadithBookRepository->getWithTranslations();
-        return view("web.{$this->webVersion}.hadith-books", compact("books"));
+        return view("{$this->webVersion}.hadith-books", compact("books"));
     }
 
     public function hadithChapters($bookId, $chapterId = null)
@@ -34,7 +34,7 @@ class HadithController extends Controller
             ->where('hadith_chapter_id', $chapterId)
             ->active()
             ->paginate(3);
-        return view("web.{$this->webVersion}.hadith-chapters", compact("book", "verses"));
+        return view("{$this->webVersion}.hadith-chapters", compact("book", "verses"));
     }
 
     public function hadithChapterVerses($bookSlug, $chapterId)
@@ -44,7 +44,7 @@ class HadithController extends Controller
             abort(404);
         }
 
-        return view("web.{$this->webVersion}.hadith-verses", compact("chapter"));
+        return view("{$this->webVersion}.hadith-verses", compact("chapter"));
     }
 
     public function hadithVerseByNumber($bookId, $verseNumber)
@@ -62,6 +62,6 @@ class HadithController extends Controller
             abort(404);
         }
 
-        return view("web.{$this->webVersion}.hadith-verses", compact("chapter", "verseNumber"));
+        return view("{$this->webVersion}.hadith-verses", compact("chapter", "verseNumber"));
     }
 }

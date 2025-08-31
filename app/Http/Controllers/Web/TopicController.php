@@ -82,7 +82,7 @@ class TopicController extends Controller
             abort(404);
         }
 
-        return view("web.{$this->webVersion}.modules", compact("topic", "menuSlug"));
+        return view("{$this->webVersion}.modules", compact("topic", "menuSlug"));
     }
 
     public function questions($menuSlug, $moduleSlug)
@@ -97,7 +97,7 @@ class TopicController extends Controller
             $questions[] = array_keys($q)[0];
         }
 
-        return view("web.{$this->webVersion}.questions", compact("module", "menuSlug", "questions"));
+        return view("{$this->webVersion}.questions", compact("module", "menuSlug", "questions"));
     }
 
     public function answers($menuSlug, $moduleSlug, $questionSlug)
@@ -113,6 +113,6 @@ class TopicController extends Controller
             $questions[] = array_keys($q)[0];
         }
 
-        return view("web.{$this->webVersion}.answers", compact("question", "module", "menuSlug", "moduleSlug", "qst", "questions"));
+        return view("{$this->webVersion}.answers", compact("question", "module", "menuSlug", "moduleSlug", "qst", "questions"));
     }
 }

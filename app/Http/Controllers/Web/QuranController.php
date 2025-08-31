@@ -169,7 +169,7 @@ class QuranController extends Controller
             ],
         ];
         $chapters = $this->quranChapterRepository->getWithTranslations();
-        return view("web.{$this->webVersion}.quran-chapters", compact("chapters", "juzs"));
+        return view("{$this->webVersion}.quran-chapters", compact("chapters", "juzs"));
     }
 
     public function quranChapter($id)
@@ -179,6 +179,6 @@ class QuranController extends Controller
             abort(404);
         }
 
-        return view("web.{$this->webVersion}.quran-verses", compact("chapter"));
+        return view("{$this->webVersion}.quran-verses", compact("chapter"));
     }
 }

@@ -26,16 +26,16 @@ class HomeController extends Controller
     public function index()
     {
         $modules = $this->topicRepository->getModulesHasMenu();
-        return view("web.{$this->webVersion}.index", compact("modules"));
+        return view("{$this->webVersion}.index", compact("modules"));
     }
 
     public function calendar()
     {
-        return view("web.{$this->webVersion}.calendar");
+        return view("{$this->webVersion}.calendar");
     }
 
     public function likes()
     {
-        return view("web.{$this->webVersion}.likes");
+        return view("{$this->webVersion}.likes");
     }
 }
