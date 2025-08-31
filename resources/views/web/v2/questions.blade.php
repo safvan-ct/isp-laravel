@@ -17,14 +17,13 @@
             <hr class="mt-1 mb-3">
 
             <div class="text-center">
-                <h5 class="fw-bold text-primary">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
+                <h5 class="fw-bold text-primary text-Playfair text-ml">നബിദിനം - <small>അനുബന്ധ വിഷയങ്ങൾ</small></h5>
                 <p class="text-muted m-0">നബിദിനം ആഘോഷിക്കേണ്ടതിന്റെ അടിസ്ഥാനവും ശ്രേഷ്ഠതയും</p>
             </div>
         </header>
 
         <x-app.filter>
-            <div class="row g-2 p-2 bg-white shadow-sm rounded border align-items-center">
-                <!-- Search -->
+            <div class="row g-2 pb-2 bg-white shadow-sm rounded border align-items-center">
                 <div class="col-12 col-md">
                     <input class="form-control form-control-sm" placeholder="Search topics, tags, or content"
                         id="search">

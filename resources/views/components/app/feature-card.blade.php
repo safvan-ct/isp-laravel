@@ -1,12 +1,12 @@
 @props(['icon' => null, 'title' => null, 'description' => null, 'href' => null, 'btnText' => null])
 
-<article class="feature-card h-100">
+<article class="card-surface feature-card h-100 rounded-4 p-3">
     @if ($icon)
-        <div class="icon-wrap"><span>{{ $icon }}</span></div>
+        <div class="icon-card rounded-5 mb-3"><span class="fs-3">{{ $icon }}</span></div>
     @endif
 
     @if ($title)
-        <h3 class="h5 mb-1">{{ $title }}</h3>
+        <h5 class=" mb-1">{{ $title }}</h5>
     @endif
 
     @if ($description)

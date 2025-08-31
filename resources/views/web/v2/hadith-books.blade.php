@@ -2,21 +2,23 @@
 
 @section('content')
     <main class="container">
-        <header class="page-hero">
-            <h3 class="text-title">Hadith Collections</h3>
-            <p class='small-note mb-2'>
-                Canonical hadith books — authors, scope, and sample narrations. Search, filter, and open any book for
-                details.
-            </p>
+        <x-app.page-hero>
+            <div class="text-center mb-2">
+                <h4 class="text-primary fw-bold text-Playfair">Hadith Collections</h4>
+                <p class="small text-muted m-0">
+                    Canonical hadith books — authors, scope, and sample narrations. Search, filter, and open any book for
+                    details.
+                </p>
+            </div>
 
-            <!-- Controls -->
-            <div class="controls mb-0">
-                <div class="search">
-                    <input class="form-control" placeholder="Search by book name, author, or keyword…" />
+            <div class=" mb-0 row justify-content-center">
+                <div class="col-md">
+                    <input class="form-control form-control-sm rounded-pill"
+                        placeholder="Search by book name, author, or keyword…" />
                 </div>
 
-                <div>
-                    <select class="form-select rounded-pill align-items-center">
+                <div class="col-auto">
+                    <select class="form-select form-select-sm rounded-pill align-items-center">
                         <option value="recommended">Recommended</option>
                         <option value="count-desc">Most hadiths</option>
                         <option value="count-asc">Fewest hadiths</option>
@@ -24,29 +26,29 @@
                     </select>
                 </div>
             </div>
-        </header>
+        </x-app.page-hero>
 
-        <!-- BOOK GRID -->
-        <div class="row g-3 my-3">
+        <div class="row g-2 my-2">
             @foreach ($books as $item)
                 <div class="col-12 col-sm-6 col-lg-4">
-                    <div class="book-card position-relative">
-                        <div class="d-flex align-items-center">
-                            <div class="book-badge me-3" aria-hidden="true">{{ $item->slug }}</div>
+                    <div class="card d-flex flex-column h-100 justify-content-between">
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="icon-card me-3">HB</div>
 
-                            <div>
+                            <div class="flex-1">
                                 <h6 class="text-primary fw-bold m-0">{{ $item->translation?->name ?: $item->name }}</h6>
-                                <p class="small muted m-0">{{ $item->translation?->writer ?: $item->writer }}
+                                <p class="small text-muted m-0">{{ $item->translation?->writer ?: $item->writer }}
                                     ({{ $item->writer_death_year }}H)
                                 </p>
                             </div>
                         </div>
 
-                        <div class="small-note mt-2">
-                            Hadiths. {{ $item->hadith_count }} • Chapters. {{ $item->chapter_count }}
-                        </div>
+                        <p class="small text-muted mb-2">
+                            Hadiths: <strong>{{ $item->hadith_count }}</strong> •
+                            Chapters: <strong>{{ $item->chapter_count }}</strong>
+                        </p>
 
-                        <div class="actions mt-3 justify-content-start">
+                        <div class="d-flex justify-content-end gap-2">
                             <button class="btn btn-sm btn-outline-success btn-open" onclick="openBook({{ $item->id }})">
                                 Details
                             </button>

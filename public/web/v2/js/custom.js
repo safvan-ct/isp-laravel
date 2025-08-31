@@ -33,7 +33,7 @@ async function playAudio() {
     const $btn = $(this);
     const surah = $btn.data("surah");
     const ayah = $btn.data("ayah");
-    const $ayahCard = $btn.closest(".ayah-card");
+    const $ayahCard = $btn.closest(".card-surface");
     const $icon = $btn.find("i");
 
     // Toggle pause/resume if same button clicked

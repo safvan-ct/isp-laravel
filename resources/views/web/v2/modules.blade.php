@@ -4,7 +4,7 @@
     <main class="container">
         <header class="page-hero d-flex align-items-center justify-content-between gap-2 flex-column flex-md-row">
             <div class="text-center text-md-start">
-                <h5 class="fw-bold text-primary">Topics</h5>
+                <h5 class="fw-bold text-primary text-Playfair">Topics</h5>
                 <p class="text-muted m-0">Browse topics (wudu, namaz, zakat...) — filter by category, evidence, difficulty
                     and tags.</p>
             </div>
@@ -16,14 +16,12 @@
         </header>
 
         <x-app.filter>
-            <div class="row g-2 p-2 bg-white shadow-sm rounded border">
-                <!-- Search -->
+            <div class="row g-2 pb-2 bg-white shadow-sm rounded border">
                 <div class="col-12 col-md-6">
                     <input class="form-control form-control-sm"
                         placeholder="Search subjects, tags, or keywords (e.g. 'wudu', 'seerah')" id="search">
                 </div>
 
-                <!-- Subject -->
                 <div class="col-12 col-md-2">
                     <select id="tagFilter" class="form-select form-select-sm">
                         <option value="featured">Choose Subject</option>
@@ -33,7 +31,6 @@
                     </select>
                 </div>
 
-                <!-- Tags -->
                 <div class="col-12 col-md-2">
                     <select id="answeredFilter" class="form-select form-select-sm">
                         <option value="all">All tags</option>
@@ -43,7 +40,6 @@
                     </select>
                 </div>
 
-                <!-- Sort -->
                 <div class="col-12 col-md-2">
                     <select id="sortSelect" class="form-select form-select-sm">
                         <option value="featured">Featured</option>

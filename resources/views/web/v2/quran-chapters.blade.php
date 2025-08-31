@@ -1,187 +1,87 @@
 @extends('layouts.web-v2')
 
-@push('styles')
-    <style>
-        .surah-card {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 16px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: 0.2s ease-in-out;
-        }
-
-        .surah-card:hover {
-            background: #fafafa;
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            cursor: pointer;
-        }
-
-        .surah-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .number-box {
-            width: 48px;
-            height: 48px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #333;
-            transform: rotate(45deg);
-        }
-
-        .number-box span {
-            transform: rotate(-45deg);
-            display: inline-block;
-        }
-
-        .surah-name {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #222;
-        }
-
-        .surah-translation {
-            font-size: 0.85rem;
-            color: #777;
-        }
-
-        .surah-right {
-            text-align: right;
-        }
-
-        .arabic-name {
-            font-family: "Scheherazade New", serif;
-            font-size: 1.2rem;
-            color: #111;
-        }
-
-        .ayah-count {
-            font-size: 0.85rem;
-            color: #555;
-        }
-    </style>
-@endpush
-
 @section('content')
     <!-- HERO -->
     <main class="container">
         <x-app.page-hero :title="'Al-Qur’an — All 114 Surahs'" :description="'Search, filter and jump by Juz — designed for calm, focused study.'" />
 
         <x-app.filter>
-            <div
-                class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
-                <div class="search">
-                    <input id="searchInput" class="form-control" placeholder="Search Surah by number or name…"
+            <div class="row g-2 pb-2 bg-white shadow-sm rounded border">
+                <div class="col-12 col-md-6">
+                    <input id="searchInput" class="form-control form-control-sm" placeholder="Search Surah by number or name…"
                         aria-label="Search Surahs">
                 </div>
 
-                <div class="view-toggle btn-group" role="group" aria-label="Switch view">
-                    <button id="btnGrid" type="button" class="btn btn-sm btn-outline-success active">Grid view</button>
-                    <button id="btnJuz" type="button" class="btn btn-sm btn-outline-secondary">Juz view</button>
+                <div class="col-12 col-md-auto ms-md-auto d-flex gap-2 justify-content-end">
+                    <div class="view-toggle btn-group" role="group" aria-label="Switch view">
+                        <button id="btnGrid" type="button" class="btn btn-sm btn-outline-success active">Grid
+                            view</button>
+                        <button id="btnJuz" type="button" class="btn btn-sm btn-outline-secondary">Juz view</button>
+                    </div>
                 </div>
             </div>
         </x-app.filter>
-
-
-        {{-- <div class="filter-toolbar mt-3 d-none">
-            <div
-                class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-2 bg-white shadow-sm rounded-3 border">
-                <div class="search">
-                    <input id="searchInput" class="form-control" placeholder="Search Surah by number or name…"
-                        aria-label="Search Surahs">
-                </div>
-
-                <div class="view-toggle btn-group" role="group" aria-label="Switch view">
-                    <button id="btnGrid" type="button" class="btn btn-sm btn-outline-success active">Grid view</button>
-                    <button id="btnJuz" type="button" class="btn btn-sm btn-outline-secondary">Juz view</button>
-                </div>
-            </div>
-        </div> --}}
 
         <!-- Grid (default) -->
         <section id="gridView" class="my-3">
             <div id="surahGrid" class="row g-2">
                 @foreach ($chapters as $chapter)
-                    <div class="col-md-6 col-lg-4 all-chapters" onclick="window.location.href = '{{ route('quran.chapter', $chapter->id) }}'">
-                        <div class="surah-card" tabindex="0" data-surah="{{ $chapter->id }}">
-                            <div class="surah-left">
+                    <div class="col-md-6 col-lg-4 all-chapters"
+                        onclick="window.location.href = '{{ route('quran.chapter', $chapter->id) }}'"
+                        style="cursor: pointer">
+                        <div class="card d-flex justify-content-between align-items-center flex-row rounded-0"
+                            data-surah="{{ $chapter->id }}">
+                            <div class="d-flex gap-3 align-items-center">
                                 <div class="number-box"><span>{{ $chapter->id }}</span></div>
+
                                 <div>
-                                    <div class="surah-name">{{ $chapter->translation?->name }}</div>
-                                    <div class="surah-translation">{{ $chapter->translation?->translation }}</div>
+                                    <h6 class="text-primary fw-bold m-0">{{ $chapter->translation?->name }}</h6>
+                                    <p class="text-muted m-0 small">{{ $chapter->translation?->translation }}</p>
                                 </div>
                             </div>
-                            <div class="surah-right">
-                                <div class="arabic-name">{{ $chapter->name }}</div>
-                                <div class="ayah-count">{{ $chapter->no_of_verses }} Ayahs</div>
+
+                            <div class="justify-content-end">
+                                <p class="text-arabic m-0">{{ $chapter->name }}</p>
+                                <p class="small m-0 text-muted">{{ $chapter->no_of_verses }} Ayahs</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class='col-6 col-md-4 col-lg-3 all-chapters d-none'>
-                        <article class="surah-card" tabindex="0" data-surah="{{ $chapter->id }}">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="surah-number">{{ $chapter->id }}</div>
-                                <div>
-                                    <div class="surah-name-ar"><span class="surah">سُورَةُ </span>{{ $chapter->name }}
-                                    </div>
-                                    <div class="fw-semibold mt-2">{{ $chapter->translation?->name }}</div>
-                                </div>
-                            </div>
-
-                            <div class="small-note">
-                                {{ $chapter->no_of_verses }} ayahs • {{ $chapter->revelation_place }}
-                            </div>
-
-                            <div class="mt-3 d-flex gap-2">
-                                <a class="btn btn-outline-success btn-sm" href="{{ route('quran.chapter', $chapter->id) }}">
-                                    Read
-                                </a>
-                                <button class="btn btn-sm btn-outline-secondary btn-jump" data-target="{{ $chapter->id }}">
-                                    Jump
-                                </button>
-                            </div>
-                        </article>
                     </div>
                 @endforeach
             </div>
         </section>
 
         <!-- Juz view (hidden by default) -->
-        <section id="juzView" class="d-none my-3">
-            <div class="accordion" id="juzAccordion">
+        <section id="juzView" class="my-3 d-none">
+            <div id="juzAccordion">
                 @foreach ($juzs as $item)
-                    <div class="accordion-item mb-2">
-                        <h2 class="accordion-header" id="heading{{ $item['number'] }}">
-                            <div class="collapsed d-flex align-items-center">
-                                <h5 class="me-3 ms-3"><strong>Juz {{ $item['number'] }}</strong></h5>
-                                <div class="flex-fill text-start ms-2 mt-2">
-                                    <h6>{{ $item['title'] }}</h6>
-                                    <p class="small-note">{{ $item['range'] }}</p>
+                    @php
+                        $range = $item['range'] ?? '';
+                        $startRange = trim(explode(' - ', $range)[0] ?? $range);
+                        $start = trim(explode(':', $startRange)[0] ?? $startRange);
+                    @endphp
+
+                    <div class="card mb-2 rounded-0 shadow-sm" id="juz-{{ $item['number'] }}">
+                        <div class="d-flex justify-content-between flex-column flex-md-row">
+                            <div class="flex-row d-flex align-items-center justify-content-between">
+                                <h6 class="text-primary fw-bold me-3">Juz {{ $item['number'] }}</h6>
+                                <div>
+                                    <p class="small fw-bold mb-0">{{ $item['title'] }}</p>
+                                    <p class="small text-muted mb-0">{{ $range }}</p>
                                 </div>
-                                <div class="ms-auto"></div>
                             </div>
 
-                            <button class="btn btn-sm btn-outline-secondary open-juz ms-3"
-                                data-start="{{ explode(':', explode(' - ', $item['range'])[0])[0] }}">
-                                Open
-                            </button>
-
-                            <div class="small-note m-3">
-                                This Juz starts at <strong>{{ explode(' - ', $item['range'])[0] }}</strong>. Click
-                                <em>Open</em> to jump to the Surah that contains this starting verse.
+                            <div class="text-md-end mt-2 mt-md-0">
+                                <button type="button" class="btn btn-sm btn-outline-secondary open-juz mb-1"
+                                    data-start="{{ $start }}" data-range="{{ $startRange }}"
+                                    aria-label="Open Juz {{ $item['number'] }}">
+                                    Open
+                                </button>
+                                <p class="small text-muted mb-0">
+                                    This Juz starts at <strong>{{ explode(' - ', $item['range'])[0] }}</strong>.
+                                    Click <em>Open</em> to jump to the Surah that contains this starting verse.
+                                </p>
                             </div>
-                        </h2>
+                        </div>
                     </div>
                 @endforeach
             </div>

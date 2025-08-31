@@ -18,7 +18,7 @@
             <hr class="mt-1 mb-3">
 
             <div class="text-center">
-                <h5 class="fw-bold text-primary">{{ array_keys($qst)[0] }}</h5>
+                <h5 class="fw-bold text-primary text-Playfair text-ml">{{ array_keys($qst)[0] }}</h5>
                 <p class="text-muted m-0">
                     ഖുർആൻ, ഹദീസ്, പ്രാമാണിക തെളിവുകൾ ഉൾക്കൊള്ളുന്ന പ്രായോഗിക ഘട്ടം ഘട്ടമായുള്ള മാർഗനിർദേശം.
                 </p>
