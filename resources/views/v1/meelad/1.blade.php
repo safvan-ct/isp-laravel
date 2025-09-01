@@ -40,7 +40,7 @@
 
             <div class="text-center mx-auto mt-3">
                 <div class="ayah-card">
-                    <h5 class="text-hadith text-primary mt-2 lh-md mb-2" dir="rtl">
+                    <h5 class="text-arabic text-primary mt-2 lh-lg mb-2" dir="rtl">
                         ﴿ وَإِيَّاكُمْ وَمُحْدَثَاتِ الْأُمُورِ فَإِنَّهَا ضَلَالَةٌ، ‏‏‏‏‏‏فَمَنْ أَدْرَكَ ذَلِكَ مِنْكُمْ
                         فَعَلَيْهِ بِسُنَّتِي وَسُنَّةِ الْخُلَفَاءِ الرَّاشِدِينَ الْمَهْدِيِّينَ ﴾
                     </h5>
