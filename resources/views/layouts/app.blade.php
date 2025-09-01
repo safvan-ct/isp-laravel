@@ -36,6 +36,26 @@
         <link href="{{ asset('v1/css/style-ml.css') }}" rel="stylesheet">
     @endif
 
+    <style>
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .check-list li::before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+
     @stack('styles')
 </head>
 
