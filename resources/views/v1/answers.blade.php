@@ -276,6 +276,11 @@
         </article>
     </main>
 
+    <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 start-0 m-3 z-3"
+        data-bs-toggle="modal" data-bs-target="#quranHadithModal">
+        <i class="fas fa-book text-white"></i>
+    </button>
+
     <div class="modal fade" id="myLgModal" tabindex="-1" aria-labelledby="myLgModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

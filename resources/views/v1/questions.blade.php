@@ -26,13 +26,11 @@
             <div class="text-center mx-auto mt-3">
                 <div class="ayah-card">
                     <h6 class="text-arabic text-primary fw-bold mt-2 lh-lg mb-0">
-                        ﴿ لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ، فَإِنَّمَا أَنَا عَبْدُهُ، فَقُولُوا
-                        عَبْدُ اللَّهِ وَرَسُولُهُ ﴾
+                        ﴿ لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ ﴾
                     </h6>
 
                     <p class="fst-italic small m-0">
-                        ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി കാണിക്കരുത്,
-                        കാരണം ഞാൻ ഒരു അടിമ മാത്രമാണ്. അതിനാൽ എന്നെ അല്ലാഹുവിന്റെ അടിമയെന്നും അവന്റെ ദൂതനെന്നും വിളിക്കൂ
+                        ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി കാണിക്കരുത്
                     </p>
 
                     <p class="m-0 mt-1 text-muted small">(സഹീഹ് ബുഖാരി: 3445)</p>
@@ -126,5 +124,10 @@
                 @endforeach
             </div>
         </section>
+
+        <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 start-0 m-3 z-3"
+            data-bs-toggle="modal" data-bs-target="#quranHadithModal">
+            <i class="fas fa-book text-white"></i>
+        </button>
     </main>
 @endsection

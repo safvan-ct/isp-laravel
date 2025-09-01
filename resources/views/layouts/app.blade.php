@@ -171,6 +171,177 @@
         </div>
     </footer>
 
+    <!-- Quran & Hadith References -->
+    <div class="modal fade" id="quranHadithModal" tabindex="-1" aria-labelledby="quranHadithModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header mb-2">
+                    <h5 class="modal-title" id="quranHadithModalLabel">Quran & Hadith References</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="p-3 mb-2 pb-0">
+                    <h6 class="fw-bold text-primary">Quran</h6>
+
+                    <article class="mt-3">
+                        <p class="text-arabic fw-bold mb-1 text-primary lh-lg">
+                            ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ
+                            ٱلْإِسْلَٰمَ دِينًۭا ۚ
+                        </p>
+
+                        <p class="fst-italic mb-2">
+                            “ഇന്ന് ഞാന്‍ നിങ്ങള്‍ക്ക് നിങ്ങളുടെ മതം പൂര്‍ത്തിയാക്കി തന്നിരിക്കുന്നു. എന്‍റെ അനുഗ്രഹം
+                            നിങ്ങള്‍ക്ക് ഞാന്‍ നിറവേറ്റിത്തരികയും ചെയ്തിരിക്കുന്നു. മതമായി ഇസ്ലാമിനെ ഞാന്‍ നിങ്ങള്‍ക്ക്
+                            തൃപ്തിപ്പെട്ട് തന്നിരിക്കുന്നു.” — <em>S. 5:3</em>
+                        </p>
+                    </article>
+                    <hr style="border-top: 2px dotted #999;" class="d-none">
+                </div>
+                <hr style="border-top: 3px double #999;">
+
+                <div class="p-3">
+                    <h6 class="fw-bold text-primary">Hadith</h6>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ، فَإِنَّمَا أَنَا عَبْدُهُ،
+                                فَقُولُوا عَبْدُ اللَّهِ وَرَسُولُهُ
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി
+                                കാണിക്കരുത്, കാരണം ഞാൻ ഒരു അടിമ മാത്രമാണ്. അതിനാൽ എന്നെ അല്ലാഹുവിന്റെ അടിമയെന്നും അവന്റെ
+                                ദൂതനെന്നും വിളിക്കൂ
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>3445</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ فِيهِ فَهُوَ رَدٌّ
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                നമ്മുടെ മതത്തിന്റെ തത്വങ്ങൾക്ക് നിരക്കാത്ത എന്തെങ്കിലും ആരെങ്കിലും പുതുതായി ഉണ്ടാക്കിയാൽ
+                                അത് നിരസിക്കപ്പെടും.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>2697</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                مَنْ عَمِلَ عَمَلًا لَيْسَ عَلَيْهِ أَمْرُنَا فَهُوَ رَدٌّ
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                നമ്മുടെ സമ്മതമില്ലാത്ത ഏതൊരു പ്രവൃത്തിയും ആരെങ്കിലും ചെയ്താൽ അത് നിരസിക്കപ്പെടും.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സഹീഹ് മുസ്ലിം: <strong>4493</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                إِنَّ اللَّهَ قَدْ أَبْدَلَكُمْ بِهِمَا خَيْرًا مِنْهُمَا يَوْمَ الأَضْحَى وَيَوْمَ
+                                الْفِطْرِ
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                അല്ലാഹു അവർക്ക് അവയെക്കാൾ മികച്ചത് മാറ്റിവെച്ചിരിക്കുന്നു, ബലിയർപ്പണ ദിനവും നോമ്പ്
+                                തുറക്കുന്ന ദിവസവും.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സുനാൻ അബു ദാവൂദ്: <strong>1134</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                وَقَدْ أَبْدَلَكُمُ اللَّهُ بِهِمَا خَيْرًا مِنْهُمَا يَوْمَ الْفِطْرِ وَيَوْمَ
+                                الْأَضْحَى
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                എന്നാൽ അല്ലാഹു (SWT) മുസ്ലീങ്ങൾക്ക് അവയെക്കാൾ മികച്ചത് നൽകിയിട്ടുണ്ട്: അൽ-ഫിത്തറിന്റെ
+                                ദിവസവും അൽ-അദ്ഹയുടെ ദിവസവും.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സുനാൻ നസാഈ: <strong>1557</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                مِنْكُمْ بَعْدِي فَسَيَرَى اخْتِلَافًا كَثِيرًا، ‏‏‏‏‏‏فَعَلَيْكُمْ بِسُنَّتِي وَسُنَّةِ
+                                الْخُلَفَاءِ الْمَهْدِيِّينَ الرَّاشِدِينَ تَمَسَّكُوا بِهَا وَعَضُّوا عَلَيْهَا
+                                بِالنَّوَاجِذِ، ‏‏‏‏‏‏وَإِيَّاكُمْ وَمُحْدَثَاتِ الْأُمُورِ فَإِنَّ كُلَّ مُحْدَثَةٍ
+                                بِدْعَةٌ وَكُلَّ بِدْعَةٍ ضَلَالَةٌ
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                എനിക്ക് ശേഷം ജീവിക്കുന്ന നിങ്ങളിൽ വലിയ അഭിപ്രായവ്യത്യാസങ്ങൾ കാണും. അപ്പോൾ നിങ്ങൾ
+                                എന്റെയും സന്മാർഗ്ഗം പ്രാപിച്ച ഖലീഫമാരുടെയും സുന്നത്ത് പിന്തുടരണം. അത് മുറുകെ
+                                പിടിക്കുകയും അതിൽ ഉറച്ചുനിൽക്കുകയും ചെയ്യുക. പുതുമകൾ ഒഴിവാക്കുക, കാരണം എല്ലാ പുതുമകളും
+                                ഒരു പുതുമയാണ്, എല്ലാ പുതുമകളും ഒരു തെറ്റാണ്.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • സുനാൻ അബു ദാവൂദ്: <strong>4607</strong>
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="mt-2">
+                        <div class="card-surface bg-light border">
+                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
+                                مَنْ يَعِشْ مِنْكُمْ يَرَى اخْتِلَافًا كَثِيرًا، ‏‏‏‏‏‏وَإِيَّاكُمْ وَمُحْدَثَاتِ
+                                الْأُمُورِ فَإِنَّهَا ضَلَالَةٌ، ‏‏‏‏‏‏فَمَنْ أَدْرَكَ ذَلِكَ مِنْكُمْ فَعَلَيْهِ
+                                بِسُنَّتِي وَسُنَّةِ الْخُلَفَاءِ الرَّاشِدِينَ الْمَهْدِيِّينَ، ‏‏‏‏‏‏عَضُّوا عَلَيْهَا
+                                بِالنَّوَاجِذِ ،‏‏‏‏ قَالَ أَبُو عِيسَى:‏‏‏‏ هَذَا حَدِيثٌ حَسَنٌ صَحِيحٌ،‏‏‏‏ وَقَدْ
+                                رَوَى ثَوْرُ بْنُ يَزِيدَ، ‏‏‏‏‏‏عَنْ خَالِدِ بْنِ مَعْدَانَ، ‏‏‏‏‏‏عَنْ عَبْدِ
+                                الرَّحْمَنِ بْنِ عَمْرٍو السُّلَمِيِّ، ‏‏‏‏‏‏عَنْ الْعِرْبَاضِ بْنِ سَارِيَةَ،
+                                ‏‏‏‏‏‏عَنِ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ نَحْوَ هَذَا
+                            </p>
+
+                            <p class="small text-muted mb-1">
+                                തീർച്ചയായും, നിങ്ങളിൽ ആരെങ്കിലും ജീവിച്ചാൽ, അവൻ ധാരാളം വ്യത്യാസം കാണും. പുതുതായി
+                                കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, കാരണം അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത്
+                                കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ
+                                പിടിക്കണം, അണപ്പല്ലുകൾ കൊണ്ട് അത് മുറുകെ പിടിക്കണം.
+                            </p>
+
+                            <p class="small mb-0 text-muted">
+                                Grade: <strong>Sahih</strong> • ജാമി അൽ-തിർമിധി: <strong>2676</strong>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
