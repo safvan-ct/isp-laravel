@@ -311,9 +311,11 @@
         </article>
     </main>
 
-    <button type="button" class="btn btn-success rounded position-fixed btn-lg bottom-0 ms-3 mb-2 z-3"
-        data-bs-toggle="modal" data-bs-target="#quickSummaryModal">
-        📜
+    <button type="button"
+        class="btn btn-success rounded-circle shadow-lg position-fixed bottom-0 m-4 mb-4 z-3 d-flex align-items-center justify-content-center"
+        style="width: 40px; height: 40px;" data-bs-toggle="modal" data-bs-target="#quickSummaryModal"
+        title="Quick Summary">
+        <i class="fas fa-list-ul fa-lg"></i>
     </button>
 
     <button type="button" class="btn btn-warning rounded-pill position-fixed bottom-0 end-0 me-3 mb-5 z-3 d-none"
