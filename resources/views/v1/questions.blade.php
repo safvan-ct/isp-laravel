@@ -125,7 +125,7 @@
             </div>
         </section>
 
-        <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 start-0 m-3 z-3"
+        <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 end-0 me-3 mb-2 z-3"
             data-bs-toggle="modal" data-bs-target="#quranHadithModal">
             <i class="fas fa-book text-white"></i>
         </button>

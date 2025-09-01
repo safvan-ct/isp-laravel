@@ -276,7 +276,12 @@
         </article>
     </main>
 
-    <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 start-0 m-3 z-3"
+    <button type="button" class="btn btn-warning rounded-pill position-fixed bottom-0 end-0 me-3 mb-5 z-3 d-none"
+        id="backToTop">
+        <i class="fas fa-arrow-up text-white"></i>
+    </button>
+
+    <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 end-0 me-3 mb-2 z-3"
         data-bs-toggle="modal" data-bs-target="#quranHadithModal">
         <i class="fas fa-book text-white"></i>
     </button>
@@ -294,3 +299,26 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const backToTopBtn = document.getElementById("backToTop");
+
+        // Show button after scrolling down 200px
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backToTopBtn.classList.remove("d-none");
+            } else {
+                backToTopBtn.classList.add("d-none");
+            }
+        });
+
+        // Smooth scroll to top
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+@endpush
