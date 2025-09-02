@@ -11,15 +11,13 @@
                 '<strong>ഹദീസ്</strong>: പ്രവാചകൻ ﷺ തിങ്കളാഴ്ച നോമ്പ് നോൽക്കാറുണ്ടായിരുന്നു (സഹീഹ് മുസ്ലിം: 2747).',
                 '<strong>മദ്ഹബുകളുടെ ഇമാമുമാർ</strong>: അവരുടെ കാലത്ത് ഇതിനെ പ്രത്യേക ആരാധനയായികാണിച്ചിട്ടില്ല.',
             ],
-            'true' => 'പ്രവാചക ചര്യ തിങ്കളാഴ്ച നോമ്പാണ്, ജന്മദിനാഘോഷമല്ല.',
             'good' =>
                 'നബി ദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമല്ല. മറിച്ച് പ്രവാചകന്റെയും സഹാബികളുടെയും ശരിയായ മാർഗമാണ്.',
             'bad' =>
-                'പ്രതേക വിരുന്ന്, ഗാനങ്ങൾ, ചടങ്ങുകൾ, മൗലിദ് സദസ്സ്, ലൈറ്റുകൾ, കൂട്ടം ചേർന്ന് ആഘോഷിക്കൽ ചര്യയല്ല ബിദ്അത് ആണ്.',
+                'പുതുതായി കൂട്ടിച്ചേർക്കലുകൾ (പ്രതേക വിരുന്ന്, ഗാനങ്ങൾ, ചടങ്ങുകൾ, മൗലിദ് സദസ്സ്, ലൈറ്റുകൾ, കൂട്ടം ചേർന്ന് ആഘോഷിക്കൽ) ചര്യയല്ല ബിദ്അത് ആണ്. (<em class="small">തിർമിധി: 2676</em>)',
+            'true' => 'പ്രവാചക ചര്യ (സുന്നത്ത്) തിങ്കളാഴ്ച നോമ്പാണ് (<em class="small">മുസ്ലിം: 2747</em>), ജന്മദിനാഘോഷമല്ല.',
             'trust' => [
                 'നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em class="text-muted small">S. 17:36</em>',
-                'ഞാൻ ജനിച്ച ദിവസമായിരുന്നു അത് (തിങ്കളാഴ്ച). — <em class="text-muted small">സഹീഹ് മുസ്ലിം: 2747</em>',
-                'മതത്തിന്റെ തത്വങ്ങൾക്ക് നിരക്കാത്ത എന്തെങ്കിലും പുതുതായി ഉണ്ടാക്കിയാൽ അത് നിരസിക്കപ്പെടും. — <em class="text-muted small">സഹീഹ് ബുഖാരി: 2697</em>',
                 'പുതുതായി കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത് കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ പിടിക്കണം. — <em class="text-muted small">തിർമിധി: 2676</em>',
                 'ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തരുത്. — <em class="text-muted small">ബുഖാരി: 3445</em>',
             ],
@@ -41,6 +39,7 @@
                             നബിദിനം
                         </a>
                     </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ array_keys($qst)[0] }}</li>
                 </ol>
             </nav>
 
@@ -118,14 +117,12 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header mb-2 position-sticky top-0 z-3 bg-white">
+                <div class="modal-header position-sticky top-0 z-3 bg-white">
                     <h5 class="modal-title text-primary" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body">
-                    <x-app.quick-summary :data="$quickSummary" :class="'p-1'" />
-                </div>
+                <x-app.quick-summary :data="$quickSummary" :class="'rounded-0'" />
             </div>
         </div>
     </div>

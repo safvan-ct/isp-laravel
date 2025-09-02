@@ -7,11 +7,9 @@
                 '<strong>ഖുർആനിലോ, സഹീഹ് ഹദീസ് പ്രകാരമോ, ഖലീഫമാരും സ്വഹാബികളും മുഖേനയോ, നാല് ഇമാമുമാർ (ഹനഫി, മാലികി, ശാഫിഈ, ഹൻബലി) മുഖേനയോ</strong> മൗലിദ് പാരായണം, മറ്റുള്ള ആഘോഷങ്ങൾ സ്ഥിരമായിട്ടില്ല.',
                 'പിന്നീട് വന്നിട്ടുള്ള <strong>ചില പണ്ഡിതർ മീലാദ് ശരീഅത്ത് വിരുദ്ധമായ (ഹറാം) കാര്യങ്ങളില്ലാതെ</strong>, ഖുർആൻ, സലാത്ത്, ദുആ, നബി ചരിത്രം പഠിക്കൽ, ഭക്ഷണം വിതരണം മുതലായവയ്ക്കായി നടത്തിയാൽ അത് <strong>ബിദ്അത് ഹസന (നല്ല പുതുമ)</strong> ആണെന്ന് അഭിപ്രായപ്പെടുന്നു. ചിലർ ഇത് <strong>ബിദ്അത് (പുതുമ) ആയതിനാൽ ഒഴിവാക്കണം</strong> എന്ന് അഭിപ്രായപ്പെടുന്നു.',
             ],
-            'true' => 'പ്രവാചക ചര്യ തിങ്കളാഴ്ച നോമ്പാണ്, ജന്മദിനാഘോഷമല്ല.',
+            'true' => 'പ്രവാചക ചര്യ (സുന്നത്ത്) തിങ്കളാഴ്ച നോമ്പാണ് (<em class="small">മുസ്ലിം: 2747</em>), ജന്മദിനാഘോഷമല്ല.',
             'trust' => [
                 'നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em class="text-muted small">S. 17:36</em>',
-                'ഞാൻ ജനിച്ച ദിവസമായിരുന്നു അത് (തിങ്കളാഴ്ച). — <em class="text-muted small">സഹീഹ് മുസ്ലിം: 2747</em>',
-                'മതത്തിന്റെ തത്വങ്ങൾക്ക് നിരക്കാത്ത എന്തെങ്കിലും പുതുതായി ഉണ്ടാക്കിയാൽ അത് നിരസിക്കപ്പെടും. — <em class="text-muted small">സഹീഹ് ബുഖാരി: 2697</em>',
                 'പുതുതായി കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത് കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ പിടിക്കണം. — <em class="text-muted small">തിർമിധി: 2676</em>',
                 'ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തരുത്. — <em class="text-muted small">ബുഖാരി: 3445</em>',
             ],
@@ -33,6 +31,7 @@
                             നബിദിനം
                         </a>
                     </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ array_keys($qst)[0] }}</li>
                 </ol>
             </nav>
 
@@ -134,7 +133,7 @@
                                     <ol style="list-style-type: lower-alpha">
                                         <li>
                                             <p class="fst-italic m-0 text-muted">
-                                                മൗലിദിനെ കുറിച്ച് ഒരു ചെറിയ പാരായണ ആചാരം ചില മുസ്ലിം സമൂഹങ്ങളിൽ രൂപപ്പെട്ടു.
+                                                മീലാദിനെ കുറിച്ച് ഒരു ചെറിയ പാരായണ ആചാരം ചില മുസ്ലിം സമൂഹങ്ങളിൽ രൂപപ്പെട്ടു.
                                             </p>
                                         </li>
                                         <li>
@@ -167,7 +166,7 @@
                                     <ol style="list-style-type: lower-alpha">
                                         <li>
                                             <p class="fst-italic m-0 text-muted">
-                                                മൗലിദ് വലിയ ആഘോഷമായി മസ്ജിദുകളിൽ, പ്രാദേശിക സ്ഥലങ്ങളിൽ വ്യാപിച്ചു.
+                                                മീലാദ് വലിയ ആഘോഷമായി മസ്ജിദുകളിൽ, പ്രാദേശിക സ്ഥലങ്ങളിൽ വ്യാപിച്ചു.
                                             </p>
                                         </li>
                                         <li>
@@ -180,82 +179,6 @@
                             </ol>
                         </article>
                         <hr class="mb-4 d-none">
-                    </div>
-
-                    <div class="card-surface p-2 mb-3">
-                        <h6 class="fw-bold text-primary">References</h6>
-
-                        <article class="mt-2">
-                            <div class="card-surface bg-light border">
-                                <h6 class="text-primary fw-bold">ഇമാം അബൂ ഹനീഫ (80-150H)</h6>
-
-                                <p class="m-0 fst-italic fw-bold">
-                                    അദ്ദേഹത്തിന്റെ കാലത്തും (ഇമാം അബൂ യൂസുഫ്, ഇമാം മുഹമ്മദ്) പുസ്തകങ്ങളിലും റ.
-                                    അവ്വൽ മാസത്തെ ശ്രേഷ്ഠമാക്കി കാണിച്ച പ്രവർത്തി ഒന്നും ഇല്ല.
-                                </p>
-                                <p class="small text-muted mb-2">
-                                    ഹനഫി ഫിഖ്ഹ് ഗ്രന്ഥങ്ങളിൽ (ഉദാ: അൽ-ഹിദായ, അൽ-മബ്സൂത്) റ. അവ്വൽ മാസത്തെ പ്രത്യേക
-                                    ആരാധന/ആഘോഷം ബിദ്അത് ആയി കണക്കാക്കുന്നു.
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="mt-2">
-                            <div class="card-surface bg-light border">
-                                <h6 class="text-primary fw-bold">ഇമാം മാലിക് (93-179H)</h6>
-
-                                <p class="m-0 fst-italic fw-bold">
-                                    അദ്ദേഹത്തോട് <strong>മീലാദ് (പ്രവാചകന്റെ ജനനദിനാഘോഷം)</strong> സംബന്ധിച്ച് ചോദിച്ചപ്പോൾ,
-                                    അദ്ദേഹം പറഞ്ഞു:
-                                    <strong>അത് ആരും ചെയ്തിട്ടില്ല. അത് ബിദ്അത് ആണ്.</strong>
-                                </p>
-                                <p class="small text-muted mb-2">
-                                    (റഫറൻസ്: അൽ-ഷാതിബി, അൽ-ഇ'തിസാം, വാള്യം 1/48).
-                                </p>
-                            </div>
-                        </article>
-
-                        <article class="mt-2">
-                            <div class="card-surface bg-light border">
-                                <h6 class="text-primary fw-bold">ഇമാം ശാഫിഈ (150–204H)</h6>
-
-                                <p class="m-0 fst-italic fw-bold">
-                                    ഒരു കാര്യത്തെ നല്ല ബിദ്അത് എന്നും, മോശം ബിദ്അത് എന്നും പറയാം. ഖുർആനും സുന്നത്തും
-                                    വിരുദ്ധമല്ലെങ്കിൽ, അത് നല്ലതാണ്.
-                                </p>
-                                <p class="small text-muted mb-2">
-                                    (റഫറൻസ്: അൽ-ബൈഹഖി, മനാഖിബ് അൽ-ശാഫിഈ 1/469).
-                                </p>
-
-                                <ul class="m-0">
-                                    <li>പക്ഷേ റ. അവ്വൽ മാസത്തെ പ്രത്യേകിച്ച് ശ്രേഷ്ഠമാക്കീട്ടില്ല.</li>
-                                    <li>
-                                        പിന്നീട് ചില ശാഫിഈ ഉലമാക്കൾ (ഉദാ: <strong>ഇമാം നവവി, ഇമാം സുയൂതി</strong>) മീലാദ്
-                                        നല്ല ബിദ്അത് ആയി പറഞ്ഞിട്ടുണ്ട്, പക്ഷേ അത് <strong>ഇമാം ശാഫിഈയുടെ നേരിട്ട് നിലപാട്
-                                            അല്ല.</strong>
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-
-                        <article class="mt-2">
-                            <div class="card-surface bg-light border">
-                                <h6 class="text-primary fw-bold">ഇമാം അഹ്മദ് ബിൻ ഹൻബൽ (164-241H)</h6>
-
-                                <p class="m-0 fst-italic fw-bold">
-                                    അദ്ദേഹത്തോട് മീലാദ് സംബന്ധിച്ച് ചോദിച്ചപ്പോൾ:
-                                    <strong>എനിക്ക് അത് ബിദ്അത് ആയി തോന്നുന്നു.</strong>
-                                </p>
-                                <p class="small text-muted mb-2">
-                                    (റഫറൻസ്: ഇബ്ന് തൈമിയ്യ, ഇഖ്തിദാഉൽ സിറാത്ത് അൽ-മുസ്തഖീം 294).
-                                </p>
-
-                                <p class="m-0 fst-italic fw-bold">
-                                    ഇമാം അഹ്മദിന്റെ (ഇബ്ന് ഖുദാമ, ഇബ്ന് തൈമിയ്യ, ഇബ്ന് അൽ-ജൗസി) എല്ലാം റ. അവ്വൽ
-                                    മാസത്തെ പ്രത്യേകിച്ച് മഹത്വപ്പെടുത്തുന്നത് ബിദ്അത് എന്ന് വ്യക്തമാക്കിയിട്ടുണ്ട്.
-                                </p>
-                            </div>
-                        </article>
                     </div>
                 </article>
             </section>
@@ -313,14 +236,12 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header mb-2 position-sticky top-0 z-3 bg-white">
+                <div class="modal-header position-sticky top-0 z-3 bg-white">
                     <h5 class="modal-title" id="quickSummaryModalLabel">Quick Summary - {{ array_keys($qst)[0] }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body">
-                    <x-app.quick-summary :data="$quickSummary" />
-                </div>
+                <x-app.quick-summary :data="$quickSummary" :class="'rounded-0'" />
             </div>
         </div>
     </div>

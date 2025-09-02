@@ -4,6 +4,32 @@
 @endpush
 
 @section('content')
+    @php
+        $quickSummary = [
+            'notes' => [
+                'റ. അവ്വൽ മാസം, റ. അവ്വൽ 12, നബിദിന ആഘോഷം (ഖുർആൻ, സഹീഹ് ഹദീസ്, ഖലീഫമാരും സ്വഹാബികളും, മദ്ഹബുകളുടെ ഇമാമുമാർ) എന്നിവയെ നേരിട്ട് <strong>ശ്രേഷ്ഠത ഉള്ളതായി പരാമർശിച്ചിട്ടില്ല.</strong>',
+                'ചരിത്രപരമായി <strong>പ്രവാചകൻ (ﷺ) ജനിച്ച മാസം</strong> എന്ന നിലയിലാണ് റ. അവ്വൽ <strong>സമൂഹത്തിൽ പ്രസിദ്ധമായത്.</strong>',
+                'നബി ﷺ പറഞ്ഞത്: ഞാൻ ജനിച്ച ദിവസമായിരുന്നു അത് (തിങ്കളാഴ്ച). — <em class="text-muted small">മുസ്ലിം: 2747</em>',
+                'നബി ﷺ ജനിച്ച കൃത്യമായ തിയ്യതിയെക്കുറിച്ച് ചരിത്രകാരന്മാര്‍ക്കിടയില്‍ <strong>അഭിപ്രായവ്യത്യാസമുണ്ട് (8, 9, 12 എന്നിവ പറയപ്പെടുന്നു).</strong> <strong>12 പ്രധാന അഭിപ്രായം</strong> ആയി മാറി.',
+                '<strong>അബ്ബാസി, ഫാത്തിമി</strong> കാലഘട്ടങ്ങളിൽ <strong>മീലാദ് തുടങ്ങുമ്പോൾ, ജനങ്ങൾക്ക് ഒരൊറ്റ തീയതി വേണമായിരുന്നു. അവർ 12 റ.അ. സ്വീകരിച്ചു</strong> → കാരണം അത് ഏറ്റവും പ്രചരിച്ചിരുന്ന അഭിപ്രായം ആയിരുന്നു.',
+                'പിന്നീട് വന്നിട്ടുള്ള <strong>ചില പണ്ഡിതർ മീലാദ് ശരീഅത്ത് വിരുദ്ധമായ (ഹറാം) കാര്യങ്ങളില്ലാതെ</strong>, ഖുർആൻ, സലാത്ത്, ദുആ, നബി ചരിത്രം പഠിക്കൽ, ഭക്ഷണം വിതരണം മുതലായവയ്ക്കായി നടത്തിയാൽ അത് <strong>ബിദ്അത് ഹസന (നല്ല പുതുമ)</strong> ആണെന്ന് അഭിപ്രായപ്പെടുന്നു. ചിലർ ഇത് <strong>ബിദ്അത് (പുതുമ) ആയതിനാൽ ഒഴിവാക്കണം</strong> എന്ന് അഭിപ്രായപ്പെടുന്നു.',
+            ],
+            'good' =>
+                'നബി ദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമല്ല. മറിച്ച് പ്രവാചകന്റെയും സഹാബികളുടെയും ശരിയായ മാർഗമാണ്.',
+            'bad' =>
+                'പുതുതായി കൂട്ടിച്ചേർക്കലുകൾ (പ്രതേക വിരുന്ന്, ഗാനങ്ങൾ, ചടങ്ങുകൾ, മൗലിദ് സദസ്സ്, ലൈറ്റുകൾ, കൂട്ടം ചേർന്ന് ആഘോഷിക്കൽ) ചര്യയല്ല ബിദ്അത് ആണ്. (<em class="small">തിർമിധി: 2676</em>)',
+            'true' =>
+                'പ്രവാചക ചര്യ (സുന്നത്ത്) തിങ്കളാഴ്ച നോമ്പാണ് (<em class="small">മുസ്ലിം: 2747</em>), ജന്മദിനാഘോഷമല്ല.',
+            'trust' => [
+                'നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em class="text-muted small">S. 17:36</em>',
+                'പുതുതായി കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത് കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ പിടിക്കണം. — <em class="text-muted small">തിർമിധി: 2676</em>',
+                'ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തരുത്. — <em class="text-muted small">ബുഖാരി: 3445</em>',
+            ],
+            'alert' =>
+                'ആചാരമാക്കുന്നവര്‍ ശുദ്ധമായ തൗഹീദിലും സുന്നത്തിലുമുള്ള മാര്‍ഗ്ഗങ്ങളില്‍ നില്‍ക്കുക. ചെയ്യാത്തവര്‍ക്കു നേരെ അപവാദമില്ല, ചെയ്യുന്നവര്‍ തെറ്റായ കൂട്ടിച്ചേർക്കലുകൾ ഹറാമായ പ്രവർത്തികൾ ഒഴിവാക്കുക.',
+        ];
+    @endphp
+
     <main class="container">
         <header class="page-hero">
             <nav aria-label="breadcrumb">
@@ -124,10 +150,30 @@
                 @endforeach
             </div>
         </section>
-
-        <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 end-0 me-3 mb-2 z-3"
-            data-bs-toggle="modal" data-bs-target="#quranHadithModal">
-            <i class="fas fa-book text-white"></i>
-        </button>
     </main>
+
+    <button type="button"
+        class="btn btn-success rounded-circle shadow-lg position-fixed bottom-0 m-4 mb-4 z-3 d-flex align-items-center justify-content-center"
+        style="width: 40px; height: 40px;" data-bs-toggle="modal" data-bs-target="#quickSummaryModal" title="Quick Summary">
+        <i class="fas fa-list-ul fa-lg"></i>
+    </button>
+
+    <button type="button" class="btn btn-secondary rounded-pill position-fixed bottom-0 end-0 me-3 mb-2 z-3"
+        data-bs-toggle="modal" data-bs-target="#quranHadithModal">
+        <i class="fas fa-book text-white"></i>
+    </button>
+
+    <div class="modal fade" id="quickSummaryModal" tabindex="-1" aria-labelledby="quickSummaryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header position-sticky top-0 z-3 bg-white">
+                    <h5 class="modal-title" id="quickSummaryModalLabel">നബിദിനം</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <x-app.quick-summary :data="$quickSummary" :class="'rounded-0'" />
+            </div>
+        </div>
+    </div>
 @endsection

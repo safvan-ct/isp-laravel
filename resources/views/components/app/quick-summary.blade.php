@@ -1,6 +1,6 @@
-@props(['data', 'class' => 'card shadow-sm'])
+@props(['data', 'class' => 'shadow-sm'])
 
-<div class="{{ $class }}">
+<div class="ayah-card {{ $class }}">
     <div class="mb-2">
         <h5 class="fw-bold text-primary mb-2">📌 Quick Summary</h5>
         @isset($data['title'])
