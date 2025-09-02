@@ -45,6 +45,9 @@ class TopicController extends Controller
                     "മദ്ഹബുകളുടെ ഇമാമുമാർ മുഖേന ഉള്ള (അടിസ്ഥാനം, റഫറൻസ്)",
                 ],
             ],
+            4 => [
+                "ചരിത്രം" => [],
+            ],
             // 4 => [
             //     "പ്രവാചകന്റെ ജന്മദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമാണോ?" => [],
             // ],
@@ -112,7 +115,7 @@ class TopicController extends Controller
         foreach ($this->questions as $q) {
             $questions[] = array_keys($q)[0];
         }
-        $page = in_array($questionSlug, [0, 1, 2, 3]) ? $questionSlug + 1 : 'template';
+        $page = in_array($questionSlug, [0, 1, 2, 3, 4]) ? $questionSlug + 1 : 'template';
 
         return view("{$this->webVersion}.meelad.{$page}", compact("question", "module", "menuSlug", "moduleSlug", "qst", "questions"));
     }

@@ -17,6 +17,29 @@
             </div>
         </header>
 
+        <section class="my-3 row g-2">
+            @foreach ($book->chapters as $chapter)
+                <div class="col-md-6 col-lg-4 all-chapters"
+                    onclick="window.location.href = '{{ route('hadith.chapter.verses', ['book' => $book->slug, 'chapter' => $chapter->id]) }}'"
+                    style="cursor: pointer">
+                    <div class="card d-flex justify-content-between align-items-center flex-row rounded-0"
+                        data-surah="{{ $chapter->id }}">
+                        <div class="d-flex gap-3 align-items-center">
+                            <div class="rounded-circle bg-light border text-dark d-flex justify-content-center align-items-center fw-bold"
+                                style="width: 36px; height: 36px; font-size: 14px;">
+                                {{ $chapter->id }}
+                            </div>
+
+                            <div class="flex-1">
+                                <h6 class="text-primary fw-bold m-0">{{ $chapter->translation?->name }}</h6>
+                                <p class="text-muted m-0 small">{{ $chapter->translation?->translation }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </section>
+
         <div class="row my-3 g-2">
             @php
                 $chapter = $book->chapters->where('id', $verses->first()->hadith_chapter_id)->first();

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@yield('title', __('app.islamic_study_portal'))</title>
+    <title class="notranslate">@yield('title', __('app.islamic_study_portal'))</title>
 
     <!-- Favicon for most browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
@@ -21,10 +21,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Amiri:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Amiri:wght@400;700&family=Lateef&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&family=Markazi+Text:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap&family=Noto+Sans+Malayalam&display=swap"
         rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam&display=swap" rel="stylesheet">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,12 +35,14 @@
     @endif
 
     <style>
-        .check-list {
+        .check-list,
+        .diamond-list {
             list-style: none;
             padding: 0;
         }
 
-        .check-list li {
+        .check-list li,
+        .diamond-list li {
             position: relative;
             padding-left: 25px;
         }
@@ -55,22 +55,20 @@
             font-weight: bold;
         }
 
-        .diamond-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .diamond-list li {
-            position: relative;
-            padding-left: 25px;
-        }
-
         .diamond-list li::before {
             content: "🔹";
             position: absolute;
             left: 0;
             color: green;
             font-weight: bold;
+        }
+
+        .skiptranslate iframe {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
         }
     </style>
 
@@ -79,7 +77,7 @@
 
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg fixed-top" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-lg fixed-top notranslate" aria-label="Main navigation">
         <div class="container">
             <a class="navbar-brand text-Playfair" href="{{ route('home') }}">
                 Islamic<span style="color:var(--clr-accent)"> Study Portal</span>
@@ -192,7 +190,7 @@
     @yield('content')
 
     <!-- FOOTER -->
-    <footer class="mt-3">
+    <footer class="mt-3 notranslate">
         <div class="container py-3">
             <div class="row gy-3 align-items-center">
                 <div class="col-md-6">

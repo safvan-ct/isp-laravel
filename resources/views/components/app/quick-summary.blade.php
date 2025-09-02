@@ -10,7 +10,7 @@
         @isset($data['notes'])
             <ul class="diamond-list m-0">
                 @foreach ($data['notes'] as $item)
-                    <li>{!! $item !!}</li>
+                    <li class="mb-1">{!! $item !!}</li>
                 @endforeach
             </ul>
         @endisset
@@ -54,7 +54,7 @@
             <h6 class="fw-bold text-primary mb-2">📖 Trust & provenance</h6>
             <ul class="check-list m-0">
                 @foreach ($data['trust'] as $item)
-                    <li>{!! $item !!}</li>
+                    <li class="mb-1">{!! $item !!}</li>
                 @endforeach
             </ul>
         </div>

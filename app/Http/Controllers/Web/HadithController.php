@@ -43,8 +43,9 @@ class HadithController extends Controller
         if (! $chapter) {
             abort(404);
         }
+        $verses = $chapter->verses()->paginate(5);
 
-        return view("{$this->webVersion}.hadith-verses", compact("chapter"));
+        return view("{$this->webVersion}.hadith-verses", compact("chapter", "verses"));
     }
 
     public function hadithVerseByNumber($bookId, $verseNumber)
