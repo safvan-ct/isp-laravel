@@ -114,16 +114,16 @@
                     @endphp
 
                     <div class="col-12 col-md-4">
-                        <article class="card h-100 d-flex flex-column p-3">
+                        <article class="ayah-card h-100 d-flex flex-column p-3">
                             <h6 class="text-primary fw-bold mb-2">{{ $loop->iteration }} : {{ $title }}</h6>
 
                             <p class="small text-muted mb-2">
-                                <span>Added • </span>
+                                <span>Added</span>
+                                <span>•</span>
+
                                 <time datetime="{{ \Carbon\Carbon::parse($addedAt)->toDateString() }}">
                                     {{ \Carbon\Carbon::parse($addedAt)->format('d-m-Y') }}
                                 </time>
-                                <span>•</span>
-                                <span>{{ $answersCount }} answers</span>
                             </p>
 
                             <div class="mb-2">
@@ -133,16 +133,16 @@
                             </div>
 
                             <div class="mt-auto d-flex gap-2 justify-content-end">
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    aria-label="Share question {{ $loop->iteration }}">
+                                    Share
+                                </button>
+
                                 <a href="{{ route('answers.show', ['menu_slug' => 'festival', 'module_slug' => 'meelad', 'question_slug' => $key]) }}"
                                     class="btn btn-sm btn-outline-success"
                                     aria-label="Open question {{ $loop->iteration }}">
                                     Open
                                 </a>
-
-                                <button type="button" class="btn btn-sm btn-outline-secondary"
-                                    aria-label="Share question {{ $loop->iteration }}">
-                                    Share
-                                </button>
                             </div>
                         </article>
                     </div>

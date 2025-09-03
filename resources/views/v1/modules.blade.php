@@ -108,13 +108,8 @@
                         </div>
                     </div>
 
-                    <p class="mb-3 shadow-sm rounded p-2 d-none">
-                        ഇസ്ലാമിലെ പ്രധാനമായ രണ്ടു ആഘോഷങ്ങൾ: റമളാനിന് ശേഷം വരുന്ന ഈദ് അൽ-ഫിത്വർ, ഹജ്ജിനോടനുബന്ധിച്ചുള്ള
-                        ഈദ് അൽ-അദ്ഹാ. ഇവ ആരാധന, സന്തോഷം, കുടുംബസംഗമം, ദാനം, അല്ലാഹുവിനെ സ്മരിക്കൽ എന്നിവ നിറഞ്ഞ ദിനങ്ങളാണ്.
-                    </p>
-
                     <div class="mt-auto">
-                        <span class="badge border rounded-pill text-muted">5 Q</span>
+                        <span class="badge border rounded-pill text-muted">3 Q</span>
                         <span class="badge border rounded-pill text-muted">94% followed</span>
                         <span class="badge border rounded-pill text-muted">Updated {{ date('d-m-Y') }}</span>
 
