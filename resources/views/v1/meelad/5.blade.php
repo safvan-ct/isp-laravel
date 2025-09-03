@@ -369,24 +369,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header position-sticky top-0 z-3 bg-white">
-                    <h5 class="modal-title text-primary" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h5>
+                    <h5 class="modal-title text-primary" id="quickSummaryModalLabel">നബിദിനം</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <x-app.quick-summary :data="$quickSummary" :class="'rounded-0'" />
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="myLgModal" tabindex="-1" aria-labelledby="myLgModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myLgModalLabel">References</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body text-center">Reference Details</div>
+                <x-app.quick-summary :data="$quickSummary" :class="'p-2'" />
             </div>
         </div>
     </div>

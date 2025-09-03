@@ -139,7 +139,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <x-app.quick-summary :data="$quickSummary" :class="'rounded-0'" />
+                <x-app.quick-summary :data="$quickSummary" :class="'p-2'" />
             </div>
         </div>
     </div>

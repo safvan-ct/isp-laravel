@@ -213,153 +213,103 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header mb-2 position-sticky top-0 z-3 bg-white">
-                    <h5 class="modal-title" id="quranHadithModalLabel">Quran & Hadith References</h5>
+                    <h5 class="modal-title" id="quranHadithModalLabel">നബിദിനം - {{ __('app.quran') }} &
+                        {{ __('app.hadith') }} References</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="p-3 mb-2 pb-0">
-                    <h6 class="fw-bold text-primary">Quran</h6>
+                <div class="p-3 pb-0 mb-2">
+                    <h6 class="fw-bold text-primary mb-2">{{ __('app.quran') }}</h6>
 
-                    <article class="mt-3">
-                        <p class="text-arabic fw-bold mb-1 text-primary lh-lg">
-                            ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ وَأَتْمَمْتُ عَلَيْكُمْ نِعْمَتِى وَرَضِيتُ لَكُمُ
-                            ٱلْإِسْلَٰمَ دِينًۭا ۚ
-                        </p>
+                    <p class="m-0 mb-2">
+                        ഇന്ന് ഞാന്‍ നിങ്ങള്‍ക്ക് നിങ്ങളുടെ മതം പൂര്‍ത്തിയാക്കി തന്നിരിക്കുന്നു. എന്‍റെ അനുഗ്രഹം
+                        നിങ്ങള്‍ക്ക് ഞാന്‍ നിറവേറ്റിത്തരികയും ചെയ്തിരിക്കുന്നു. മതമായി ഇസ്ലാമിനെ ഞാന്‍ നിങ്ങള്‍ക്ക്
+                        തൃപ്തിപ്പെട്ട് തന്നിരിക്കുന്നു. — <em class="small text-muted">S. 5:3</em>
+                    </p>
+                    <div class="geo-divider my-2"></div>
 
-                        <p class="fst-italic mb-2">
-                            ഇന്ന് ഞാന്‍ നിങ്ങള്‍ക്ക് നിങ്ങളുടെ മതം പൂര്‍ത്തിയാക്കി തന്നിരിക്കുന്നു. എന്‍റെ അനുഗ്രഹം
-                            നിങ്ങള്‍ക്ക് ഞാന്‍ നിറവേറ്റിത്തരികയും ചെയ്തിരിക്കുന്നു. മതമായി ഇസ്ലാമിനെ ഞാന്‍ നിങ്ങള്‍ക്ക്
-                            തൃപ്തിപ്പെട്ട് തന്നിരിക്കുന്നു. — <em>S. 5:3</em>
-                        </p>
-                    </article>
-                    <hr style="border-top: 2px dotted #999;">
-
-                    <article class="mt-3">
-                        <p class="text-arabic fw-bold mb-1 text-primary lh-lg">
-                            وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِۦ عِلْمٌ ۚ
-                        </p>
-
-                        <p class="fst-italic mb-2">
-                            നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em>S. 17:36</em>
-                        </p>
-                    </article>
+                    <p class="m-0">
+                        നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em
+                            class="small text-muted">S. 17:36</em>
+                    </p>
                 </div>
-                <hr style="border-top: 3px double #999;">
 
-                <div class="p-3">
-                    <h6 class="fw-bold text-primary">Hadith</h6>
+                <div class="p-3 card-surface bg-light rounded-0">
+                    <h6 class="fw-bold text-primary mb-2">{{ __('app.hadith') }}</h6>
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                ذَاكَ يَوْمٌ وُلِدْتُ فِيهِ، وَيَوْمٌ بُعِثْتُ - أَوْ أُنْزِلَ عَلَيَّ فِيهِ
-                            </p>
+                    <article class="mb-2">
+                        <p class="small mb-1">
+                            (തിങ്കളാഴ്ച നോമ്പിനെ കുറിച് ചോദിക്കപ്പെട്ടപ്പോൾ): ഞാൻ ജനിച്ച ദിവസമായിരുന്നു അത്. അന്ന്
+                            എനിക്ക് പ്രവാചകത്വം നൽകുകയോ എനിക്ക് ദിവ്യബോധനം നൽകുകയോ ചെയ്തു.
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                (ഞാന്‍ തിങ്കളാഴ്ച നോമ്പുവയ്ക്കുന്നത്): ഞാൻ ജനിച്ച ദിവസമായിരുന്നു അത് (തിങ്കളാഴ്ച). അന്ന്
-                                എനിക്ക് പ്രവാചകത്വം നൽകുകയോ എനിക്ക് ദിവ്യബോധനം നൽകുകയോ ചെയ്തു.
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • സഹീഹ് മുസ്ലിം: <strong>2747</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • സഹീഹ് മുസ്ലിം: <strong>2747</strong>
+                        </p>
                     </article>
+                    <hr class="m-0 my-2">
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                لاَ تُطْرُونِي كَمَا أَطْرَتِ النَّصَارَى ابْنَ مَرْيَمَ، فَإِنَّمَا أَنَا عَبْدُهُ،
-                                فَقُولُوا عَبْدُ اللَّهِ وَرَسُولُهُ
-                            </p>
+                    <article class="mb-2">
+                        <p class="small mb-1">
+                            ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി
+                            കാണിക്കരുത്, കാരണം ഞാൻ ഒരു അടിമ മാത്രമാണ്. അതിനാൽ എന്നെ അല്ലാഹുവിന്റെ അടിമയെന്നും അവന്റെ
+                            ദൂതനെന്നും വിളിക്കൂ
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ പുകഴ്ത്തുന്നതിൽ നിങ്ങൾ അതിശയോക്തി
-                                കാണിക്കരുത്, കാരണം ഞാൻ ഒരു അടിമ മാത്രമാണ്. അതിനാൽ എന്നെ അല്ലാഹുവിന്റെ അടിമയെന്നും അവന്റെ
-                                ദൂതനെന്നും വിളിക്കൂ
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>3445</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>3445</strong>
+                        </p>
                     </article>
+                    <hr class="m-0 my-2">
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ فِيهِ فَهُوَ رَدٌّ
-                            </p>
+                    <article class="bt-2">
+                        <p class="small mb-1">
+                            നമ്മുടെ മതത്തിന്റെ തത്വങ്ങൾക്ക് നിരക്കാത്ത എന്തെങ്കിലും ആരെങ്കിലും പുതുതായി ഉണ്ടാക്കിയാൽ
+                            അത് നിരസിക്കപ്പെടും.
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                നമ്മുടെ മതത്തിന്റെ തത്വങ്ങൾക്ക് നിരക്കാത്ത എന്തെങ്കിലും ആരെങ്കിലും പുതുതായി ഉണ്ടാക്കിയാൽ
-                                അത് നിരസിക്കപ്പെടും.
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>2697</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • സഹീഹ് ബുഖാരി: <strong>2697</strong>
+                        </p>
                     </article>
+                    <hr class="m-0 my-2">
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                مَنْ عَمِلَ عَمَلًا لَيْسَ عَلَيْهِ أَمْرُنَا فَهُوَ رَدٌّ
-                            </p>
+                    <article class="mb-2">
+                        <p class="small text-muted mb-1">
+                            നമ്മുടെ സമ്മതമില്ലാത്ത ഏതൊരു പ്രവൃത്തിയും ആരെങ്കിലും ചെയ്താൽ അത് നിരസിക്കപ്പെടും.
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                നമ്മുടെ സമ്മതമില്ലാത്ത ഏതൊരു പ്രവൃത്തിയും ആരെങ്കിലും ചെയ്താൽ അത് നിരസിക്കപ്പെടും.
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • സഹീഹ് മുസ്ലിം: <strong>4493</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • സഹീഹ് മുസ്ലിം: <strong>4493</strong>
+                        </p>
                     </article>
+                    <hr class="m-0 my-2">
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                مِنْكُمْ بَعْدِي فَسَيَرَى اخْتِلَافًا كَثِيرًا، ‏‏‏‏‏‏فَعَلَيْكُمْ بِسُنَّتِي وَسُنَّةِ
-                                الْخُلَفَاءِ الْمَهْدِيِّينَ الرَّاشِدِينَ تَمَسَّكُوا بِهَا وَعَضُّوا عَلَيْهَا
-                                بِالنَّوَاجِذِ، ‏‏‏‏‏‏وَإِيَّاكُمْ وَمُحْدَثَاتِ الْأُمُورِ فَإِنَّ كُلَّ مُحْدَثَةٍ
-                                بِدْعَةٌ وَكُلَّ بِدْعَةٍ ضَلَالَةٌ
-                            </p>
+                    <article class="mb-2">
+                        <p class="small mb-1">
+                            എനിക്ക് ശേഷം ജീവിക്കുന്ന നിങ്ങളിൽ വലിയ അഭിപ്രായവ്യത്യാസങ്ങൾ കാണും. അപ്പോൾ നിങ്ങൾ
+                            എന്റെയും സന്മാർഗ്ഗം പ്രാപിച്ച ഖലീഫമാരുടെയും സുന്നത്ത് പിന്തുടരണം. അത് മുറുകെ
+                            പിടിക്കുകയും അതിൽ ഉറച്ചുനിൽക്കുകയും ചെയ്യുക. പുതുമകൾ ഒഴിവാക്കുക, കാരണം എല്ലാ പുതുമകളും
+                            ഒരു പുതുമയാണ്, എല്ലാ പുതുമകളും ഒരു തെറ്റാണ്.
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                എനിക്ക് ശേഷം ജീവിക്കുന്ന നിങ്ങളിൽ വലിയ അഭിപ്രായവ്യത്യാസങ്ങൾ കാണും. അപ്പോൾ നിങ്ങൾ
-                                എന്റെയും സന്മാർഗ്ഗം പ്രാപിച്ച ഖലീഫമാരുടെയും സുന്നത്ത് പിന്തുടരണം. അത് മുറുകെ
-                                പിടിക്കുകയും അതിൽ ഉറച്ചുനിൽക്കുകയും ചെയ്യുക. പുതുമകൾ ഒഴിവാക്കുക, കാരണം എല്ലാ പുതുമകളും
-                                ഒരു പുതുമയാണ്, എല്ലാ പുതുമകളും ഒരു തെറ്റാണ്.
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • സുനാൻ അബു ദാവൂദ്: <strong>4607</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • സുനാൻ അബു ദാവൂദ്: <strong>4607</strong>
+                        </p>
                     </article>
+                    <hr class="m-0 my-2">
 
-                    <article class="mt-2">
-                        <div class="card-surface bg-light border">
-                            <p class="text-header text-primary lh-md m-0" dir="rtl" style="font-size: 1.2rem">
-                                مَنْ يَعِشْ مِنْكُمْ يَرَى اخْتِلَافًا كَثِيرًا، ‏‏‏‏‏‏وَإِيَّاكُمْ وَمُحْدَثَاتِ
-                                الْأُمُورِ فَإِنَّهَا ضَلَالَةٌ، ‏‏‏‏‏‏فَمَنْ أَدْرَكَ ذَلِكَ مِنْكُمْ فَعَلَيْهِ
-                                بِسُنَّتِي وَسُنَّةِ الْخُلَفَاءِ الرَّاشِدِينَ الْمَهْدِيِّينَ، ‏‏‏‏‏‏عَضُّوا عَلَيْهَا
-                                بِالنَّوَاجِذِ
-                            </p>
+                    <article class="">
+                        <p class="small mb-1">
+                            തീർച്ചയായും, നിങ്ങളിൽ ആരെങ്കിലും ജീവിച്ചാൽ, അവൻ ധാരാളം വ്യത്യാസം കാണും. പുതുതായി
+                            കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, കാരണം അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത്
+                            കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ
+                            പിടിക്കണം, അണപ്പല്ലുകൾ കൊണ്ട് അത് മുറുകെ പിടിക്കണം.
+                        </p>
 
-                            <p class="small text-muted mb-1">
-                                തീർച്ചയായും, നിങ്ങളിൽ ആരെങ്കിലും ജീവിച്ചാൽ, അവൻ ധാരാളം വ്യത്യാസം കാണും. പുതുതായി
-                                കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, കാരണം അവ വഴിതെറ്റിയതാണ്. നിങ്ങളിൽ ആരെങ്കിലും അത്
-                                കാണുന്നുവെങ്കിൽ, അവൻ എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ
-                                പിടിക്കണം, അണപ്പല്ലുകൾ കൊണ്ട് അത് മുറുകെ പിടിക്കണം.
-                            </p>
-
-                            <p class="small mb-0 text-muted">
-                                Grade: <strong>Sahih</strong> • ജാമി അൽ-തിർമിധി: <strong>2676</strong>
-                            </p>
-                        </div>
+                        <p class="small mb-0 text-muted">
+                            Grade: <strong>Sahih</strong> • ജാമി അൽ-തിർമിധി: <strong>2676</strong>
+                        </p>
                     </article>
                 </div>
             </div>

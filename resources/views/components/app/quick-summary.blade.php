@@ -1,7 +1,7 @@
-@props(['data', 'class' => 'shadow-sm'])
+@props(['data', 'class' => 'p-0'])
 
-<div class="card-surface {{ $class }}">
-    <div class="ayah-card">
+<div class="{{ $class }}">
+    <div class="ayah-card w-100">
         <h5 class="fw-bold text-primary mb-2">📌 Quick Summary</h5>
         <hr class="m-2">
         @isset($data['title'])
@@ -18,9 +18,9 @@
     </div>
 
     @if (isset($data['true']) || isset($data['good']) || isset($data['bad']))
-        <div class="geo-divider my-2"></div>
+        <div class="geo-divider my-2 d-none"></div>
 
-        <div class="d-flex flex-column gap-2">
+        <div class="d-flex flex-column gap-2 mt-2">
             @isset($data['true'])
                 <div class="card text-white bg-success shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
@@ -51,7 +51,7 @@
     @endif
 
     @isset($data['trust'])
-        <div class="geo-divider my-2"></div>
+        <div class="geo-divider my-2 d-none"></div>
 
         <div class="mb-3">
             <h6 class="fw-bold text-primary mb-2">📖 Trust & provenance</h6>
@@ -64,9 +64,9 @@
     @endisset
 
     @isset($data['alert'])
-        <div class="geo-divider my-2"></div>
+        <div class="geo-divider my-2 d-none"></div>
 
-        <div class="card text-dark bg-warning shadow-sm border-0 rounded-3">
+        <div class="card text-dark bg-warning shadow-sm border-0 rounded-3 mt-2">
             <div class="text-center gap-3">
                 <i class="fas fa-exclamation-triangle fa-lg mt-1 text-center"></i>
                 <p class="mb-0 text-center">{!! $data['alert'] !!}</p>
