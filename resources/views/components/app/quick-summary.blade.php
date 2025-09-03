@@ -1,8 +1,9 @@
 @props(['data', 'class' => 'shadow-sm'])
 
-<div class="ayah-card {{ $class }}">
-    <div class="mb-2">
+<div class="card-surface {{ $class }}">
+    <div class="ayah-card">
         <h5 class="fw-bold text-primary mb-2">📌 Quick Summary</h5>
+        <hr class="m-2">
         @isset($data['title'])
             <p class="fw-bold mb-2">{{ $data['title'] }}</p>
         @endisset
@@ -17,6 +18,8 @@
     </div>
 
     @if (isset($data['true']) || isset($data['good']) || isset($data['bad']))
+        <div class="geo-divider my-2"></div>
+
         <div class="d-flex flex-column gap-2">
             @isset($data['true'])
                 <div class="card text-white bg-success shadow-sm border-0 rounded-3">
@@ -28,9 +31,9 @@
             @endisset
 
             @isset($data['good'])
-                <div class="card bg-secondary-subtle shadow-sm border-0 rounded-3">
+                <div class="card bg-primary-subtle shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
-                        <i class="fas fa-info-circle fa-lg mt-1 text-secondary"></i>
+                        <i class="fas fa-info-circle fa-lg mt-1" style="color: #0d6efd"></i>
                         <p class="m-0">{!! $data['good'] !!}</p>
                     </div>
                 </div>
@@ -40,16 +43,16 @@
                 <div class="card bg-danger-subtle shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
                         <i class="fas fa-times-circle fa-lg mt-1 text-danger"></i>
-                        <p class="m-0">{!! $data['bad'] !!}</p>
+                        <div class="m-0">{!! $data['bad'] !!}</div>
                     </div>
                 </div>
             @endisset
         </div>
     @endif
 
-    <hr>
-
     @isset($data['trust'])
+        <div class="geo-divider my-2"></div>
+
         <div class="mb-3">
             <h6 class="fw-bold text-primary mb-2">📖 Trust & provenance</h6>
             <ul class="check-list m-0">
@@ -61,10 +64,12 @@
     @endisset
 
     @isset($data['alert'])
-        <div class="card text-white bg-danger shadow-sm border-0 rounded-3">
+        <div class="geo-divider my-2"></div>
+
+        <div class="card text-dark bg-warning shadow-sm border-0 rounded-3">
             <div class="text-center gap-3">
                 <i class="fas fa-exclamation-triangle fa-lg mt-1 text-center"></i>
-                <p class="fw-semibold mb-0 text-center">{!! $data['alert'] !!}</p>
+                <p class="mb-0 text-center">{!! $data['alert'] !!}</p>
             </div>
         </div>
     @endisset
