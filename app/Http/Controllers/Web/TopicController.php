@@ -57,7 +57,7 @@ class TopicController extends Controller
             $questions[] = array_keys($q)[0];
         }
 
-        return view("{$this->webVersion}.questions", compact("module", "menuSlug", "questions"));
+        return view("{$this->webVersion}.{$moduleSlug}.index", compact("module", "menuSlug", "questions"));
     }
 
     public function answers($menuSlug, $moduleSlug, $questionSlug)

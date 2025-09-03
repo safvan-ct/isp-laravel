@@ -40,7 +40,7 @@
             @endforeach
         </section>
 
-        <div class="row my-3 g-2">
+        <div class="row my-3 g-2 d-none">
             @php
                 $chapter = $book->chapters->where('id', $verses->first()->hadith_chapter_id)->first();
             @endphp
