@@ -25,6 +25,9 @@
                         <a href="{{ route('hadith.index') }}" class="btn btn-accent rounded-pill px-4">
                             {{ __('app.explore_hadith') }}
                         </a>
+                        <a href="{{ route('modules.show', 'life-of-muslim') }}" class="btn btn-secondary rounded-pill px-4">
+                            {{ __('app.topics') }}
+                        </a>
                     </div>
                 </div>
             </section>
@@ -44,7 +47,7 @@
         </div>
 
         <!-- SUBJECTS -->
-        <section class="my-3">
+        <section class="my-3 d-none">
             <header class="text-center mb-4">
                 <h2 class="text-Playfair text-primary text-tr">{{ __('app.foundational_subjects') }}</h2>
                 <p class="text-muted">Build your base with structured chapters & Q/A</p>
@@ -72,7 +75,7 @@
         <div class="geo-divider my-4"></div>
 
         <!-- TOPICS -->
-        <section class="my-4">
+        <section class="my-4 d-none">
             <header class="text-center mb-4">
                 <h2 class="text-Playfair text-primary text-tr">{{ __('app.explore_by_topics') }}</h2>
                 <p class="text-muted">Quick access to common topics</p>
