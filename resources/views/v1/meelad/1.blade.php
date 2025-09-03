@@ -4,19 +4,21 @@
     @php
         $quickSummary = [
             'notes' => [
-                'റ. അവ്വൽ മാസം ഖുർആനിലോ, സഹീഹ് ഹദീസ് പ്രകാരമോ, ഖലീഫമാരും സ്വഹാബികളും മുഖേനയോ, മദ്ഹബുകളുടെ
-                    ഇമാമുമാർ മുഖേനയോ <strong>വിശുദ്ധ മാസം ആയി പറയപ്പെട്ടിട്ടില്ല. 12 എന്നത് സ്ഥിരപ്പെട്ടിട്ടുമില്ല.</strong>',
+                '<strong>നബി ﷺ</strong> തന്റെ ജന്മദിനം <strong>ആഘോഷിച്ചിട്ടില്ല</strong>.',
+                '<strong>സഹാബികളും ഖലീഫാക്കളും</strong> (അബൂബക്കർ, ഉമർ, ഉസ്മാൻ, അലി) <strong>ആഘോഷിച്ചിട്ടില്ല</strong>.',
+                '<strong>ഖുർആൻ</strong>–ൽ അതിനൊരു നിർദ്ദേശമില്ല.',
+                '<strong>ഹദീസ്</strong>: നബി ﷺ തിങ്കളാഴ്ച നോമ്പ് എടുക്കാറുണ്ടായിരുന്നു - <em class="text-muted small"> മുസ്ലിം: 2747.</em>',
+                '<strong>മദ്ഹബുകളുടെ ഇമാമുമാർ</strong>: അവരുടെ കാലത്ത് ആഘോഷങ്ങൾ സ്ഥിരമായിട്ടില്ല.',
 
-                'ചരിത്രപരമായി <strong>പ്രവാചകൻ ﷺ ജനിച്ച മാസം</strong> എന്ന നിലയിലാണ് റ. അവ്വൽ മുസ്ലിം സമൂഹത്തിൽ
+                '<strong>പ്രവാചകൻ ﷺ ജനിച്ച മാസം</strong> എന്ന നിലയിലാണ് റ. അവ്വൽ മുസ്ലിം സമൂഹത്തിൽ
                 പ്രസിദ്ധമായത്.',
 
-                'നബി ﷺ ജനിച്ച കൃത്യമായ <strong>തിയ്യതിയെക്കുറിച്ച് ചരിത്രകാരന്മാര്‍ക്കിടയില്‍ അഭിപ്രായവ്യത്യാസമുണ്ട്</strong> (8, 9, 12)
-                എന്നിവ പറയപ്പെടുന്നു. <strong>12 പ്രധാന അഭിപ്രായം</strong> ആയി മാറി.',
+                '<strong>നബി ﷺ ജനിച്ച തീയതി സംബന്ധിച്ച് (8, 9, 12) തുടങ്ങിയ വ്യത്യസ്ത അഭിപ്രായങ്ങൾ ഉണ്ടെങ്കിലും,</strong>
+                12-ാം തീയതി പ്രധാന അഭിപ്രായമായി അറിയപ്പെടുന്നു.',
 
-                '<strong>അബ്ബാസി, ഫാത്തിമി (~300H - 700H)</strong> കാലഘട്ടങ്ങളിൽ <strong>മീലാദ് തുടങ്ങുമ്പോൾ ഒറ്റ തീയതി വേണമായിരുന്നു. അവർ
-                    റ.അവ്വൽ 12 സ്വീകരിച്ചു.</strong> 12 ഏറ്റവും പ്രചരിച്ചിരുന്ന അഭിപ്രായം ആയിരുന്നു.',
+                '<strong>അബ്ബാസി, ഫാത്തിമി </strong> കാലഘട്ടങ്ങളിൽ (~500H) <strong>മീലാദ് തുടങ്ങുമ്പോൾ റ.അവ്വൽ 12 സ്വീകരിച്ചു.</strong>',
 
-                'പിന്നീട് വന്നിട്ടുള്ള കാലഘട്ടങ്ങളിൽ മീലാദ് ആഘോഷമായും, ആചാരമായും പ്രചരിച്ചു.',
+                '<strong>പിന്നീട് വന്നിട്ടുള്ള കാലഘട്ടങ്ങളിൽ മീലാദ് ആഘോഷമായും, ആചാരമായും പ്രചരിച്ചു.</strong>',
             ],
             'true' => 'പ്രവാചക ചര്യ (സുന്നത്ത്) തിങ്കളാഴ്ച നോമ്പാണ് - <em class="small">മുസ്ലിം: 2747</em>.',
         ];
@@ -49,7 +51,12 @@
             </div>
         </header>
 
-        <div class="row g-2 my-1">
+        <div class="position-sticky z-3 card-surface bg-success-subtle mt-2 rounded-0 b-accent shadow-sm d-md-none d-sm-block"
+            style="top: 72px;">
+            <h6 class="text-primary fw-bold m-0 text-center">{{ array_keys($qst)[0] }}</h6>
+        </div>
+
+        <div class="row g-2 mt-2">
             <section class="col-lg-8">
                 <article class="card-surface">
                     <x-app.topic-header :title="array_keys($qst)[0]" />
@@ -62,36 +69,31 @@
                             <div class="flex-1">
                                 <div class="fw-bold">{!! $item !!}</div>
                                 @if ($key == 0)
-                                    <p class="small text-muted m-0">
-                                        റ. അവ്വൽ മാസത്തിന്റെയോ, 12 - മീലാദ് (ജന്മദിനം) ന്റെയോ <strong>പ്രത്യേക ശ്രേഷ്ഠതയെ
-                                            കുറിച്ച് ഖുർആനിൽ നേരിട്ട്
-                                            പരാമർശമില്ല.</strong>
-                                    </p>
+                                    <p class="small m-0">ഖുർആനിൽ പ്രത്യേക പരാമർശമില്ല.</p>
                                 @endif
 
                                 @if ($key == 1)
-                                    <p class="small text-muted m-0">
-                                        സഹീഹ് ഹദീസ് ഗ്രന്ഥങ്ങളിൽ റ. അവ്വൽ മാസത്തെ <strong>പ്രത്യേകത വാഴ്ത്തുന്ന ഒരു ഹദീസും
-                                            ഇല്ല.</strong>
-                                    </p>
-                                    <p class="small text-muted m-0">
-                                        ജന്മദിനവുമായി ബന്ധപ്പെട്ട് സഹീഹ് ഹദീസ് <strong>ജനിച്ച ദിവസം (തിങ്കളാഴ്ച)</strong>
-                                        - <em class="fst-italic text-muted small">{{ __('app.hadith') }} • മുസ്ലിം:
-                                            2747</em>
-                                    </p>
+                                    <ul class="m-0 p-0 ps-3 small">
+                                        <li>സഹീഹ് ഹദീസുകളിൽ പ്രത്യേക പരാമർശമില്ല.</li>
+                                        <li>
+                                            <strong>നബി ﷺ ജനിച്ചത് തിങ്കളാഴ്ച</strong> എന്ന് പറയപ്പെട്ടിട്ടുണ്ട്. - <em
+                                                class="fst-italic text-muted">മുസ്ലിം: 2747</em>
+                                        </li>
+                                    </ul>
                                 @endif
 
                                 @if ($key == 2)
-                                    <p class="small text-muted m-0">
-                                        അബൂബക്കർ(റ), ഉമർ (റ), ഉസ്മാൻ (റ), അലി (റ) എന്നിവർ <strong>പ്രവാചകൻ ﷺ ജനിച്ച ദിവസം
-                                            ആഘോഷിക്കുകയോ, റ. അവ്വൽ മാസത്തെ പ്രത്യേകിച്ച് വാഴ്ത്തുകയോ ചെയ്തിട്ടില്ല.</strong>
+                                    <p class="small m-0">
+                                        <span class="text-muted">അബൂബക്കർ(റ), ഉമർ (റ), ഉസ്മാൻ (റ), അലി (റ)</span>
+                                        എന്നിവർ പ്രവാചകൻ ﷺ ജനിച്ച ദിവസം ആഘോഷിക്കുകയോ, പ്രത്യേകിച്ച് വാഴ്ത്തുകയോ
+                                        ചെയ്തിട്ടില്ല.
                                     </p>
                                 @endif
 
                                 @if ($key == 3)
-                                    <p class="small text-muted m-0">
-                                        റ . അവ്വൽ മാസത്തെ കുറിച്ച് മദ്ഹബുകളുടെ ഇമാമുമാരുടെ </strong> നിലപാട് നോക്കുമ്പോൾ,
-                                        അവരുടെ കാലത്ത്
+                                    <span class='fst-italic small text-muted'>(ഇമാം അബൂ ഹനീഫ, മാലിക്, ശാഫിഈ, ഹൻബലി)</span>
+                                    <p class="small m-0">
+                                        മദ്ഹബുകളുടെ ഇമാമുമാരുടെ </strong> നിലപാട് നോക്കുമ്പോൾ, അവരുടെ കാലത്ത്
                                         <strong>ഈ മാസത്തെ പ്രത്യേകമായി മഹത്വപ്പെടുത്തിയ പ്രവർത്തി ഒന്നും ഇല്ല.</strong>
                                     </p>
                                 @endif
@@ -279,7 +281,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header position-sticky top-0 z-3 bg-white">
-                    <h5 class="modal-title" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h5>
+                    <h6 class="modal-title text-primary m-0" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

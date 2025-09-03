@@ -2,7 +2,7 @@
 
 <div class="{{ $class }}">
     <div class="ayah-card w-100">
-        <h5 class="fw-bold text-primary mb-2">📌 Quick Summary</h5>
+        <h6 class="fw-bold text-primary mb-2">📌 Quick Summary</h6>
         <hr class="m-2">
         @isset($data['title'])
             <p class="fw-bold mb-2">{{ $data['title'] }}</p>

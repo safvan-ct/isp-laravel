@@ -213,8 +213,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header position-sticky top-0 z-3 bg-white">
-                    <h5 class="modal-title" id="quranHadithModalLabel">നബിദിനം - {{ __('app.quran') }} &
-                        {{ __('app.hadith') }} References</h5>
+                    <h6 class="modal-title text-primary" id="quranHadithModalLabel">നബിദിനം - {{ __('app.quran') }} &
+                        {{ __('app.hadith') }} References</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

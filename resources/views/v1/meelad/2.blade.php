@@ -8,23 +8,23 @@
                 '<strong>സഹാബികളും ഖലീഫാക്കളും</strong> (അബൂബക്കർ, ഉമർ, ഉസ്മാൻ, അലി) <strong>ആഘോഷിച്ചിട്ടില്ല</strong>.',
                 '<strong>ഖുർആൻ</strong>–ൽ അതിനൊരു നിർദ്ദേശമില്ല.',
                 '<strong>ഹദീസ്</strong>: പ്രവാചകൻ ﷺ തിങ്കളാഴ്ച നോമ്പ് നോൽക്കാറുണ്ടായിരുന്നു - <em class="text-muted small"> മുസ്ലിം: 2747.</em>',
-                '<strong>മദ്ഹബുകളുടെ ഇമാമുമാർ</strong>: അവരുടെ കാലത്ത് ആഘോഷം, മൗലിദ് പാരായണം, മറ്റുള്ള ആഘോഷങ്ങൾ സ്ഥിരമായിട്ടില്ല.',
+                '<strong>മദ്ഹബുകളുടെ ഇമാമുമാർ</strong>: അവരുടെ കാലത്ത് ആഘോഷങ്ങൾ സ്ഥിരമായിട്ടില്ല.',
 
-                'പിന്നീട് വന്നിട്ടുള്ള <strong>ചില പണ്ഡിതർ ഹറാം കാര്യങ്ങളില്ലാതെ</strong>, ഖുർആൻ, സലാത്ത്, ദുആ, നബി ചരിത്രം
+                '<strong>പിന്നീട് വന്നിട്ടുള്ള ചില പണ്ഡിതന്മാർ ഹറാം കാര്യങ്ങളില്ലാതെ</strong>, ഖുർആൻ, സലാത്ത്, ദുആ, നബി ചരിത്രം
                 പഠിക്കൽ, ഭക്ഷണം വിതരണം മുതലായവയ്ക്കായി നടത്തിയാൽ അത് <strong>ബിദ്അത് ഹസന (നല്ല പുതുമ)</strong> ആണെന്ന്
                 അഭിപ്രായപ്പെടുന്നു.',
 
-                'ചില പണ്ഡിതർ ഇത് <strong>ബിദ്അത് (പുതുമ) ആയതിനാൽ ഒഴിവാക്കണം</strong> എന്ന് അഭിപ്രായപ്പെടുന്നു.',
+                '<strong>ചില പണ്ഡിതന്മാർ ഇത് ബിദ്അത് (പുതുമ) ആയതിനാൽ ഒഴിവാക്കണം</strong> എന്ന് അഭിപ്രായപ്പെടുന്നു.',
             ],
             'true' =>
                 'പ്രവാചക ചര്യ (സുന്നത്ത്) തിങ്കളാഴ്ച നോമ്പാണ് (<em class="small">മുസ്ലിം: 2747</em>), ജന്മദിനാഘോഷമല്ല.',
 
-            'good' => '<b>നബി ദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമല്ല. മറിച്ച് പ്രവാചകന്റെയും സഹാബികളുടെയും ശരിയായ മാർഗമാണ്.</b>
+            'good' => '<b>നബി ദിനം ആഘോഷിക്കാത്തത് ഇസ്‌ലാമിക വിരോധമല്ല.</b>
                 <br><span class="fst-italic small text-muted">എന്റെ സുന്നത്തും സന്മാർഗ്ഗം പ്രാപിച്ച ഖുലഫയുടെ സുന്നത്തും മുറുകെ പിടിക്കണം. — <em class="small">തിർമിധി: 2676</em><span>',
 
             'bad' => 'പുതുതായി കൂട്ടിച്ചേർക്കലുകൾ <span class="fst-italic small text-muted">(പ്രതേക വിരുന്ന്, ഗാനങ്ങൾ, ചടങ്ങുകൾ, മൗലിദ് സദസ്സ്,
                  ലൈറ്റുകൾ, കൂട്ടം ചേർന്ന് ആഘോഷിക്കൽ)</span> ചര്യയല്ല ബിദ്അത് ആണ്.
-                 <p class="fst-italic m-0 mt-2 text-muted small">പുതുതായി കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, അവ വഴിതെറ്റിയതാണ്.
+                 <p class="fst-italic m-0 my-2 text-muted small">പുതുതായി കണ്ടുപിടിച്ച കാര്യങ്ങളെ സൂക്ഷിക്കുക, അവ വഴിതെറ്റിയതാണ്.
                         — <em class="small">തിർമിധി: 2676</em></p>
                     <p class="fst-italic m-0 text-muted small">ക്രിസ്ത്യാനികൾ മർയമിന്റെ മകനെ പുകഴ്ത്തിയതുപോലെ എന്നെ നിങ്ങൾ പുകഴ്ത്തരുത്.
                         — <em class="small">ബുഖാരി: 3445</em></p>',
@@ -61,6 +61,11 @@
             </div>
         </header>
 
+        <div class="position-sticky z-3 card-surface bg-success-subtle mt-2 rounded-0 b-accent shadow-sm d-md-none d-sm-block"
+            style="top: 72px;">
+            <h6 class="text-primary fw-bold m-0 text-center">{{ array_keys($qst)[0] }}</h6>
+        </div>
+
         <div class="row g-2 my-1">
             <section class="col-lg-8">
                 <article class="card-surface">
@@ -75,8 +80,7 @@
                                 <div class="fw-bold">{{ $item }}</div>
                                 @if ($key == 0)
                                     <p class="small text-muted m-0 mb-2">
-                                        ജന്മദിനം ആഘോഷിക്കൽ, പ്രത്യേക പാരായണങ്ങൾ നടത്തൽ സംബന്ധിച്ച് <strong>ഖുർആനിൽ
-                                            നേരിട്ടുള്ള പരാമർശമില്ല.</strong>
+                                        <strong>ഖുർആനിൽ നേരിട്ടുള്ള പരാമർശമില്ല.</strong>
                                     </p>
                                     <div class="small m-0">
                                         എന്നാൽ, ചില പണ്ഡിതന്മാർ താഴെക്കാണുന്ന ഖുർആൻ ആയത്തുകൾ ചൂണ്ടിക്കാണിച്ച് നബി ﷺ യുടെ
@@ -97,24 +101,22 @@
                                 @endif
 
                                 @if ($key == 1)
-                                    <p class="small text-muted m-0">
-                                        പ്രവാചകൻ ﷺ ജനിച്ച ദിവസം ആഘോഷിക്കുന്നതിനെ സംബന്ധിച്ച് പറയുന്ന <strong>സഹീഹ് ഹദീസ്
-                                            ഒന്നും
-                                            ഇല്ല.</strong>
-                                    </p>
+                                    <p class="small m-0">സഹീഹ് ഹദീസുകളിൽ പ്രത്യേക പരാമർശമില്ല.</p>
                                 @endif
 
                                 @if ($key == 2)
-                                    <p class="small text-muted m-0">
-                                        അബൂബക്കർ(റ), ഉമർ (റ), ഉസ്മാൻ (റ), അലി (റ) എന്നിവർ <strong>പ്രവാചകൻ ﷺ ജനിച്ച ദിവസം
-                                            ആഘോഷിക്കുകയോ, റ. അവ്വൽ മാസത്തെ പ്രത്യേകിച്ച് വാഴ്ത്തുകയോ ചെയ്തിട്ടില്ല.</strong>
+                                    <p class="small m-0">
+                                        <span class="text-muted">അബൂബക്കർ(റ), ഉമർ (റ), ഉസ്മാൻ (റ), അലി (റ)</span>
+                                        എന്നിവർ പ്രവാചകൻ ﷺ ജനിച്ച ദിവസം ആഘോഷിക്കുകയോ, പ്രത്യേകിച്ച് വാഴ്ത്തുകയോ
+                                        ചെയ്തിട്ടില്ല.
                                     </p>
                                 @endif
 
                                 @if ($key == 3)
-                                    <p class="small text-muted m-0">
-                                        മദ്ഹബുകളുടെ ഇമാമുമാർ ആരും <strong>മീലാദ് ആഘോഷങ്ങളെ സംബന്ധിച്ച് നേരിട്ട് ഒന്നും
-                                            പറഞ്ഞിട്ടില്ല,</strong> അത് അവരുടെ കാലത്ത് ഇല്ലായിരുന്നു.
+                                    <span class='fst-italic small text-muted'>(ഇമാം അബൂ ഹനീഫ, മാലിക്, ശാഫിഈ, ഹൻബലി)</span>
+                                    <p class="small m-0">
+                                        മദ്ഹബുകളുടെ ഇമാമുമാരുടെ </strong> നിലപാട് നോക്കുമ്പോൾ, അവരുടെ കാലത്ത്
+                                        <strong>ഈ മാസത്തെ പ്രത്യേകമായി മഹത്വപ്പെടുത്തിയ പ്രവർത്തി ഒന്നും ഇല്ല.</strong>
                                     </p>
                                 @endif
                             </div>
@@ -280,7 +282,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header position-sticky top-0 z-3 bg-white">
-                    <h5 class="modal-title" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h5>
+                    <h6 class="modal-title text-primary m-0" id="quickSummaryModalLabel">{{ array_keys($qst)[0] }}</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
