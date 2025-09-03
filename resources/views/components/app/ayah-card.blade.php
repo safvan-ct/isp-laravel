@@ -1,6 +1,6 @@
-@props(['ayah' => '', 'translation', 'number'])
+@props(['ayah' => '', 'translation', 'number', 'class' => ''])
 
-<div class="ayah-card">
+<div class="ayah-card {{ $class }}">
     @if ($ayah)
         <h6 class="text-arabic text-primary fw-bold mt-2 lh-lg mb-0"> ﴿ {{ $ayah }} ﴾ </h6>
     @endif

@@ -212,29 +212,31 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header mb-2 position-sticky top-0 z-3 bg-white">
+                <div class="modal-header position-sticky top-0 z-3 bg-white">
                     <h5 class="modal-title" id="quranHadithModalLabel">നബിദിനം - {{ __('app.quran') }} &
                         {{ __('app.hadith') }} References</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="p-3 pb-0 mb-2">
+                <div class="ayah-card rounded-0">
                     <h6 class="fw-bold text-primary mb-2">{{ __('app.quran') }}</h6>
 
-                    <p class="m-0 mb-2">
+                    <p class="m-0 small">
+                        നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em
+                            class="small text-muted">S. 17:36</em>
+                    </p>
+                    <hr class="m-0 my-2">
+
+                    <p class="m-0 small">
                         ഇന്ന് ഞാന്‍ നിങ്ങള്‍ക്ക് നിങ്ങളുടെ മതം പൂര്‍ത്തിയാക്കി തന്നിരിക്കുന്നു. എന്‍റെ അനുഗ്രഹം
                         നിങ്ങള്‍ക്ക് ഞാന്‍ നിറവേറ്റിത്തരികയും ചെയ്തിരിക്കുന്നു. മതമായി ഇസ്ലാമിനെ ഞാന്‍ നിങ്ങള്‍ക്ക്
                         തൃപ്തിപ്പെട്ട് തന്നിരിക്കുന്നു. — <em class="small text-muted">S. 5:3</em>
                     </p>
-                    <div class="geo-divider my-2"></div>
-
-                    <p class="m-0">
-                        നിനക്ക് അറിവില്ലാത്ത യാതൊരു കാര്യത്തിന്‍റെയും പിന്നാലെ നീ പോകരുത്‌. — <em
-                            class="small text-muted">S. 17:36</em>
-                    </p>
                 </div>
 
-                <div class="p-3 card-surface bg-light rounded-0">
+                <div class="geo-divider my-2"></div>
+
+                <div class="card-surface bg-light rounded-0">
                     <h6 class="fw-bold text-primary mb-2">{{ __('app.hadith') }}</h6>
 
                     <article class="mb-2">

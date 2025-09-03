@@ -22,7 +22,7 @@
 
         <div class="d-flex flex-column gap-2 mt-2">
             @isset($data['true'])
-                <div class="card text-white bg-success shadow-sm border-0 rounded-3">
+                <div class="card-surface text-white bg-success shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
                         <i class="fas fa-check-circle fa-lg mt-1"></i>
                         <p class="m-0">{!! $data['true'] !!}</p>
@@ -31,7 +31,7 @@
             @endisset
 
             @isset($data['good'])
-                <div class="card bg-primary-subtle shadow-sm border-0 rounded-3">
+                <div class="card-surface bg-primary-subtle shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
                         <i class="fas fa-info-circle fa-lg mt-1" style="color: #0d6efd"></i>
                         <p class="m-0">{!! $data['good'] !!}</p>
@@ -40,7 +40,7 @@
             @endisset
 
             @isset($data['bad'])
-                <div class="card bg-danger-subtle shadow-sm border-0 rounded-3">
+                <div class="card-surface bg-danger-subtle shadow-sm border-0 rounded-3">
                     <div class="d-flex align-items-center gap-3">
                         <i class="fas fa-times-circle fa-lg mt-1 text-danger"></i>
                         <div class="m-0">{!! $data['bad'] !!}</div>
@@ -66,9 +66,9 @@
     @isset($data['alert'])
         <div class="geo-divider my-2 d-none"></div>
 
-        <div class="card text-dark bg-warning shadow-sm border-0 rounded-3 mt-2">
+        <div class="card-surface text-dark bg-warning-subtle shadow-sm border-0 rounded-3 mt-2">
             <div class="text-center gap-3">
-                <i class="fas fa-exclamation-triangle fa-lg mt-1 text-center"></i>
+                <i class="fas fa-exclamation-triangle fa-lg mt-1 text-center text-warning"></i>
                 <p class="mb-0 text-center">{!! $data['alert'] !!}</p>
             </div>
         </div>
